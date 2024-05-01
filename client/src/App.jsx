@@ -1,16 +1,12 @@
-import { useState } from 'react'
-import './App.css'
-import { Prueba } from './components/Prueba'
-
+import React from "react";
+import AppRoutes from "./routes/Routes";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <Prueba text="GUARDAR"/>
+      <AppRoutes />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
