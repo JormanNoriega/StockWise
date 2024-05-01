@@ -9,10 +9,10 @@ import {
 
 const router = Router();
 
-router.get("/", getUsuarios);
-router.post("/", createUsuario);
-router.put("/:idUsuario", updateUsuario);
-router.delete("/:idUsuario", deleteUsuario); //toca eliminar antes todo lo q tenga en otras tablas :D
-router.get("/:idUsuario", getUsuario);
+router.get("/usuarios", getUsuarios);
+router.post("/usuarios", createUsuario);
+router.put("/usuarios/:idUsuario", updateUsuario);
+router.delete("/usuarios/:idUsuario", deleteUsuario); //toca eliminar antes todo lo q tenga en otras tablas :D
+router.get("/usuarios/:idUsuario", getUsuario);
 
 export default router;
