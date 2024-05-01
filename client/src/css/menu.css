@@ -10,7 +10,12 @@
 .header {
   background-color: hsl(218, 29%, 16%);
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
-  padding: 1rem 1.5rem;
+  padding: 0rem 1.4rem;
+  position: fixed;
+  width: 100%;
+  height: 8%;
+  z-index: 10; /* Make sure the header is above other elements */
+  text-decoration: none;
 }
 
 .logo {
@@ -18,10 +23,17 @@
   font-weight: bold;
   font-size: 1.4rem;
   text-decoration: none;
-  margin-left: 30px; /* Push the container to the left */
+  margin-left: 20px; /* Push the container to the left */
+  margin-top: 5px; /* Push the container to the left */
   display: grid; /* Enable Grid layout */
   grid-template-columns: 100px auto; /* Two columns: 100px for logo, auto for name */
   grid-gap: 10px;
+}
+
+.nombrelogo {
+  margin-left: -40px; /* Push the container to the left */
+  margin-top: 15px; /* Push the container to the left */
+
 }
 
 .sidebar {
@@ -64,6 +76,7 @@
   display: flex;
   align-items: center;
   padding: 1rem 1.5rem;
+  text-decoration: none;
   transition: all 0.3s ease-in-out;
 }
 
@@ -103,7 +116,7 @@
   padding: 0px;
   font-size: 0.9rem;
   list-style: none;
-  color: #55DAD5;
+  color: #313f3f;
 }
 
 .breadcrumb-item a {
@@ -149,7 +162,8 @@
   display: flex; /* Make the container a flexbox */
   margin-top: 7px; /* Adjust margin-top if needed */
   display: flex; /* Make the container a flexbox */
-  margin-left: -70px; /* Push the container to the left */
+  margin-left: -10px; /* Push the container to the left */
+  margin-top: -35px;
 }
 
 .toggle-sidebar-btn:hover {
