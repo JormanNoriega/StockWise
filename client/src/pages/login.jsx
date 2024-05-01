@@ -5,6 +5,7 @@ import "../css/login.css";
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loginContrasena, setLoginContrasena] = useState("");
+  
 
   return (
     <div className="Bg-Img">
@@ -23,7 +24,7 @@ const LoginPage = () => {
           </p>
         </div>
         <div className="login-form">
-          <h2>Inicio De Sesíon</h2>
+          <h2>Inicio De Sesión</h2>
           <form action="#">
             <label htmlFor="username">Tipo de Inicio de Sesíon:</label>
             <select name="tipo" id="tipo">

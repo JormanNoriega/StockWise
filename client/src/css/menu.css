@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Mont:wght@700&display=swap');
+
+
+.dashboard {
+  display: flex;
+  min-height: 100vh;
+  color: #fff;
+}
+
+.header {
+  background-color: hsl(218, 29%, 16%);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+  padding: 1rem 1.5rem;
+}
+
+.logo {
+  color: #55DAD5;
+  font-weight: bold;
+  font-size: 1.4rem;
+  text-decoration: none;
+  margin-left: 30px; /* Push the container to the left */
+  display: grid; /* Enable Grid layout */
+  grid-template-columns: 100px auto; /* Two columns: 100px for logo, auto for name */
+  grid-gap: 10px;
+}
+
+.sidebar {
+  background-color: #1E2736;
+  width: 240px; /* Initial width */
+  transition: width 0.3s ease-in-out; /* Transition for width */
+  box-shadow: 0 16px 20px rgba(0, 0, 0, 0.5);
+  font-size: 0.9rem;
+  font-family: Open Sans, sans-serif;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.sidebar.open {
+  width: 0px; /* Width when open */
+}
+
+.sidebar.open:hover {
+  width: 240px; /* Width on hover when open */
+}
+
+.sidebar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-titulo {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.nav-link {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+  background-color: #29374A;
+}
+
+.nav-link.collapsed {
+  font-weight: bold;
+}
+
+.bi {
+  font-size: 1.2rem;
+  margin-right: 1rem;
+}
+
+.main {
+  flex: 1;
+  padding: 1.5rem;
+  margin-top: 40px;
+  font-size: 0.75rem;
+  color: #55DAD5;
+  
+}
+
+.pagetitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem 1.5rem;
+  border-bottom: 2px solid #29374A;
+  margin-bottom: 10px; /* Ajusta el valor según sea necesario */
+}
+
+.breadcrumb {
+  margin: 0px;
+  padding: 0px;
+  font-size: 0.9rem;
+  list-style: none;
+  color: #55DAD5;
+}
+
+.breadcrumb-item a {
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  color: #55DAD5;
+}
+
+.breadcrumb-item a:hover {
+  color: #55DAD5;
+}
+
+.back-to-top {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  padding: 0.5rem;
+  background-color: #29374A;
+  color: #fff;
+  border-radius: 50%;
+  transition: all 0.3s ease-in-out;
+}
+
+.back-to-top:hover {
+  background-color: #55DAD5;
+}
+
+.logo {
+  /* Existing styles */
+  width: 35px; /* Set logo width to 250px */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.toggle-sidebar-btn {
+  /* Remove default button styles */
+  background-color: transparent; /* Change background color */
+  color: white; /* Change icon color */
+  width: 40px; /* Change button width */
+  height: 40px; /* Change button height */
+  border: none;
+  transition: all 0.2s ease-in-out; /* Add hover effect transition */
+  display: flex; /* Make the container a flexbox */
+  margin-top: 7px; /* Adjust margin-top if needed */
+  display: flex; /* Make the container a flexbox */
+  margin-left: -70px; /* Push the container to the left */
+}
+
+.toggle-sidebar-btn:hover {
+  background-color: transparent; /* Change background color on hover */
+}
