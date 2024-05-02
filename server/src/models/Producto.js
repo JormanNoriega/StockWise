@@ -36,10 +36,6 @@ export const Producto = sequelize.define(
     },
     
   },
-  {
-    primaryKey: true,
-    composite: true,
-  }
 );
 
 //RELACION CON DETALLE VENTA

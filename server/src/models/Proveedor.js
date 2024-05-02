@@ -17,16 +17,16 @@ export const Proveedor = sequelize.define("proveedores", {
   telefono: {
     type: DataTypes.STRING,
   },
-  corre: {
+  correo: {
     type: DataTypes.STRING,
   },
 });
 
 //RELACIONES CON PRODUCTOS
-Proveedor.hasMany(Producto,{
+Proveedor.hasMany(Producto, {
   foreignKey: "idProveedor",
   targetID: "idProveedor",
-})
+});
 
 Producto.belongsTo(Proveedor, {
   foreignKey: "idProveedor",

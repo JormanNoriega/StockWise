@@ -18,4 +18,3 @@ export const DetalleVenta = sequelize.define("detalleVentas", {
     type: DataTypes.DOUBLE,
   },
 });
-

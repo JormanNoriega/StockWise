@@ -22,7 +22,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       {/* Header */}
-      <header className="header fixed-top d-flex align-items-center">
+      <header className="header">
         <div className="d-flex align-items-center justify-content-between">
           <a href="/menu" className="logo d-flex align-items-center">
             <img className="logo" src="./LogoSinFondo.png" alt="logo" />
