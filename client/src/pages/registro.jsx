@@ -1,10 +1,51 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import "../css/registro.css";
+import Swal from "sweetalert2"; 
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [loginContrasena, setLoginContrasena] = useState("");
+  const [formData, setFormData] = useState({
+    nombre: "",
+    correo: "",
+    contraseña: ""
+  });
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:4000/usuarios", formData);
+      console.log(response.data);
+      Swal.fire({
+        icon: 'success',
+        title: '¡Registro exitoso!',
+        text: 'Tu cuenta ha sido creada correctamente.'
+      });
+      setFormData({
+        nombre: "",
+        correo: "",
+        contraseña: ""
+      });
+    } catch (error) {
+      setError(error.response.data.message);
+      Swal.fire({
+        icon: 'error',
+        title: '¡Error!',
+        text: 'Hubo un problema al registrar tu cuenta.',
+        footer: error
+      });
+    }
+  };
 
   return (
     <div className="Bg-Img">
@@ -24,34 +65,36 @@ const RegisterPage = () => {
         </div>
         <div className="login-form">
           <h2>Crear Usuario</h2>
-          <form>
+          <form onSubmit={handleSubmit}>
             <label htmlFor="nombre">Nombre:</label>
             <input
               type="text"
               id="nombre"
               name="nombre"
               placeholder="StockWise"
+              value={formData.nombre}
+              onChange={handleChange}
               required
             />
-            <label htmlFor="username">Correo:</label>
+            <label htmlFor="correo">Correo:</label>
             <input
-              type="text"
-              id="username"
+              type="email"
+              id="correo"
               name="correo"
               placeholder="usuario@ejemplo.com"
+              value={formData.correo}
+              onChange={handleChange}
               required
             />
-            <label htmlFor="password">Contraseña:</label>
+            <label htmlFor="contraseña">Contraseña:</label>
             <div className="toggle-password">
               <input
                 type={showPassword ? "text" : "password"}
-                id="password"
-                name="password"
+                id="contraseña"
+                name="contraseña"
                 placeholder="*************"
-                value={loginContrasena}
-                onChange={(event) => {
-                  setLoginContrasena(event.target.value);
-                }}
+                value={formData.contraseña}
+                onChange={handleChange}
                 required
               />
               <i
@@ -61,13 +104,14 @@ const RegisterPage = () => {
               ></i>
             </div>
             <div className="btns">
-              <button type="button">Registrar Usuario</button>
+              <button type="submit">Registrar Usuario</button>
             </div>
-            <a>¿Tienes cuenta ya?</a> <b />
-            <Link to="/login" className="nav-links2">
-              Inicia sesión aquí
-            </Link>
           </form>
+          {error && <p className="error-message">{error}</p>}
+          <p>¿Ya tienes cuenta?</p>
+          <Link to="/login" className="nav-links2">
+            Inicia sesión aquí
+          </Link>
         </div>
       </div>
     </div>

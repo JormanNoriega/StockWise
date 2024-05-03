@@ -80,10 +80,6 @@
   transition: all 0.3s ease-in-out;
 }
 
-.nav-link:hover {
-  background-color: #29374A;
-}
-
 .nav-link.collapsed {
   font-weight: bold;
 }
