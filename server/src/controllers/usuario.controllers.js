@@ -58,3 +58,21 @@ export async function deleteUsuario(req, res) {
     res.status(500).json({ message: error.message });
   }
 }
+
+export async function getIniciarSesion(req, res) {
+  const { correo, contraseña } = req.body;
+  try {
+    // Llamar al servicio de autenticación para iniciar sesión
+    const usuario = await UsuarioService.iniciarSesion(correo, contraseña);
+    if (usuario) {
+      // Si se encontró un usuario, devolverlo como respuesta
+      res.json(usuario);
+    } else {
+      // Si no se encontró un usuario, devolver un mensaje de error
+      res.status(401).json({ message: "Credenciales incorrectas" });
+    }
+  } catch (error) {
+    // Si ocurre algún error durante el proceso, devolver un mensaje de error interno del servidor
+    res.status(500).json({ message: "Error interno del servidor" });
+  }
+}
