@@ -81,3 +81,30 @@ export async function eliminarUsuario(idUsuario) {
     throw new Error(error.message);
   }
 }
+
+export async function iniciarSesion(correo, contraseña) {
+  try {
+    // Buscar un usuario con el correo electrónico y contraseña proporcionados
+    const usuario = await Usuario.findOne({
+      where: {
+        correo: correo,
+        contraseña: contraseña,
+      },
+    });
+    // Si se encuentra un usuario, devolverlo
+    if (usuario) {
+      return new UsuarioDTO(
+        usuario.idUsuario,
+        usuario.nombre,
+        usuario.correo,
+        usuario.contraseña
+      );
+    } else {
+      // Si no se encuentra un usuario, devolver null u otro indicador de que las credenciales son incorrectas
+      return null;
+    }
+  } catch (error) {
+    // Manejar cualquier error que ocurra durante la búsqueda del usuario
+    throw new Error("Error al iniciar sesión: " + error.message);
+  }
+}
