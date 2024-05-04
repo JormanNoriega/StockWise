@@ -1,11 +1,49 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
+import axios from "axios";
 import "../css/login.css";
+import Swal from "sweetalert2";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [loginContrasena, setLoginContrasena] = useState("");
-  
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    correo: "",
+    contraseña: ""
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:4000/login", formData);
+      console.log(response.data);
+      Swal.fire({
+        icon: "success",
+        title: "¡Inicio de sesión exitoso!",
+        text: "¡Bienvenido de vuelta!",
+      });
+      navigate("/menu");
+    } catch (error) {
+      setError("Correo o contraseña incorrectos");
+      Swal.fire({
+        icon: "error",
+        title: "¡Error!",
+        text: "Correo o contraseña incorrectos",
+        footer: error
+      });
+    }
+  };
 
   return (
     <div className="Bg-Img">
@@ -25,31 +63,31 @@ const LoginPage = () => {
         </div>
         <div className="login-form">
           <h2>Inicio De Sesión</h2>
-          <form action="#">
-            <label htmlFor="username">Tipo de Inicio de Sesíon:</label>
+          <form onSubmit={handleSubmit}>
+          <label htmlFor="username">Tipo de Inicio de Sesión:</label>
             <select name="tipo" id="tipo">
               <option value="user">Usuario</option>
               <option value="employee">Empleado</option>
             </select>
-            <label htmlFor="username">Correo:</label>
+            <label htmlFor="correo">Correo:</label>
             <input
               type="text"
-              id="username"
-              name="username"
+              id="correo"
+              name="correo"
               placeholder="usuario@ejemplo.com"
+              value={formData.correo}
+              onChange={handleChange}
               required
             />
-            <label htmlFor="password">Contraseña:</label>
+            <label htmlFor="contraseña">Contraseña:</label>
             <div className="toggle-password">
               <input
                 type={showPassword ? "text" : "password"}
-                id="password"
-                name="password"
+                id="contraseña"
+                name="contraseña"
                 placeholder="*************"
-                value={loginContrasena}
-                onChange={(event) => {
-                  setLoginContrasena(event.target.value);
-                }}
+                value={formData.contraseña}
+                onChange={handleChange}
                 required
               />
               <i
@@ -59,13 +97,13 @@ const LoginPage = () => {
               ></i>
             </div>
             <div className="btns">
-              <button type="submit">Inicia Sesíon</button>
+              <button type="submit">Inicia Sesión</button>
             </div>
-            <a>¿No tienes cuenta?</a> <b />
+            </form>
+            <p>¿No tienes cuenta?</p>
             <Link to="/registro" className="nav-links2">
-              Registrate aqui
+              Regístrate aquí
             </Link>
-          </form>
         </div>
       </div>
     </div>

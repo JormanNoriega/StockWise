@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "../css/registro.css";
-import Swal from "sweetalert2"; 
+import Swal from "sweetalert2";
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -107,7 +107,6 @@ const RegisterPage = () => {
               <button type="submit">Registrar Usuario</button>
             </div>
           </form>
-          {error && <p className="error-message">{error}</p>}
           <p>¿Ya tienes cuenta?</p>
           <Link to="/login" className="nav-links2">
             Inicia sesión aquí
