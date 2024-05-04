@@ -16,6 +16,6 @@ router.post("/usuarios", createUsuario);
 router.put("/usuarios/:idUsuario", updateUsuario);
 router.delete("/usuarios/:idUsuario", deleteUsuario); //toca eliminar antes todo lo q tenga en otras tablas :D
 router.get("/usuarios/:idUsuario", getUsuario);
-router.get("/login", getIniciarSesion);
+router.post("/login", getIniciarSesion);
 
 export default router;
