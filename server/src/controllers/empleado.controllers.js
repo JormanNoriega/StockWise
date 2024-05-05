@@ -28,18 +28,18 @@ export async function getEmpleadoDeUsuario(req, res) {
   const { idUsuario } = req.params;
   const { idEmpleado } = req.params;
   try {
-    const empleados = await empleadoService.obtenerEmpleadoDeUsuario(
+    const empleado = await empleadoService.obtenerEmpleadoDeUsuario(
       idUsuario,
       idEmpleado
     );
-    res.json(empleados);
+    res.json(empleado);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 }
 
 // Controlador para crear un nuevo empleado para un usuario
-export async function crearEmpleado(req, res) {
+export async function postEmpleado(req, res) {
   const { idUsuario } = req.params;
   const { nombre, correo, contraseña } = req.body;
   try {
@@ -56,7 +56,7 @@ export async function crearEmpleado(req, res) {
 }
 
 // Controlador para actualizar un empleado de un usuario
-export async function actualizarEmpleado(req, res) {
+export async function putEmpleado(req, res) {
   const { idUsuario } = req.params;
   const { idEmpleado } = req.params;
   const { nombre, correo, contraseña } = req.body;
@@ -75,7 +75,7 @@ export async function actualizarEmpleado(req, res) {
 }
 
 // Controlador para eliminar un empleado de un usuario
-export async function eliminarEmpleado(req, res) {
+export async function deleteEmpleado(req, res) {
   const { idEmpleado } = req.params;
   const { idUsuario } = req.params;
   try {

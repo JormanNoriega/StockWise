@@ -4,6 +4,6 @@ export class ProveedorDTO {
     this.idUsuario = idUsuario;
     this.nombProveedor = nombProveedor;
     this.telefono = telefono;
-    this.correo = telefono;
+    this.correo = correo;
   }
 }
