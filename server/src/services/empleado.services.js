@@ -46,24 +46,27 @@ export async function obtenerEmpleadosDeUsuario(idUsuario) {
 }
 
 //Obtener un Empleado de un Usuario
-export async function obtenerEmpleadoDeUsuario(idUsuario,idEmpleado) {
+export async function obtenerEmpleadoDeUsuario(idUsuario, idEmpleado) {
   try {
-    const empleado = await Empleado.findAll({
+    const empleado = await Empleado.findOne({
       where: {
         idUsuario: idUsuario,
         idEmpleado: idEmpleado
       },
     });
-    return empleado.map(
-      (empleado) =>
-        new EmpleadoDTO(
-          empleado.idEmpleado,
-          empleado.nombre,
-          empleado.correo,
-          empleado.contraseña,
-          empleado.idUsuario
-        )
-    );
+    if (empleado) {
+      // Si se encontró un empleado, devolverlo como un objeto
+      return new EmpleadoDTO(
+        empleado.idEmpleado,
+        empleado.nombre,
+        empleado.correo,
+        empleado.contraseña,
+        empleado.idUsuario
+      );
+    } else {
+      // Si no se encontró ningún empleado, devolver null
+      return null;
+    }
   } catch (error) {
     throw new Error(error.message);
   }

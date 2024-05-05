@@ -1,5 +1,6 @@
 import * as UsuarioService from "../services/usuario.services.js";
 
+//Obtener todos los usuarios
 export async function getUsuarios(req, res) {
   try {
     const usuarios = await UsuarioService.obtenerUsuarios();
@@ -9,6 +10,7 @@ export async function getUsuarios(req, res) {
   }
 }
 
+//Obtener un usuario
 export async function getUsuario(req, res) {
   const { idUsuario } = req.params;
   try {
@@ -19,7 +21,8 @@ export async function getUsuario(req, res) {
   }
 }
 
-export async function createUsuario(req, res) {
+//Crear un Usuario
+export async function postUsuario(req, res) {
   const { nombre, correo, contraseña } = req.body;
   try {
     const newUsuario = await UsuarioService.crearUsuario(
@@ -33,7 +36,8 @@ export async function createUsuario(req, res) {
   }
 }
 
-export async function updateUsuario(req, res) {
+//Actualizar un usuario
+export async function putUsuario(req, res) {
   const { idUsuario } = req.params;
   const { nombre, correo, contraseña } = req.body;
   try {
@@ -49,6 +53,7 @@ export async function updateUsuario(req, res) {
   }
 }
 
+//Eliminar un usuario
 export async function deleteUsuario(req, res) {
   const { idUsuario } = req.params;
   try {
@@ -59,20 +64,17 @@ export async function deleteUsuario(req, res) {
   }
 }
 
+//Iniciar Seccion
 export async function getIniciarSesion(req, res) {
   const { correo, contraseña } = req.body;
   try {
-    // Llamar al servicio de autenticación para iniciar sesión
     const usuario = await UsuarioService.iniciarSesion(correo, contraseña);
     if (usuario) {
-      // Si se encontró un usuario, devolverlo como respuesta
-      res.json(usuario);
+      res.json(usuario); // Si se encontró un usuario, devolverlo como respuesta
     } else {
-      // Si no se encontró un usuario, devolver un mensaje de error
-      res.status(401).json({ message: "Credenciales incorrectas" });
+      res.status(401).json({ message: "Credenciales incorrectas" }); // Si no se encontró un usuario, devolver un mensaje de error
     }
   } catch (error) {
-    // Si ocurre algún error durante el proceso, devolver un mensaje de error interno del servidor
     res.status(500).json({ message: "Error interno del servidor" });
   }
 }
