@@ -64,17 +64,51 @@ export async function deleteUsuario(req, res) {
   }
 }
 
-//Iniciar Seccion
-export async function getIniciarSesion(req, res) {
-  const { correo, contraseña } = req.body;
+// //Iniciar Seccion
+// export async function getIniciarSesion(req, res) {
+//   const { correo, contraseña } = req.body;
+//   try {
+//     const usuario = await UsuarioService.iniciarSesion(correo, contraseña);
+//     if (usuario) {
+//       res.json(usuario); // Si se encontró un usuario, devolverlo como respuesta
+//     } else {
+//       res.status(401).json({ message: "Credenciales incorrectas" }); // Si no se encontró un usuario, devolver un mensaje de error
+//     }
+//   } catch (error) {
+//     res.status(500).json({ message: "Error interno del servidor" });
+//   }
+// }
+
+export const postRegistroUsuario = async (req, res) => {
   try {
-    const usuario = await UsuarioService.iniciarSesion(correo, contraseña);
-    if (usuario) {
-      res.json(usuario); // Si se encontró un usuario, devolverlo como respuesta
-    } else {
-      res.status(401).json({ message: "Credenciales incorrectas" }); // Si no se encontró un usuario, devolver un mensaje de error
-    }
+    const { nombre, correo, contraseña } = req.body;
+    const usuarioRegistrado = await UsuarioService.registrarUsuario(
+      nombre,
+      correo,
+      contraseña
+    );
+    res.cookie("token", usuarioRegistrado.token, {
+      httpOnly: process.env.NODE_ENV !== "development",
+      secure: true,
+      sameSite: "none",
+    });
+    res.json(usuarioRegistrado);
   } catch (error) {
-    res.status(500).json({ message: "Error interno del servidor" });
+    res.status(500).json({ message: error.message });
   }
-}
+};
+
+export const postIniciarSesion = async (req, res) => {
+  try {
+    const { correo, contraseña } = req.body;
+    const usuarioLogueado = await UsuarioService.iniciarSesion(correo, contraseña);
+    res.cookie("token", usuarioLogueado.token, {
+      httpOnly: process.env.NODE_ENV !== "development",
+      secure: true,
+      sameSite: "none",
+    });
+    res.json(usuarioLogueado);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

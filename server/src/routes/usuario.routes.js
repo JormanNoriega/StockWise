@@ -5,7 +5,8 @@ import {
   getUsuario,
   putUsuario,
   deleteUsuario,
-  getIniciarSesion
+  postRegistroUsuario,
+  postIniciarSesion
 } from "../controllers/usuario.controllers.js";
 
 const router = Router();
@@ -16,6 +17,9 @@ router.post("/usuarios", postUsuario);
 router.put("/usuarios/:idUsuario", putUsuario);
 router.delete("/usuarios/:idUsuario", deleteUsuario); //toca eliminar antes todo lo q tenga en otras tablas :D
 router.get("/usuarios/:idUsuario", getUsuario);
-router.post("/login", getIniciarSesion);
+
+//nuevos
+router.post("/login", postIniciarSesion);
+router.post("/register", postRegistroUsuario);
 
 export default router;
