@@ -40,7 +40,7 @@ export async function getEmpleadoDeUsuario(req, res) {
 
 // Controlador para crear un nuevo empleado para un usuario
 export async function postEmpleado(req, res) {
-  const { idUsuario } = req.params;
+  const { idUsuario } = req.params.idUsuario;
   const { nombre, correo, contraseña } = req.body;
   try {
     const nuevoEmpleado = await empleadoService.crearEmpleado(

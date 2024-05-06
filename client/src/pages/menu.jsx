@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { FaBars, FaProductHunt, FaUsers, FaThLarge, FaGem, FaChartLine, FaSignOutAlt, FaEnvelope } from 'react-icons/fa';
+import Empleado from '../components/Empleado/FormEmpleado';
 import '../css/menu.css'
 // Estilo CSS para tu componente
 

@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+
+/* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins',sans-serif;
+    box-sizing: border-box;
+}
+
+/* Main container */
+.w-full.h-full {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.bg-gray-900.text-white.py-4.px-6.rounded-t-lg {
+    background-color: #1E2736;
+    color: #fff;
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+}
+
+.text-3xl.font-bold {
+    font-size: 1.875rem;
+    font-weight: bold;
+}
+
+/* Form section */
+.grid.grid-cols-1.gap-8.p-6 {
+    background-color: #fff; /* Add background color */  
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.text-2xl.font-bold.mb-4 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.space-y-4 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Form labels */
+.text-sm.font-medium.leading-none.peer-disabled:cursor-not-allowed.peer-disabled:opacity-70 {
+    font-size: 0.875rem;
+    font-weight: medium;
+    color: rgba(255, 255, 255, 0.7);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+/* Card for employee context */
+.employee-card {
+    background-color: #fff;
+    border-radius: 0.5rem; /* Redondea los bordes */
+    padding: 1.5rem;
+    margin-top: 1rem; /* Adjust margin as needed */
+}
+
+/* Table styling */
+.table-card table {
+    width: 100%; /* Ajusta el ancho de la tabla al 100% del contenedor */
+    border-collapse: collapse; /* Combina los bordes de las celdas de la tabla */
+    border-radius: 1rem; /* Redondea los bordes de la tabla */
+    overflow: hidden; /* Asegura que el redondeo de los bordes se aplique correctamente */
+}
+
+.table-card table th,
+.table-card table td {
+    padding: 0.75rem; /* Ajusta el espaciado interno de las celdas */
+    border: 1px solid #e2e8f0; /* Agrega bordes a las celdas */
+    background-color: #fff; /* Agrega un fondo a las celdas */
+}
+
+/* Estilos CSS para los inputs */
+.employee-card input[type="text"],
+.employee-card input[type="email"],
+.employee-card input[type="password"] {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    padding: 0.75rem; /* Ajusta el espaciado interno */
+    border: 1px solid #e2e8f0; /* Agrega un borde */
+    border-radius: 0.5rem; /* Redondea los bordes */
+    margin-bottom: 1rem; /* Espacio entre los inputs */
+    font-size: 0.9rem; /* Tamaño de la fuente */
+    font-weight: normal; /* Peso de la fuente */
+    font-family: 'Poppins',sans-serif;
+    color: #1E2736; /* Color del texto */
+}
+
+/* Estilos CSS para el botón de registro */
+.employee-card button[type="submit"] {
+    width: 40%; /* Ocupa todo el ancho disponible */
+    padding: 0.75rem 1rem; /* Ajusta el espaciado interno */
+    border: none; /* Elimina el borde */
+    border-radius: 0.5rem; /* Redondea los bordes */
+    background-color: #1E2736; /* Color de fondo */
+    color: white; /* Color del texto */
+    font-size: 0.9rem; /* Tamaño de la fuente */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    transition: background-color 0.3s; /* Transición suave para el cambio de color de fondo */
+    position: fixed;
+    left: 40rem;
+}
+
+.employee-card button[type="submit"]:hover {
+    background-color: #3c4350; /* Cambia el color de fondo al pasar el ratón */
+}
+
+/* CSS para los botones de editar y eliminar */
+.edit-button {
+    background-color: #2196F3;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-right: 0.5rem;
+    margin-left: 1rem;
+}
+
+.delete-button {
+    background-color: #f44336;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-right: 0.5rem;
+
+}
+
+/* Cambio de color al pasar el ratón */
+.edit-button:hover {
+    background-color: #0b7dda;
+}
+
+.delete-button:hover {
+    background-color: #d32f2f;
+}
+
+
+/* Aplica un borde transparente solo a las líneas verticales */
+.table-card table td {
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+}
+
+.table-card table th {
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+}
+
+/* Para mantener los bordes exteriores de la tabla */
+.table-card table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid#e5e7eb; /* Agregar de nuevo el borde exterior de la tabla */
+}
