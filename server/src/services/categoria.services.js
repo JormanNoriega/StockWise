@@ -1,39 +1,37 @@
 import { Categoria } from "../models/Categoria.js";
 import { CategoriaDTO } from "../dtos/categoria.dto.js";
 
-//obtener Todas las categorias
-export async function obtenerCategorias() {
+//Crear Categoria
+export async function crearCategoria(idUsuario, nombCatergoria) {
   try {
-    const categoria = await Categoria.findAll({
-      attributes: ["idCategoria", "idUsuario", "nombCatergoria"],
+    const newCategoria = await Categoria.create({
+      idUsuario,
+      nombCatergoria,
     });
-    return categoria.map(
-      (categoria) =>
-        new CategoriaDTO(
-          categoria.idCategoria,
-          categoria.idUsuario,
-          categoria.nombCatergoria
-        )
+    return new CategoriaDTO(
+      newCategoria.idCategoria,
+      newCategoria.idUsuario,
+      newCategoria.nombCatergoria
     );
   } catch (error) {
     throw new Error(error.message);
   }
 }
 
-//Obtener Todas las Categorias de un usuario
-export async function obtenerCategoriasDeUsuario(idUsuario) {
+//Obtener Todas las Categorias
+export async function obtenerCategorias(idUsuario) {
   try {
-    const categoria = await Categoria.findAll({
+    const categorias = await Categoria.findAll({
       where: {
         idUsuario: idUsuario,
       },
     });
-    return categoria.map(
-      (categoria) =>
+    return categorias.map(
+      (categorias) =>
         new CategoriaDTO(
-          categoria.idCategoria,
-          categoria.idUsuario,
-          categoria.nombCatergoria
+          categorias.idCategoria,
+          categorias.idUsuario,
+          categorias.nombCatergoria
         )
     );
   } catch (error) {
@@ -41,8 +39,8 @@ export async function obtenerCategoriasDeUsuario(idUsuario) {
   }
 }
 
-//Obtener una Categora de un usuario
-export async function obtenerCategoriaDeUsuario(idUsuario, idCategoria) {
+//Obtener una Categora
+export async function obtenerCategoria(idUsuario, idCategoria) {
   try {
     const categoria = await Categoria.findOne({
       where: {
@@ -64,24 +62,7 @@ export async function obtenerCategoriaDeUsuario(idUsuario, idCategoria) {
   }
 }
 
-//Crear Categoria a un Usuario
-export async function crearCategoria(idUsuario, nombCatergoria) {
-  try {
-    const newCategoria = await Categoria.create({
-      idUsuario,
-      nombCatergoria,
-    });
-    return new CategoriaDTO(
-      newCategoria.idCategoria,
-      newCategoria.idEmpleado,
-      newCategoria.nombre
-    );
-  } catch (error) {
-    throw new Error(error.message);
-  }
-}
-
-//Actualizar Categoria de un Usuario
+//Actualizar Categoria
 export async function actualizarCategoria(
   idCategoria,
   idUsuario,
