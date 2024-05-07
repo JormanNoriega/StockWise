@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
-import axios from "axios";
 import "../css/login.css";
 import Swal from "sweetalert2";
-import RegistroEmpleados from "../components/Empleado/FormEmpleado";
+import { useAuth } from "../context/authContext";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const [userId, setUserId] = useState("");
 
   const [formData, setFormData] = useState({
     correo: "",
@@ -23,15 +21,13 @@ const LoginPage = () => {
       [name]: value
     }));
   };
+  const { signin } = useAuth();
 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4000/login", formData);
-      console.log(response.data);
-      const { userId } = response.data; // Suponiendo que el servidor devuelve la ID del usuario
-      setUserId(userId); // Guardar la ID del usuario en el estado local
+      signin(formData);
       Swal.fire({
         icon: "success",
         title: "¡Inicio de sesión exitoso!",
@@ -110,7 +106,6 @@ const LoginPage = () => {
             </Link>
         </div>
       </div>
-      <RegistroEmpleados userId={userId} />
     </div>
   );
 };

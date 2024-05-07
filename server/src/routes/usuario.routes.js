@@ -3,6 +3,7 @@ import {
   postRegistroUsuario,
   postCerrarSesion,
   postIniciarSesion,
+  verifyToken
 } from "../controllers/usuario.controllers.js";
 
 const router = Router();
@@ -16,6 +17,7 @@ const router = Router();
 //nuevos
 router.post("/login", postIniciarSesion);
 router.post("/register", postRegistroUsuario);
+router.get("/verify", verifyToken);
 router.post("/logout", postCerrarSesion);
 
 export default router;

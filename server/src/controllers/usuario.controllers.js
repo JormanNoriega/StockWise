@@ -1,4 +1,7 @@
+import { Usuario } from "../models/Usuario.js";
 import * as UsuarioService from "../services/usuario.services.js";
+import jwt from 'jsonwebtoken';
+import { TOKEN_SECRET } from "../config.js";
 
 export const postRegistroUsuario = async (req, res) => {
   try {
@@ -36,7 +39,23 @@ export const postCerrarSesion = async (req, res) => {
   return res.sendStatus(200);
 };
 
+export const verifyToken = async (req, res) => {
+  const { token } = req.cookies;
 
+  if(!token) return res.status(401).json({message: 
+    "Unauthorized"});
+
+  jwt.verify(token, TOKEN_SECRET, async (err, user) => {
+    if(err) return res.status(401).json({message: 
+      "Unauthorized"});
+
+    const userFound = await Usuario.findByPk(user.idUsuario);
+    if(!userFound) return res.status(401).json({ message: 
+      "Unauthorized" });
+
+    return res.json(userFound);
+  })
+}
 
 // //Obtener todos los usuarios
 // export async function getUsuarios(req, res) {

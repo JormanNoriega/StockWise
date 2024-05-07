@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../css/FormEmpleado.css';
 import Swal from "sweetalert2";
-import axios from "axios";
+import { useEmpleado } from '../../context/empleadoContext';
 
 
 const RegistroEmpleados = ({ idUsuario }) => {
@@ -11,6 +11,7 @@ const RegistroEmpleados = ({ idUsuario }) => {
         contraseña: ""
       });
       const [error, setError] = useState('');
+      const { createEmpleado } = useEmpleado();
     
       const handleChange = (e) => {
         const { name, value } = e.target;
@@ -22,9 +23,8 @@ const RegistroEmpleados = ({ idUsuario }) => {
     
       const handleSubmit = async (e) => {
         e.preventDefault();
+        createEmpleado(formData);
         try {
-          const response = await axios.post(`http://localhost:4000/usuarios/:${idUsuario}/empleados`, formData);
-          console.log(response.data);
           Swal.fire({
             icon: 'success',
             title: '¡Registro exitoso!',
