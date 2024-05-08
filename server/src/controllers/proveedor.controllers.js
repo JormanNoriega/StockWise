@@ -21,9 +21,7 @@ export async function postProveedor(req, res) {
 export async function getProveedores(req, res) {
   const idUsuario = req.usuario.idUsuario;
   try {
-    const proveedores = await proveedorService.obtenerProveedoresDeUsuario(
-      idUsuario
-    );
+    const proveedores = await proveedorService.obtenerProveedores(idUsuario);
     res.json(proveedores);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -35,7 +33,7 @@ export async function getProveedor(req, res) {
   const idUsuario = req.usuario.idUsuario;
   const { idProveedor } = req.params;
   try {
-    const proveedor = await proveedorService.obtenerProveedorDeUsuario(
+    const proveedor = await proveedorService.obtenerProveedor(
       idUsuario,
       idProveedor
     );
