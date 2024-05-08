@@ -107,8 +107,8 @@
     font-size: 0.9rem; /* Tamaño de la fuente */
     cursor: pointer; /* Cambia el cursor al pasar por encima */
     transition: background-color 0.3s; /* Transición suave para el cambio de color de fondo */
-    position: fixed;
-    left: 40rem;
+    position: relative;
+    left: 30%;
 }
 
 .employee-card button[type="submit"]:hover {
@@ -166,4 +166,8 @@
     border-collapse: separate;
     border-spacing: 0;
     border: 1px solid#e5e7eb; /* Agregar de nuevo el borde exterior de la tabla */
+}
+
+.table-card table tbody td {
+    text-align: center; /* Centra el contenido horizontalmente */
 }

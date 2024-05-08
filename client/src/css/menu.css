@@ -24,7 +24,7 @@
   font-size: 1.4rem;
   text-decoration: none;
   margin-left: 20px; /* Push the container to the left */
-  margin-top: 5px; /* Push the container to the left */
+  margin-top: 3px; /* Push the container to the left */
   display: grid; /* Enable Grid layout */
   grid-template-columns: 100px auto; /* Two columns: 100px for logo, auto for name */
   grid-gap: 10px;
@@ -32,7 +32,7 @@
 
 .nombrelogo {
   margin-left: -40px; /* Push the container to the left */
-  margin-top: 15px; /* Push the container to the left */
+  margin-top: 12px; /* Push the container to the left */
 
 }
 

@@ -1,28 +1,24 @@
 import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Route, Link, Form } from 'react-router-dom';
 import { FaBars, FaProductHunt, FaUsers, FaThLarge, FaGem, FaChartLine, FaSignOutAlt, FaEnvelope } from 'react-icons/fa';
-import Empleado from '../components/Empleado/FormEmpleado';
 import '../css/menu.css'
+import FormEmpleado from '../components/Empleado/FormEmpleado'
+import { useAuth } from '../context/authContext';
 // Estilo CSS para tu componente
 
 const Dashboard = () => {
-  // Aquí puedes manejar el estado necesario para tu componente
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activeContent, setActiveContent] = useState('dashboard'); // Initial content
+  const { isAuthenticated, logout } = useAuth()
+  const [activeContent, setActiveContent] = useState('');
 
-  // Function to toggle sidebar
+
+
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
-  // Function to set active content
-  const handleContentChange = (content) => {
-    setActiveContent(content);
-  };
-
   return (
     <div className="dashboard">
-      {/* Header */}
       <header className="header">
         <div className="d-flex align-items-center justify-content-between">
           <a href="/menu" className="logo d-flex align-items-center">
@@ -30,7 +26,6 @@ const Dashboard = () => {
             <span className="nombrelogo">StockWise</span>
           </a>
           <div className="toggle-sidebar-container">
-            {/* Wrap the FaBars icon inside the button element */}
             <button className="toggle-sidebar-btn" onClick={toggleSidebar}>
               <FaBars style={{ marginLeft: '5.5px', marginRight: '0px', marginTop: '5px', fontSize: '25px' }} />
             </button>
@@ -38,7 +33,6 @@ const Dashboard = () => {
         </div>
       </header>
 
-      {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <ul className="sidebar-nav" id="sidebar-nav">
           <li className="nav-item">
@@ -62,13 +56,15 @@ const Dashboard = () => {
             </a>
           </li>
 
-          <li className="nav-item">
-            <a className={activeContent === 'empleados' ? 'nav-link active' : 'nav-link collapsed'} href="#" onClick={() => handleContentChange('empleados')}>
-              <FaUsers style={{ marginLeft: '0px', marginRight: '5px', fontSize: '20px' }} />
-              <span>Empleados</span>
-            </a>
-          </li>
-
+        <li className="nav-item">
+          <a
+            className={activeContent === 'empleado' ? 'nav-link active' : 'nav-link collapsed'}
+            onClick={() => setActiveContent('empleado')} // Al hacer clic, se establece activeContent a 'empleados'
+          >
+            <FaUsers style={{ marginLeft: '0px', marginRight: '5px', fontSize: '20px' }} />
+            <span>Empleados</span>
+          </a>
+        </li>
           <li className="nav-item">
             <a className="nav-link collapsed" href="dashboard.html">
               <FaThLarge style={{ marginLeft: '0px', marginRight: '5px', fontSize: '20px' }} />
@@ -118,15 +114,20 @@ const Dashboard = () => {
           </li>
 
           <li className="nav-item">
-            <a className="nav-link collapsed" href="dashboard.html">
-              <FaSignOutAlt style={{ marginLeft: '0px', marginRight: '5px', fontSize: '20px' }} />
-              <span>Salir</span>
-            </a>
+            {isAuthenticated ? (
+              <Link to='/login' className="nav-link collapsed" onClick={() => {
+                logout();
+              }}>
+                <FaSignOutAlt style={{ marginLeft: '0px', marginRight: '5px', fontSize: '20px' }} />
+                <span>Salir</span>
+              </Link>
+            ) : (
+              <></>
+            )}
           </li>
         </ul>
       </aside>
 
-      {/* Main Content */}
       <main className="main">
         <div className="pagetitle">
         </div>
@@ -137,6 +138,7 @@ const Dashboard = () => {
             <li className="breadcrumb-item active">Dashboard</li>
           </ol>
         </nav>
+        {activeContent === 'empleado' && <FormEmpleado />}
       </main>
 
     </div>
