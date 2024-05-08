@@ -11,7 +11,7 @@ export const postRegistroUsuario = async (req, res) => {
       correo,
       contraseña
     );
-    res.cookie("token", usuarioRegistrado.token);
+    // res.cookie("token", usuarioRegistrado.token); para acceder de una depues de  registrar
     res.json(usuarioRegistrado);
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -29,17 +29,17 @@ export async function registrarUsuario(nombre, correo, contraseña) {
     // Guardar el usuario en la base de datos
     const UsuarioGuardado = await newUsuario.save();
 
-    // Crear token de acceso
-    const token = await createAccessToken({
-      idUsuario: UsuarioGuardado.idUsuario,
-    });
+    // // Crear token de acceso
+    // const token = await createAccessToken({
+    //   idUsuario: UsuarioGuardado.idUsuario,
+    // });
 
     // Crear y devolver un DTO de usuario
     return new UsuarioDTO(
       UsuarioGuardado.idUsuario,
       UsuarioGuardado.nombre,
       UsuarioGuardado.correo,
-      token
+      // token
     );
   } catch (error) {
     throw new Error(error.message);

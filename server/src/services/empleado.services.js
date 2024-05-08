@@ -1,10 +1,10 @@
 import { Empleado } from "../models/Empleado.js";
 import { EmpleadoDTO } from "../dtos/empleado.dto.js";
 
-//Crear un Empleado a Un Usuario
+//Crear un Empleado
 export async function crearEmpleado(nombre, correo, contraseña, idUsuario) {
   try {
-    const newEmpleado = await Empleado.save({
+    const newEmpleado = await Empleado.create({
       nombre,
       correo,
       contraseña,
@@ -20,7 +20,7 @@ export async function crearEmpleado(nombre, correo, contraseña, idUsuario) {
   } catch (error) {
     throw new Error(error.message);
   }
-}
+}            
 
 //Obtener Todos los Empleados
 export async function obtenerEmpleados(idUsuario) {

@@ -1,81 +1,6 @@
 import { Proveedor } from "../models/Proveedor.js";
 import { ProveedorDTO } from "../dtos/proveedor.dto.js";
 
-//obtener Todos los proveedores
-export async function obtenerProveedores() {
-  try {
-    const proveedores = await Proveedor.findAll({
-      attributes: [
-        "idProveedor",
-        "idUsuario",
-        "nombProveedor",
-        "telefono",
-        "correo",
-      ],
-    });
-    return proveedores.map(
-      (proveedores) =>
-        new ProveedorDTO(
-          proveedores.idProveedor,
-          proveedores.idUsuario,
-          proveedores.nombProveedor,
-          proveedores.telefono,
-          proveedores.correo
-        )
-    );
-  } catch (error) {
-    throw new Error(error.message);
-  }
-}
-
-//Obtener Todas los proveedores de un usuario
-export async function obtenerProveedoresDeUsuario(idUsuario) {
-  try {
-    const proveedores = await Proveedor.findAll({
-      where: {
-        idUsuario: idUsuario,
-      },
-    });
-    return proveedores.map(
-      (proveedores) =>
-        new ProveedorDTO(
-          proveedores.idProveedor,
-          proveedores.idUsuario,
-          proveedores.nombProveedor,
-          proveedores.telefono,
-          proveedores.correo
-        )
-    );
-  } catch (error) {
-    throw new Error(error.message);
-  }
-}
-
-//Obtener una Categora de un usuario
-export async function obtenerProveedorDeUsuario(idUsuario, idProveedor) {
-  try {
-    const proveedor = await Proveedor.findOne({
-      where: {
-        idUsuario: idUsuario,
-        idProveedor: idProveedor,
-      },
-    });
-    if (proveedor) {
-      return new ProveedorDTO(
-        proveedor.idProveedor,
-        proveedor.idUsuario,
-        proveedor.nombProveedor,
-        proveedor.telefono,
-        proveedor.correo
-      );
-    } else {
-      return null;
-    }
-  } catch (error) {
-    throw new Error(error.message);
-  }
-}
-
 //Crear Proveedor a un Usuario
 export async function crearProveedor(
   idUsuario,
@@ -97,6 +22,54 @@ export async function crearProveedor(
       newProveedor.telefono,
       newProveedor.correo
     );
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
+//Obtener Todas los proveedores
+export async function obtenerProveedores(idUsuario) {
+  try {
+    const proveedores = await Proveedor.findAll({
+      where: {
+        idUsuario: idUsuario,
+      },
+    });
+    return proveedores.map(
+      (proveedores) =>
+        new ProveedorDTO(
+          proveedores.idProveedor,
+          proveedores.idUsuario,
+          proveedores.nombProveedor,
+          proveedores.telefono,
+          proveedores.correo
+        )
+    );
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
+//Obtener un proveedor
+export async function obtenerProveedor(idUsuario, idProveedor) {
+  try {
+    const proveedor = await Proveedor.findOne({
+      where: {
+        idUsuario: idUsuario,
+        idProveedor: idProveedor,
+      },
+    });
+    if (proveedor) {
+      return new ProveedorDTO(
+        proveedor.idProveedor,
+        proveedor.idUsuario,
+        proveedor.nombProveedor,
+        proveedor.telefono,
+        proveedor.correo
+      );
+    } else {
+      return null;
+    }
   } catch (error) {
     throw new Error(error.message);
   }

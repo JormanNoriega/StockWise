@@ -1,17 +1,11 @@
 import * as empleadoService from "../services/empleado.services.js";
-import { Empleado } from "../models/Empleado.js";
 
 //Crear un Empleado
 export const postEmpleado = async (req, res) => {
   try {
+    const idUsuario = req.usuario.idUsuario;
     const { nombre, correo, contraseña } = req.body;
-    const newEmpleado = new Empleado({
-      nombre,
-      correo,
-      contraseña,
-      idUsuario: req.usuario.idUsuario,
-    });
-    await newEmpleado.save();
+    const newEmpleado = await empleadoService.crearEmpleado(nombre,correo,contraseña,idUsuario)
     res.json(newEmpleado);
   } catch (error) {
     return res.status(500).json({ message: error.message });

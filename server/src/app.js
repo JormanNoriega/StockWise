@@ -5,6 +5,7 @@ import cors from "cors";
 
 import usuariosRoutes from "./routes/usuario.routes.js";
 import empleadosRoutes from "./routes/empleado.routes.js";
+import categoriasRoutes from "./routes/categoria.routes.js";
 
 const app = express();
 
@@ -19,5 +20,6 @@ app.use(cookieParser());
 
 app.use("/api", usuariosRoutes);
 app.use("/api", empleadosRoutes);
+app.use("/api", categoriasRoutes);
 
 export default app;

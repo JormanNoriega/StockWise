@@ -1,46 +1,8 @@
 import * as categoriaService from "../services/categoria.services.js";
 
-//Obtener todas las categorias
-export async function getCategorias(req, res) {
-  try {
-    const categorias = await categoriaService.obtenerCategorias();
-    res.json(categorias);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-}
-
-//Obtener todas las categorias de un usuario
-export async function getCategoriasDeUsuario(req, res) {
-  const { idUsuario } = req.params;
-  try {
-    const categorias = await categoriaService.obtenerCategoriasDeUsuario(
-      idUsuario
-    );
-    res.json(categorias);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-}
-
-//Obtener una categoria de un usuario
-export async function getCategoriaDeUsuario(req, res) {
-  const { idUsuario } = req.params;
-  const { idCategoria } = req.params;
-  try {
-    const categoria = await categoriaService.obtenerCategoriaDeUsuario(
-      idUsuario,
-      idCategoria
-    );
-    res.json(categoria);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-}
-
-// Crear una categoria para un usuario
+// Crear categoria
 export async function postCategoria(req, res) {
-  const { idUsuario } = req.params;
+  const idUsuario = req.usuario.idUsuario;
   const { nombCatergoria } = req.body;
   try {
     const newCategoria = await categoriaService.crearCategoria(
@@ -53,9 +15,36 @@ export async function postCategoria(req, res) {
   }
 }
 
+//Obtener todas las Categorias
+export async function getCategorias(req, res) {
+  const idUsuario = req.usuario.idUsuario;
+  try {
+    const categorias = await categoriaService.obtenerCategorias(idUsuario);
+    res.json(categorias);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+//Obtener una categoria de un usuario
+export async function getCategoria(req, res) {
+  const idUsuario = req.usuario.idUsuario;
+  const { idCategoria } = req.params;
+  try {
+    const categoria = await categoriaService.obtenerCategoria(
+      idUsuario,
+      idCategoria
+    );
+    res.json(categoria);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
 // Actualizar una Categoria de un usuario
 export async function putCategoria(req, res) {
-  const { idUsuario, idCategoria } = req.params;
+  const idUsuario = req.usuario.idUsuario;
+  const { idCategoria } = req.params;
   const { nombCatergoria } = req.body;
   try {
     const categoriaActualizada = await categoriaService.actualizarCategoria(
@@ -72,7 +61,7 @@ export async function putCategoria(req, res) {
 // Eliminar una Categoria de un usuario
 export async function deleteCategoria(req, res) {
   const { idCategoria } = req.params;
-  const { idUsuario } = req.params;
+  const idUsuario = req.usuario.idUsuario;
   try {
     await categoriaService.eliminarCategoria(idCategoria, idUsuario);
     res.sendStatus(204);
