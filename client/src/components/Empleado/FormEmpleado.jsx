@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import { useEmpleado } from '../../context/empleadoContext';
 
 
-const RegistroEmpleados = ({ idUsuario }) => {
+const RegistroEmpleados = () => {
     const [formData, setFormData] = useState({
         nombre: "",
         correo: "",
@@ -36,6 +36,7 @@ const RegistroEmpleados = ({ idUsuario }) => {
             correo: "",
             contraseña: ""
           });
+          await getEmpleado();
         } catch (error) {
           setError(error.response.data.message);
           Swal.fire({
@@ -112,16 +113,17 @@ const RegistroEmpleados = ({ idUsuario }) => {
                                             <th>Nombre</th>
                                             <th>Correo Electrónico</th>
                                             <th>Contraseña</th>
+                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {
                                             empleados.map((val, key) => {
                                                 return <tr key={val.idUsuario}>  
-                                                <th>{val.idEmpleado}</th>
                                                 <td>{val.nombre}</td>
                                                 <td>{val.correo}</td>
-                                                <td>{val.contrasena}
+                                                <td>{val.contraseña}</td>
+                                                <td>
                                                     <button className="edit-button">Editar</button>
                                                     <button className="delete-button">Eliminar</button>
                                                 </td>

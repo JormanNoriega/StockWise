@@ -27,7 +27,7 @@ const LoginPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      signin(formData);
+      await signin(formData);
       Swal.fire({
         icon: "success",
         title: "¡Inicio de sesión exitoso!",
@@ -44,6 +44,7 @@ const LoginPage = () => {
       });
     }
   };
+  
 
   return (
     <div className="Bg-Img">
