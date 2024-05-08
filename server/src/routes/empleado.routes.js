@@ -1,14 +1,20 @@
 import { Router } from "express";
-import { putEmpleado, deleteEmpleado, getEmpleados, getEmpleadosDeUsuario,postEmpleado, getEmpleadoDeUsuario } from "../controllers/empleado.controllers.js";
+import {
+  putEmpleado,
+  deleteEmpleado,
+  getEmpleados,
+  getEmpleado,
+  postEmpleado,
+} from "../controllers/empleado.controllers.js";
+import { usuarioRequerido } from "../middlewares/usuario.middleware.js";
 
 const router = Router();
 
-router.get("/empleados",getEmpleados); //todos los empleados
-router.get("/usuarios/:idUsuario/empleados/",getEmpleadosDeUsuario); //todos los empleados de un usuario
-router.get("/usuarios/:idUsuario/empleados/:idEmpleado",getEmpleadoDeUsuario); //un empleado de un usuario
-router.post("/usuarios/:idUsuario/empleados/", postEmpleado);
-router.put("/usuarios/:idUsuario/empleados/:idEmpleado", putEmpleado);
-router.delete("/usuarios/:idUsuario/empleados/:idEmpleado", deleteEmpleado);
-
+//nuevos
+router.post("/empleados", usuarioRequerido, postEmpleado); //crearEmpleado
+router.get("/empleados", usuarioRequerido, getEmpleados); //obtener todos los empleados
+router.get("/empleados/:idEmpleado", usuarioRequerido, getEmpleado); // obtener un empleado
+router.put("/empleados/:idEmpleado", usuarioRequerido, putEmpleado); // editar un empleado
+router.delete("/empleados/:idEmpleado", usuarioRequerido, deleteEmpleado); //eliminar un empleado
 
 export default router;

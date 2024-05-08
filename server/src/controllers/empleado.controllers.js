@@ -1,34 +1,40 @@
 import * as empleadoService from "../services/empleado.services.js";
+import { Empleado } from "../models/Empleado.js";
 
-// Controlador para obtener todos los empleados
+//Crear un Empleado
+export const postEmpleado = async (req, res) => {
+  try {
+    const { nombre, correo, contraseña } = req.body;
+    const newEmpleado = new Empleado({
+      nombre,
+      correo,
+      contraseña,
+      idUsuario: req.usuario.idUsuario,
+    });
+    await newEmpleado.save();
+    res.json(newEmpleado);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+//Obtener todos los empleados
 export async function getEmpleados(req, res) {
+  const idUsuario = req.usuario.idUsuario;
   try {
-    const empleados = await empleadoService.obtenerEmpleados();
+    const empleados = await empleadoService.obtenerEmpleados(idUsuario);
     res.json(empleados);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 }
 
-// Controlador para obtener todos los empleados de un usuario específico
-export async function getEmpleadosDeUsuario(req, res) {
-  const { idUsuario } = req.params;
-  try {
-    const empleados = await empleadoService.obtenerEmpleadosDeUsuario(
-      idUsuario
-    );
-    res.json(empleados);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-}
-
-// Controlador para obtener un empleado de un usuario
-export async function getEmpleadoDeUsuario(req, res) {
-  const { idUsuario } = req.params;
+//Obtener un Empleado
+export async function getEmpleado(req, res) {
+  const idUsuario = req.usuario.idUsuario;
   const { idEmpleado } = req.params;
   try {
-    const empleado = await empleadoService.obtenerEmpleadoDeUsuario(
+    const empleado = await empleadoService.obtenerEmpleado(
       idUsuario,
       idEmpleado
     );
@@ -38,26 +44,9 @@ export async function getEmpleadoDeUsuario(req, res) {
   }
 }
 
-// Controlador para crear un nuevo empleado para un usuario
-export async function postEmpleado(req, res) {
-  const { idUsuario } = req.params.idUsuario;
-  const { nombre, correo, contraseña } = req.body;
-  try {
-    const nuevoEmpleado = await empleadoService.crearEmpleado(
-      nombre,
-      correo,
-      contraseña,
-      idUsuario
-    );
-    res.json(nuevoEmpleado);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-}
-
-// Controlador para actualizar un empleado de un usuario
+// Actualizar un empleado
 export async function putEmpleado(req, res) {
-  const { idUsuario } = req.params;
+  const idUsuario = req.usuario.idUsuario;
   const { idEmpleado } = req.params;
   const { nombre, correo, contraseña } = req.body;
   try {
@@ -74,10 +63,10 @@ export async function putEmpleado(req, res) {
   }
 }
 
-// Controlador para eliminar un empleado de un usuario
+// Eliminar un empleado
 export async function deleteEmpleado(req, res) {
   const { idEmpleado } = req.params;
-  const { idUsuario } = req.params;
+  const idUsuario = req.usuario.idUsuario;
   try {
     await empleadoService.eliminarEmpleado(idEmpleado, idUsuario);
     res.sendStatus(204);

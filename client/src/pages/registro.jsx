@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 import "../css/registro.css";
 import Swal from "sweetalert2";
 
@@ -12,6 +12,13 @@ const RegisterPage = () => {
     contraseña: ""
   });
   const [error, setError] = useState("");
+  const { signup, isAuthenticated } = useAuth()
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    if(isAuthenticated) navigate("/login")
+  }, [isAuthenticated])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,8 +31,7 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4000/usuarios", formData);
-      console.log(response.data);
+      signup(formData);
       Swal.fire({
         icon: 'success',
         title: '¡Registro exitoso!',

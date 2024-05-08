@@ -1,29 +1,29 @@
 import { Empleado } from "../models/Empleado.js";
 import { EmpleadoDTO } from "../dtos/empleado.dto.js";
 
-//Obtener todos los empleados
-export async function obtenerEmpleados() {
+//Crear un Empleado a Un Usuario
+export async function crearEmpleado(nombre, correo, contraseña, idUsuario) {
   try {
-    const empleados = await Empleado.findAll({
-      attributes: ["idEmpleado", "nombre", "correo", "contraseña", "idUsuario"],
+    const newEmpleado = await Empleado.save({
+      nombre,
+      correo,
+      contraseña,
+      idUsuario,
     });
-    return empleados.map(
-      (empleado) =>
-        new EmpleadoDTO(
-          empleado.idEmpleado,
-          empleado.nombre,
-          empleado.correo,
-          empleado.contraseña,
-          empleado.idUsuario
-        )
+    return new EmpleadoDTO(
+      newEmpleado.idEmpleado,
+      newEmpleado.nombre,
+      newEmpleado.correo,
+      newEmpleado.contraseña,
+      newEmpleado.idUsuario
     );
   } catch (error) {
     throw new Error(error.message);
   }
 }
 
-//Obtener Todos los Empleados de un Usuario
-export async function obtenerEmpleadosDeUsuario(idUsuario) {
+//Obtener Todos los Empleados
+export async function obtenerEmpleados(idUsuario) {
   try {
     const empleados = await Empleado.findAll({
       where: {
@@ -45,13 +45,13 @@ export async function obtenerEmpleadosDeUsuario(idUsuario) {
   }
 }
 
-//Obtener un Empleado de un Usuario
-export async function obtenerEmpleadoDeUsuario(idUsuario, idEmpleado) {
+//Obtener un Empleado
+export async function obtenerEmpleado(idUsuario, idEmpleado) {
   try {
     const empleado = await Empleado.findOne({
       where: {
         idUsuario: idUsuario,
-        idEmpleado: idEmpleado
+        idEmpleado: idEmpleado,
       },
     });
     if (empleado) {
@@ -67,27 +67,6 @@ export async function obtenerEmpleadoDeUsuario(idUsuario, idEmpleado) {
       // Si no se encontró ningún empleado, devolver null
       return null;
     }
-  } catch (error) {
-    throw new Error(error.message);
-  }
-}
-
-//Crear un Empleado a Un Usuario
-export async function crearEmpleado(nombre, correo, contraseña, idUsuario) {
-  try {
-    const newEmpleado = await Empleado.create({
-      nombre,
-      correo,
-      contraseña,
-      idUsuario,
-    });
-    return new EmpleadoDTO(
-      newEmpleado.idEmpleado,
-      newEmpleado.nombre,
-      newEmpleado.correo,
-      newEmpleado.contraseña,
-      newEmpleado.idUsuario
-    );
   } catch (error) {
     throw new Error(error.message);
   }
