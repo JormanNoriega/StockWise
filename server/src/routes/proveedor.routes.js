@@ -1,14 +1,20 @@
 import { Router } from "express";
-import { deleteProveedor, getProveedorDeUsuario, getProveedores, getProveedoresDeUsuario, postProveedor, putProveedor } from '../controllers/proveedor.controllers.js'
+import {
+  getProveedores,
+  postProveedor,
+  getProveedor,
+  putProveedor,
+  deleteProveedor,
+} from "../controllers/proveedor.controllers.js";
+import { usuarioRequerido } from "../middlewares/usuario.middleware.js";
 
 const router = Router();
 
-router.get("/proveedores",getProveedores); //todos los empleados
-router.get("/usuarios/:idUsuario/proveedores/",getProveedoresDeUsuario); //todos los empleados de un usuario
-router.get("/usuarios/:idUsuario/proveedores/:idProveedor",getProveedorDeUsuario); //un empleado de un usuario
-router.post("/usuarios/:idUsuario/proveedores/", postProveedor);
-router.put("/usuarios/:idUsuario/proveedores/:idProveedor", putProveedor);
-router.delete("/usuarios/:idUsuario/proveedores/:idProveedor", deleteProveedor);
-
+//nuevos
+router.post("/proveedores", usuarioRequerido, postProveedor); //crear Producto
+router.get("/proveedores", usuarioRequerido, getProveedores); //obtener todos los Producto
+router.get("/proveedores/:idProveedor", usuarioRequerido, getProveedor); // obtener un Producto
+router.put("/proveedores/:idProveedor", usuarioRequerido, putProveedor); // editar un Producto
+router.delete("/proveedores/:idProveedor", usuarioRequerido, deleteProveedor); //eliminar un Producto
 
 export default router;
