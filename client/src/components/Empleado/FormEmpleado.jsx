@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../css/FormEmpleado.css';
 import Swal from "sweetalert2";
 import { useEmpleado } from '../../context/empleadoContext';
@@ -12,6 +12,7 @@ const RegistroEmpleados = ({ idUsuario }) => {
       });
       const [error, setError] = useState('');
       const { createEmpleado } = useEmpleado();
+      const { getEmpleado, empleados } = useEmpleado();
     
       const handleChange = (e) => {
         const { name, value } = e.target;
@@ -45,6 +46,10 @@ const RegistroEmpleados = ({ idUsuario }) => {
           });
         }
       };
+
+      useEffect(() => {
+        getEmpleado();
+      }, [])
 
     return (
         <div className="w-full h-full">
@@ -110,32 +115,19 @@ const RegistroEmpleados = ({ idUsuario }) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>John Doe</td>
-                                            <td>john.doe@example.com</td>
-                                            <td>john.doe@example.com
-                                                <button className="edit-button">Editar</button>
-                                                <button className="delete-button">Eliminar</button>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>Jane Smith</td>
-                                            <td>jane.smith@example.com</td>
-                                            <td>jane.smith@example.com
-                                                <button className="edit-button">Editar</button>
-                                                <button className="delete-button">Eliminar</button>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>Bob Johnson</td>
-                                            <td>bob.johnson@example.com</td>
-                                            <td>bob.johnson@example.com
-                                                <button className="edit-button">Editar</button>
-                                                <button className="delete-button">Eliminar</button>
-                                            </td>
-                                        </tr>
+                                        {
+                                            empleados.map((val, key) => {
+                                                return <tr key={val.idUsuario}>  
+                                                <th>{val.idEmpleado}</th>
+                                                <td>{val.nombre}</td>
+                                                <td>{val.correo}</td>
+                                                <td>{val.contrasena}
+                                                    <button className="edit-button">Editar</button>
+                                                    <button className="delete-button">Eliminar</button>
+                                                </td>
+                                            </tr>
+                                            })
+                                        }
                                     </tbody>
                                 </table>
                             </div>

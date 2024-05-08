@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { createEmpleadoRequest } from '../api/Empleado/empleadoAuth';
+import { createEmpleadoRequest, getEmpleadosRequest } from '../api/Empleado/empleadoAuth';
 
 
 const EmpleadoContext  = createContext();
@@ -15,15 +15,26 @@ export const useEmpleado = () => {
 export function EmpleadoProvider({ children }) {
     const [empleados, setEmpleado] = useState([]);
 
+    const getEmpleado = async () => {
+        try {
+            const res = await getEmpleadosRequest();
+            setEmpleado(res.data);
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
     const createEmpleado = async (empleado) => {
         const res = await createEmpleadoRequest(empleado);
-        console.log(empleado);
+        console.log(res);
     }
 
     return(
         <EmpleadoContext.Provider value={{
             empleados,
-            createEmpleado
+            createEmpleado,
+            getEmpleado
         }}>
             {children}
         </EmpleadoContext.Provider>
