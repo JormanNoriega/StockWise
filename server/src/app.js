@@ -1,7 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
-//import cors from "cors";
+import cors from "cors";
 
 import usuariosRoutes from "./routes/usuario.routes.js";
 import empleadosRoutes from "./routes/empleado.routes.js";
@@ -11,11 +11,11 @@ import productosRoutes from "./routes/producto.routes.js";
 
 const app = express();
 
-// // Middlewares
-// app.use(cors({
-//     origin: 'http://localhost:5173',
-//     credentials: true
-// }));
+// Middlewares
+ app.use(cors({
+     origin: 'http://localhost:5173',
+     credentials: true
+}));
 
 app.use(morgan("dev"));
 app.use(express.json());
