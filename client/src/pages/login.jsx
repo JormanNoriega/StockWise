@@ -23,7 +23,6 @@ const LoginPage = () => {
   };
   const { signin } = useAuth();
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
