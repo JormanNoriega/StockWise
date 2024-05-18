@@ -8,6 +8,7 @@ import Registro from "../pages/registro";
 import Menu from "../pages/menu";
 import { EmpleadoProvider } from "../context/empleadoContext";
 import { CategoriaProvider } from "../context/categoriaContext";
+import { ProveedorProvider } from "../context/proveedorContext";
 
 const AppRoutes = () => {
   return (
@@ -15,17 +16,19 @@ const AppRoutes = () => {
       <AuthProvider>
         <EmpleadoProvider>
           <CategoriaProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Inicio />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/registro" element={<Registro />} />
+            <ProveedorProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<Inicio />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/registro" element={<Registro />} />
 
-                <Route element={<ProtectedRoutes />}>
-                  <Route path="/menu" element={<Menu />} />
-                </Route>
-              </Routes>
-            </BrowserRouter>
+                  <Route element={<ProtectedRoutes />}>
+                    <Route path="/menu" element={<Menu />} />
+                  </Route>
+                </Routes>
+              </BrowserRouter>
+            </ProveedorProvider>
           </CategoriaProvider>
         </EmpleadoProvider>
       </AuthProvider>

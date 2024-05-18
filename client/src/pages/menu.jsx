@@ -54,12 +54,11 @@ const Dashboard = () => {
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <ul className="sidebar-nav" id="sidebar-nav">
           <li className="nav-item">
-            <a
-              className={
-                activeContent === "producto"
-                  ? "nav-link active"
-                  : "nav-link collapsed"
-              }
+            <Link className={
+              activeContent === "producto"
+                ? "nav-link active"
+                : "nav-link collapsed"
+            }
               onClick={() => setActiveContent("producto")}
             >
               <FaProductHunt
@@ -70,12 +69,11 @@ const Dashboard = () => {
                 }}
               />
               <span>Productos</span>
-            </a>
+            </Link>
           </li>
 
           <li className="nav-item">
-            <a
-              className={
+            <Link className={
                 activeContent === "empleado"
                   ? "nav-link active"
                   : "nav-link collapsed"
@@ -90,16 +88,15 @@ const Dashboard = () => {
                 }}
               />
               <span>Empleados</span>
-            </a>
+            </Link>
           </li>
 
           <li className="nav-item">
-            <a
-              className={
-                activeContent === "categoria"
-                  ? "nav-link active"
-                  : "nav-link collapsed"
-              }
+            <Link className={
+              activeContent === "categoria"
+                ? "nav-link active"
+                : "nav-link collapsed"
+            }
               onClick={() => setActiveContent("categoria")}
             >
               <FaThLarge
@@ -110,16 +107,15 @@ const Dashboard = () => {
                 }}
               />
               <span>Categorias</span>
-            </a>
+            </Link>
           </li>
 
           <li className="nav-item">
-            <a
-              className={
-                activeContent === "proveedor"
-                  ? "nav-link active"
-                  : "nav-link collapsed"
-              }
+            <Link className={
+              activeContent === "proveedor"
+                ? "nav-link active"
+                : "nav-link collapsed"
+            }
               onClick={() => setActiveContent("proveedor")}
             >
               <FaGem
@@ -130,16 +126,15 @@ const Dashboard = () => {
                 }}
               />
               <span>Proveedores</span>
-            </a>
+            </Link>
           </li>
 
           <li className="nav-item">
-            <a
-              className={
-                activeContent === "venta"
-                  ? "nav-link active"
-                  : "nav-link collapsed"
-              }
+            <Link className={
+              activeContent === "venta"
+                ? "nav-link active"
+                : "nav-link collapsed"
+            }
               onClick={() => setActiveContent("venta")}
             >
               <FaChartLine
@@ -150,7 +145,7 @@ const Dashboard = () => {
                 }}
               />
               <span>Ventas</span>
-            </a>
+            </Link>
           </li>
 
           <li className="nav-item-secundary">
@@ -160,12 +155,11 @@ const Dashboard = () => {
           </li>
 
           <li className="nav-item">
-            <a
-              className={
-                activeContent === "perfil"
-                  ? "nav-link active"
-                  : "nav-link collapsed"
-              }
+            <Link className={
+              activeContent === "perfil"
+                ? "nav-link active"
+                : "nav-link collapsed"
+            }
               onClick={() => setActiveContent("perfil")}
             >
               <FaUsers
@@ -176,12 +170,11 @@ const Dashboard = () => {
                 }}
               />
               <span>Perfil</span>
-            </a>
+            </Link>
           </li>
 
           <li className="nav-item">
-            <a
-              className={
+            <Link className={
                 activeContent === "contacto"
                   ? "nav-link active"
                   : "nav-link collapsed"
@@ -196,7 +189,8 @@ const Dashboard = () => {
                 }}
               />
               <span>Contactanos</span>
-            </a>
+
+            </Link>
           </li>
 
           <li className="nav-item">
