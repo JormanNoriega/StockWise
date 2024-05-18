@@ -182,9 +182,10 @@ const RegistroEmpleados = () => {
                     </form>
                 </div>
                 <div>
-                    <div className="table-card">
-                        <h2 className="text-2xl font-bold mb-4">Empleados Registrados</h2>
-                        <div>
+                <div className="table-container">
+                <h2 className="text-2xl font-bold mb-4">Empleados Registrados</h2>
+                <div className="table-card">
+                        <div className="table-scroll">
                             <table>
                                 <thead>
                                     <tr>
@@ -212,6 +213,8 @@ const RegistroEmpleados = () => {
                             </table>
                         </div>
                     </div>
+                </div>
+
                 </div>
             </div>
         </div>

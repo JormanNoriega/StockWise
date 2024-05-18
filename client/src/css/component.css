@@ -7,6 +7,10 @@
     box-sizing: border-box;
 }
 
+body {
+    overflow: hidden;
+}
+
 .w-full.h-full {
     min-height: 100vh;
     display: flex;
@@ -58,6 +62,19 @@
     border-radius: 0.5rem;
     padding: 1.5rem;
     margin-top: 1rem;
+}
+
+.table-container {
+    overflow: hidden;
+}
+
+.table-card {
+    overflow: hidden;
+}
+
+.table-scroll {
+    overflow-y: auto;
+    max-height: 250px;
 }
 
 .table-card table {
