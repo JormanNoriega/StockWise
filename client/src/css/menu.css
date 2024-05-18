@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Mont:wght@700&display=swap');
 
-
 .dashboard {
   display: flex;
   min-height: 100vh;
@@ -14,7 +13,7 @@
   position: fixed;
   width: 100%;
   height: 60px;
-  z-index: 10; /* Make sure the header is above other elements */
+  z-index: 10;
   text-decoration: none;
 }
 
@@ -23,23 +22,22 @@
   font-weight: bold;
   font-size: 1.4rem;
   text-decoration: none;
-  margin-left: 20px; /* Push the container to the left */
-  margin-top: 3px; /* Push the container to the left */
-  display: grid; /* Enable Grid layout */
-  grid-template-columns: 100px auto; /* Two columns: 100px for logo, auto for name */
+  margin-left: 20px;
+  margin-top: 3px;
+  display: grid;
+  grid-template-columns: 100px auto;
   grid-gap: 10px;
 }
 
 .nombrelogo {
-  margin-left: -40px; /* Push the container to the left */
-  margin-top: 12px; /* Push the container to the left */
-
+  margin-left: -40px;
+  margin-top: 12px;
 }
 
 .sidebar {
   background-color: #1E2736;
-  width: 240px; /* Initial width */
-  transition: width 0.3s ease-in-out; /* Transition for width */
+  width: 240px;
+  transition: width 0.3s ease-in-out;
   box-shadow: 0 16px 20px rgba(0, 0, 0, 0.5);
   font-size: 0.9rem;
   font-family: Open Sans, sans-serif;
@@ -49,11 +47,11 @@
 }
 
 .sidebar.open {
-  width: 0px; /* Width when open */
+  width: 0px;
 }
 
 .sidebar.open:hover {
-  width: 240px; /* Width on hover when open */
+  width: 240px;
 }
 
 .sidebar-nav {
@@ -72,11 +70,11 @@
   font-size: 1rem;
 }
 
-aside{
+aside {
   padding-top: 70px;
 }
 
-.nav-item:hover{
+.nav-item:hover {
   background-color: #2e3644;
 }
 
@@ -104,7 +102,6 @@ aside{
   margin-top: 40px;
   font-size: 0.75rem;
   color: #55DAD5;
-  
 }
 
 .pagetitle {
@@ -112,8 +109,7 @@ aside{
   align-items: center;
   justify-content: space-between;
   padding: 0 1.5rem 0.9rem;
-  /* border-bottom: 2px solid #29374A; */
-  margin-bottom: 10px; /* Ajusta el valor según sea necesario */
+  margin-bottom: 10px;
 }
 
 .breadcrumb {
@@ -151,26 +147,24 @@ aside{
 }
 
 .logo {
-  /* Existing styles */
-  width: 35px; /* Set logo width to 250px */
-  height: auto; /* Maintain aspect ratio */
+  width: 35px;
+  height: auto;
 }
 
 .toggle-sidebar-btn {
-  /* Remove default button styles */
-  background-color: transparent; /* Change background color */
-  color: white; /* Change icon color */
-  width: 40px; /* Change button width */
-  height: 40px; /* Change button height */
+  background-color: transparent;
+  color: white;
+  width: 40px;
+  height: 40px;
   border: none;
-  transition: all 0.2s ease-in-out; /* Add hover effect transition */
-  display: flex; /* Make the container a flexbox */
-  margin-top: 7px; /* Adjust margin-top if needed */
-  display: flex; /* Make the container a flexbox */
-  margin-left: -10px; /* Push the container to the left */
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  margin-top: 7px;
+  display: flex;
+  margin-left: -10px;
   margin-top: -35px;
 }
 
 .toggle-sidebar-btn:hover {
-  background-color: transparent; /* Change background color on hover */
+  background-color: transparent;
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../css/FormEmpleado.css';
+import '../css/component.css';
 import Swal from "sweetalert2";
 import { useEmpleado } from '../context/empleadoContext';
 
