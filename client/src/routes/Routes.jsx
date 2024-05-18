@@ -6,7 +6,7 @@ import Inicio from "../pages/Inicio";
 import Login from "../pages/login";
 import Registro from "../pages/registro";
 import Menu from "../pages/menu";
-import FormEmpleado from "../components/Empleado/FormEmpleado";
+import FormEmpleado from "../components/FormEmpleado";
 import { EmpleadoProvider } from "../context/empleadoContext";
 
 const AppRoutes = () => {

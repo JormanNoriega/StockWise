@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import '../../css/FormEmpleado.css';
+import '../css/FormEmpleado.css';
 import Swal from "sweetalert2";
-import { useEmpleado } from '../../context/empleadoContext';
+import { useEmpleado } from '../context/empleadoContext';
 
 
 const RegistroEmpleados = () => {

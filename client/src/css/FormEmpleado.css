@@ -36,6 +36,7 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
+    color: #1E2736;
 }
 
 .text-2xl.font-bold.mb-4 {
@@ -109,6 +110,7 @@
     transition: background-color 0.3s; /* Transición suave para el cambio de color de fondo */
     position: relative;
     left: 30%;
+    margin-top: 20px;
 }
 
 .employee-card button[type="submit"]:hover {
