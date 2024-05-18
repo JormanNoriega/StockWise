@@ -34,8 +34,11 @@ export const AuthProvider = ({children}) => {
             const response = await loginRequest(user);
             console.log(response.data);
             setIsAuthenticated(true);
+            setUser(response.data);
         } catch (error) {
-            console.error(error)
+            console.error(error);
+            setErrors(error.response.data);
+            throw new Error(error.response.data.message || "Error en el inicio de sesión");
         }
     }
 

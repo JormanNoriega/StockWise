@@ -6,26 +6,27 @@ import Inicio from "../pages/Inicio";
 import Login from "../pages/login";
 import Registro from "../pages/registro";
 import Menu from "../pages/menu";
-import FormEmpleado from "../components/FormEmpleado";
 import { EmpleadoProvider } from "../context/empleadoContext";
+import { CategoriaProvider } from "../context/categoriaContext";
 
 const AppRoutes = () => {
   return (
     <>
       <AuthProvider>
         <EmpleadoProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Inicio />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/registro" element={<Registro />} />
+          <CategoriaProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Inicio />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/registro" element={<Registro />} />
 
-              <Route element={<ProtectedRoutes />}>
-                <Route path="/menu" element={<Menu />} />
-                <Route path="/empleado" element={<FormEmpleado />} />
-              </Route>
-            </Routes>
-          </BrowserRouter>
+                <Route element={<ProtectedRoutes />}>
+                  <Route path="/menu" element={<Menu />} />
+                </Route>
+              </Routes>
+            </BrowserRouter>
+          </CategoriaProvider>
         </EmpleadoProvider>
       </AuthProvider>
     </>
