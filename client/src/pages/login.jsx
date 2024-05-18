@@ -6,7 +6,6 @@ import { useAuth } from "../context/authContext";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -34,7 +33,6 @@ const LoginPage = () => {
       });
       navigate("/menu");
     } catch (error) {
-      setError("Correo o contraseña incorrectos");
       Swal.fire({
         icon: "error",
         title: "¡Error!",
