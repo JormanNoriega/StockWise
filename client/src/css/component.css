@@ -7,29 +7,25 @@
     box-sizing: border-box;
 }
 
-body {
-    overflow: hidden;
-}
-
 .w-full.h-full {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-.bg-gray-900.text-white.py-4.px-6.rounded-t-lg {
+.header-comp {
     background-color: #1E2736;
     color: #fff;
     padding: 1rem 1.5rem;
     border-radius: 0.5rem;
 }
 
-.text-3xl.font-bold {
+.title-comp {
     font-size: 1.875rem;
     font-weight: bold;
 }
 
-.grid.grid-cols-1.gap-8.p-6 {
+.form-comp {
     background-color: #fff;  
     padding: 1.5rem;
     display: grid;
@@ -38,14 +34,9 @@ body {
     color: #1E2736;
 }
 
-.text-2xl.font-bold.mb-4 {
+.sub-titles-copm {
     font-size: 1.5rem;
     font-weight: bold;
-    margin-bottom: 1rem;
-}
-
-.space-y-4 {
-    margin-top: 1rem;
     margin-bottom: 1rem;
 }
 
@@ -57,44 +48,14 @@ body {
     margin-bottom: 0.5rem;
 }
 
-.employee-card {
+.card {
     background-color: #fff;
     border-radius: 0.5rem;
     padding: 1.5rem;
     margin-top: 1rem;
 }
 
-.table-container {
-    overflow: hidden;
-}
-
-.table-card {
-    overflow: hidden;
-}
-
-.table-scroll {
-    overflow-y: auto;
-    max-height: 250px;
-}
-
-.table-card table {
-    width: 100%;
-    border-collapse: collapse;
-    border-radius: 1rem;
-    overflow: hidden;
-}
-
-.table-card table th,
-.table-card table td {
-    padding: 0.75rem;
-    border: 1px solid #e2e8f0;
-    background-color: #fff;
-}
-
-.employee-card input[type="text"],
-.employee-card input[type="email"],
-.employee-card input[type="number"],
-.employee-card input[type="password"] {
+.card input, select {
     width: 100%;
     padding: 0.75rem;
     border: 1px solid #e2e8f0;
@@ -106,7 +67,7 @@ body {
     color: #1E2736;
 }
 
-.employee-card button[type="submit"] {
+.card button{
     width: 40%;
     padding: 0.75rem 1rem;
     border: none;
@@ -121,7 +82,7 @@ body {
     margin-top: 20px;
 }
 
-.employee-card button[type="submit_2"] {
+.card button[type="submit_2"] {
     width: 20%;
     padding: 0.75rem 1rem;
     border: none;
@@ -137,7 +98,7 @@ body {
     margin-top: 20px;
 }
 
-.employee-card button[type="button"] {
+.card button[type="button"] {
     width: 20%;
     padding: 0.75rem 1rem;
     border: none;
@@ -152,7 +113,7 @@ body {
     margin-top: 20px;
 }
 
-.employee-card button[type="submit"]:hover {
+.card button[type="submit"]:hover {
     background-color: #3c4350;
 }
 
@@ -189,7 +150,27 @@ body {
     background-color: #d32f2f;
 }
 
+/*CSS TABLAS*/
+
+.table-card {
+    overflow: hidden;
+}
+
+.table-card table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.table-card table th,
 .table-card table td {
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    background-color: #fff;
+}
+
+.table-card table td{
     border-left: 1px solid transparent;
     border-right: 1px solid transparent;
 }
@@ -208,3 +189,6 @@ body {
 .table-card table tbody td {
     text-align: center;
 }
+
+
+

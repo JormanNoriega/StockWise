@@ -9,17 +9,23 @@ const RegistroEmpleados = () => {
   });
   const [id, setId] = useState("");
   const [editar, setEditar] = useState(false);
-  const [error, setError] = useState('');
-  const { createCategoria, getCategoria, categorias, deleteCategoria, updateCategoria } = useCategoria();
+  const [error, setError] = useState("");
+  const {
+    createCategoria,
+    getCategoria,
+    categorias,
+    deleteCategoria,
+    updateCategoria,
+  } = useCategoria();
 
   const handleCreateCategoria = async (e) => {
     e.preventDefault();
     try {
       await createCategoria(formData);
       Swal.fire({
-        icon: 'success',
-        title: '¡Registro exitoso!',
-        text: 'La categoria ha sido registrado correctamente.'
+        icon: "success",
+        title: "¡Registro exitoso!",
+        text: "La categoria ha sido registrado correctamente.",
       });
       setFormData({
         nombCatergoria: "",
@@ -28,10 +34,10 @@ const RegistroEmpleados = () => {
     } catch (error) {
       setError(error.response.data.message);
       Swal.fire({
-        icon: 'error',
-        title: '¡Error!',
-        text: 'Hubo un problema al registrar la categoria.',
-        footer: error
+        icon: "error",
+        title: "¡Error!",
+        text: "Hubo un problema al registrar la categoria.",
+        footer: error,
       });
     }
   };
@@ -39,32 +45,39 @@ const RegistroEmpleados = () => {
   const handleDeleteCategoria = (val) => {
     Swal.fire({
       title: "Confirmar eliminación",
-      html: "<i>¿Realmente desea eliminar a <strong>" + val.nombCatergoria + "</strong>?</i>",
+      html:
+        "<i>¿Realmente desea eliminar a <strong>" +
+        val.nombCatergoria +
+        "</strong>?</i>",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, eliminarlo!"
+      confirmButtonText: "Sí, eliminarlo!",
     }).then((result) => {
       if (result.isConfirmed) {
         deleteCategoria(val.idCategoria)
           .then(() => {
             Swal.fire({
               title: "Registro eliminado!",
-              html: "<i>La categoria <strong>" + val.nombCatergoria + "</strong> fue eliminado exitosamente!</i>",
-              icon: 'success',
+              html:
+                "<i>La categoria <strong>" +
+                val.nombCatergoria +
+                "</strong> fue eliminado exitosamente!</i>",
+              icon: "success",
             });
-          }).catch((error) => {
+          })
+          .catch((error) => {
             Swal.fire({
               icon: "error",
               title: "Oops...",
               text: "No se puede eliminar la categoria!",
-              footer: '<a href="#">Intente más tarde</a>'
+              footer: '<a href="#">Intente más tarde</a>',
             });
           });
       }
     });
-  }
+  };
 
   const handleUpdateCategoria = async (e) => {
     e.preventDefault();
@@ -73,7 +86,10 @@ const RegistroEmpleados = () => {
       limpiar();
       Swal.fire({
         title: "<strong>Actualización exitosa!</strong>",
-        html: "<i>La categoria <strong>" + formData.nombCatergoria + "</strong> fue actualizado con éxito! </i>",
+        html:
+          "<i>La categoria <strong>" +
+          formData.nombCatergoria +
+          "</strong> fue actualizado con éxito! </i>",
         icon: "success",
       });
       await getEmpleado();
@@ -83,7 +99,7 @@ const RegistroEmpleados = () => {
         icon: "error",
         title: "Oops...",
         text: "No se puede actualizar la categoria!",
-        footer: '<a href="#">Intente más tarde</a>'
+        footer: '<a href="#">Intente más tarde</a>',
       });
     }
   };
@@ -94,7 +110,7 @@ const RegistroEmpleados = () => {
       nombCatergoria: val.nombCatergoria,
     });
     setId(val.idCategoria);
-  }
+  };
 
   const limpiar = () => {
     setFormData({
@@ -110,25 +126,25 @@ const RegistroEmpleados = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
   return (
     <div className="w-full h-full">
-      <div className="bg-gray-900 text-white py-4 px-6 rounded-t-lg">
-        <h1 className="text-3xl font-bold">Registro de Categorias</h1>
+      <div className="header-comp">
+        <h1 className="title-comp">Registro de Categorias</h1>
       </div>
-      <div className="grid grid-cols-1 gap-8 p-6">
-        <div className="employee-card">
-          {" "}
-          {/* Aplica la clase para la tarjeta del contexto del empleado */}
-          <h2 className="text-2xl font-bold mb-4">Nueva Categoria</h2>
-          <form className="space-y-4" onSubmit={editar ? handleUpdateCategoria : handleCreateCategoria}>
+      <div className="form-comp">
+        <div className="card">
+          <h2 className="sub-titles-copm">Nueva Categoria</h2>
+          <form
+            onSubmit={editar ? handleUpdateCategoria : handleCreateCategoria}
+          >
             <div>
-              <label htmlFor="name">Nombre de Categoria</label>
+              <label htmlFor="nombCatergoria">Nombre de Categoria</label>
               <input
                 type="text"
                 id="nombCatergoria"
@@ -140,48 +156,53 @@ const RegistroEmpleados = () => {
               />
             </div>
             <div>
-              {
-                editar ?
-                  <div>
-                    <button type="submit_2">Actualizar</button>
-                    <button type="button" onClick={limpiar}>Cancelar</button>
-                  </div>
-                  : <button type="submit">Registrar</button>
-              }
+              {editar ? (
+                <div>
+                  <button type="submit_2">Actualizar</button>
+                  <button type="button" onClick={limpiar}>
+                    Cancelar
+                  </button>
+                </div>
+              ) : (
+                <button type="submit">Registrar</button>
+              )}
             </div>
           </form>
         </div>
-        <div></div>
-        <div>
+        <div className="table-container">
+          <h2 className="sub-titles-copm">Categorias Registradas</h2>
           <div className="table-card">
-            {" "}
-            {/* Aplica la clase para la tarjeta de la tabla */}
-            <h2 className="text-2xl font-bold mb-4">Categorias Registradas</h2>
-            <div>
-              <div>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Nombre de Categoria</th>
-                      <th>Acciones</th>
+            <table>
+              <thead>
+                <tr>
+                  <th>Nombre de Categoria</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {categorias.map((val, key) => {
+                  return (
+                    <tr key={val.idUsuario}>
+                      <td>{val.nombCatergoria}</td>
+                      <td>
+                        <button
+                          className="edit-button"
+                          onClick={() => setCategoria(val)}
+                        >
+                          Editar
+                        </button>
+                        <button
+                          className="delete-button"
+                          onClick={() => handleDeleteCategoria(val)}
+                        >
+                          Eliminar
+                        </button>
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {categorias.map((val, key) => {
-                      return (
-                        <tr key={val.idUsuario}>
-                          <td>{val.nombCatergoria}</td>
-                          <td>
-                            <button className="edit-button" onClick={() => setCategoria(val)}>Editar</button>
-                            <button className="delete-button" onClick={() => handleDeleteCategoria(val)}>Eliminar</button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
