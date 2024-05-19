@@ -10,7 +10,7 @@ Se Debe configurar la conexion a la BD en "/database/database.js" Por Defecto es
 - password: "123"  
 
 Al momento de instalar PosgrestSQL puede utilizar estos datos  
-Es Importante Crear desde consola o desde cualquier Programa gestor de BD una Base de datos que se llame "stockwise"    
+Es Importante Crear una Base de Datos llamada "stockwise"    
 Para Ejecutar el server se escribe el comando "npm run dev" 
 
 ## CLIENT:  
