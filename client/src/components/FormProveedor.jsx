@@ -3,7 +3,7 @@ import "../css/component.css";
 import Swal from "sweetalert2";
 import { useProveedor } from "../context/proveedorContext";
 
-const RegistroEmpleados = () => {
+const RegistroProveedor = () => {
   const [formData, setFormData] = useState({
     nombProveedor: "",
     telefono: "",
@@ -248,4 +248,4 @@ const RegistroEmpleados = () => {
   );
 };
 
-export default RegistroEmpleados;
+export default RegistroProveedor;
