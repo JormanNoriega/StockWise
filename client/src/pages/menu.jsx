@@ -21,7 +21,7 @@ import { useAuth } from "../context/authContext";
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, user, empleado } = useAuth();
   const [activeContent, setActiveContent] = useState("");
 
   const toggleSidebar = () => {
@@ -53,100 +53,131 @@ const Dashboard = () => {
       {/* BARRA DE NAVEGACION LATERAL*/}
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <ul className="sidebar-nav" id="sidebar-nav">
-          <li className="nav-item">
-            <Link className={
-              activeContent === "producto"
-                ? "nav-link active"
-                : "nav-link collapsed"
-            }
-              onClick={() => setActiveContent("producto")}
-            >
-              <FaProductHunt
-                style={{
-                  marginLeft: "0px",
-                  marginRight: "5px",
-                  fontSize: "20px",
-                }}
-              />
-              <span>Productos</span>
-            </Link>
-          </li>
+          {user && (
+            <>
+              <li className="nav-item">
+                <Link
+                  className={
+                    activeContent === "producto"
+                      ? "nav-link active"
+                      : "nav-link collapsed"
+                  }
+                  onClick={() => setActiveContent("producto")}
+                >
+                  <FaProductHunt
+                    style={{
+                      marginLeft: "0px",
+                      marginRight: "5px",
+                      fontSize: "20px",
+                    }}
+                  />
+                  <span>Productos</span>
+                </Link>
+              </li>
 
-          <li className="nav-item">
-            <Link className={
-                activeContent === "empleado"
-                  ? "nav-link active"
-                  : "nav-link collapsed"
-              }
-              onClick={() => setActiveContent("empleado")}
-            >
-              <FaUsers
-                style={{
-                  marginLeft: "0px",
-                  marginRight: "5px",
-                  fontSize: "20px",
-                }}
-              />
-              <span>Empleados</span>
-            </Link>
-          </li>
+              <li className="nav-item">
+                <Link
+                  className={
+                    activeContent === "empleado"
+                      ? "nav-link active"
+                      : "nav-link collapsed"
+                  }
+                  onClick={() => setActiveContent("empleado")}
+                >
+                  <FaUsers
+                    style={{
+                      marginLeft: "0px",
+                      marginRight: "5px",
+                      fontSize: "20px",
+                    }}
+                  />
+                  <span>Empleados</span>
+                </Link>
+              </li>
 
-          <li className="nav-item">
-            <Link className={
-              activeContent === "categoria"
-                ? "nav-link active"
-                : "nav-link collapsed"
-            }
-              onClick={() => setActiveContent("categoria")}
-            >
-              <FaThLarge
-                style={{
-                  marginLeft: "0px",
-                  marginRight: "5px",
-                  fontSize: "20px",
-                }}
-              />
-              <span>Categorias</span>
-            </Link>
-          </li>
+              <li className="nav-item">
+                <Link
+                  className={
+                    activeContent === "categoria"
+                      ? "nav-link active"
+                      : "nav-link collapsed"
+                  }
+                  onClick={() => setActiveContent("categoria")}
+                >
+                  <FaThLarge
+                    style={{
+                      marginLeft: "0px",
+                      marginRight: "5px",
+                      fontSize: "20px",
+                    }}
+                  />
+                  <span>Categorias</span>
+                </Link>
+              </li>
 
-          <li className="nav-item">
-            <Link className={
-              activeContent === "proveedor"
-                ? "nav-link active"
-                : "nav-link collapsed"
-            }
-              onClick={() => setActiveContent("proveedor")}
-            >
-              <FaGem
-                style={{
-                  marginLeft: "0px",
-                  marginRight: "5px",
-                  fontSize: "20px",
-                }}
-              />
-              <span>Proveedores</span>
-            </Link>
-          </li>
+              <li className="nav-item">
+                <Link
+                  className={
+                    activeContent === "proveedor"
+                      ? "nav-link active"
+                      : "nav-link collapsed"
+                  }
+                  onClick={() => setActiveContent("proveedor")}
+                >
+                  <FaGem
+                    style={{
+                      marginLeft: "0px",
+                      marginRight: "5px",
+                      fontSize: "20px",
+                    }}
+                  />
+                  <span>Proveedores</span>
+                </Link>
+              </li>
 
-          <li className="nav-item">
-            <Link className={
-              activeContent === "venta"
-                ? "nav-link active"
-                : "nav-link collapsed"
-            }
-              onClick={() => setActiveContent("venta")}
-            >
-              <FaChartLine
-                style={{
-                  marginLeft: "0px",
-                  marginRight: "5px",
-                  fontSize: "20px",
-                }}
-              />
-              <span>Ventas</span>
-            </Link>
-          </li>
+              <li className="nav-item">
+              <Link
+                className={
+                  activeContent === "venta"
+                    ? "nav-link active"
+                    : "nav-link collapsed"
+                }
+                onClick={() => setActiveContent("venta")}
+              >
+                <FaChartLine
+                  style={{
+                    marginLeft: "0px",
+                    marginRight: "5px",
+                    fontSize: "20px",
+                  }}
+                />
+                <span>Ventas</span>
+              </Link>
+            </li>
+            </>
+          )}
+
+          {empleado && (
+            <li className="nav-item">
+              <Link
+                className={
+                  activeContent === "venta"
+                    ? "nav-link active"
+                    : "nav-link collapsed"
+                }
+                onClick={() => setActiveContent("venta")}
+              >
+                <FaChartLine
+                  style={{
+                    marginLeft: "0px",
+                    marginRight: "5px",
+                    fontSize: "20px",
+                  }}
+                />
+                <span>Ventas</span>
+              </Link>
+            </li>
+          )}
 
           <li className="nav-item-secundary">
             <a className="nav-titulo">
@@ -155,11 +186,12 @@ const Dashboard = () => {
           </li>
 
           <li className="nav-item">
-            <Link className={
-              activeContent === "perfil"
-                ? "nav-link active"
-                : "nav-link collapsed"
-            }
+            <Link
+              className={
+                activeContent === "perfil"
+                  ? "nav-link active"
+                  : "nav-link collapsed"
+              }
               onClick={() => setActiveContent("perfil")}
             >
               <FaUsers
@@ -174,7 +206,8 @@ const Dashboard = () => {
           </li>
 
           <li className="nav-item">
-            <Link className={
+            <Link
+              className={
                 activeContent === "contacto"
                   ? "nav-link active"
                   : "nav-link collapsed"
@@ -189,7 +222,6 @@ const Dashboard = () => {
                 }}
               />
               <span>Contactanos</span>
-
             </Link>
           </li>
 
@@ -225,7 +257,7 @@ const Dashboard = () => {
         {activeContent === "empleado" && <FormEmpleado />}
         {activeContent === "categoria" && <FormCategoria />}
         {activeContent === "proveedor" && <FormProveedor />}
-        {activeContent === "ventas" && <FormVenta />}
+        {activeContent === "venta" && <FormVenta />}
       </main>
     </div>
   );

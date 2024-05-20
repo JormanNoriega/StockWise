@@ -1,21 +1,50 @@
+import { Usuario } from "../models/Usuario.js";
 import { Empleado } from "../models/Empleado.js";
 import { EmpleadoDTO } from "../dtos/empleado.dto.js";
+import bcrypt from "bcryptjs";
+import { createAccessToken } from "../libs/jwt.js";
 
 //Crear un Empleado
 export async function crearEmpleado(nombre, correo, contraseña, idUsuario) {
   try {
-    const newEmpleado = await Empleado.create({
+    // Verificar si el correo ya está en uso
+    const empleadoEncontrado = await Empleado.findOne({
+      where: {
+        correo: correo,
+      },
+    });
+
+    if (empleadoEncontrado) {
+      throw new Error("El correo ya está en uso");
+    }
+
+    const usuarioEncontrado = await Usuario.findOne({
+      where: {
+        correo: correo,
+      },
+    });
+
+    if (usuarioEncontrado) {
+      throw new Error("El correo ya está en uso");
+    }
+
+    // Hash de la contraseña
+    const contraseñaHash = await bcrypt.hash(contraseña, 10);
+
+    const newEmpleado = new Empleado({
+      idUsuario,
       nombre,
       correo,
-      contraseña,
-      idUsuario,
+      contraseña: contraseñaHash,
     });
+
+    const EmpleadoGuardado = await newEmpleado.save();
     return new EmpleadoDTO(
-      newEmpleado.idEmpleado,
-      newEmpleado.nombre,
-      newEmpleado.correo,
-      newEmpleado.contraseña,
-      newEmpleado.idUsuario
+      EmpleadoGuardado.idEmpleado,
+      EmpleadoGuardado.nombre,
+      EmpleadoGuardado.correo,
+      EmpleadoGuardado.contraseña,
+      EmpleadoGuardado.idUsuario
     );
   } catch (error) {
     throw new Error(error.message);
@@ -112,6 +141,46 @@ export async function eliminarEmpleado(idEmpleado, idUsuario) {
         idUsuario: idUsuario,
       },
     });
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
+export async function iniciarSesion(correo, contraseña) {
+  try {
+    // Buscar usuario por correo electrónico
+    const empleadoEncontrado = await Empleado.findOne({
+      where: {
+        correo: correo,
+      },
+    });
+
+    if (!empleadoEncontrado) {
+      throw new Error("El correo electrónico no existe");
+    }
+
+    // Comparar contraseñas
+    const isMatch = await bcrypt.compare(
+      contraseña,
+      empleadoEncontrado.contraseña
+    );
+    if (!isMatch) {
+      throw new Error("La contraseña es incorrecta");
+    }
+
+    // Generar token de acceso
+    const token = await createAccessToken({
+      idEmpleado: empleadoEncontrado.idEmpleado,
+      nombre: empleadoEncontrado.nombre,
+    });
+
+    // Crear y devolver DTO de usuario logueado
+    return new EmpleadoDTO(
+      empleadoEncontrado.idEmpleado,
+      empleadoEncontrado.nombre,
+      empleadoEncontrado.correo,
+      token
+    );
   } catch (error) {
     throw new Error(error.message);
   }

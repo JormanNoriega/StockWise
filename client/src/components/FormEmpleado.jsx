@@ -34,7 +34,7 @@ const RegistroEmpleados = () => {
             Swal.fire({
                 icon: 'error',
                 title: '¡Error!',
-                text: 'Hubo un problema al registrar al empleado.',
+                text: error.response.data.message,
                 footer: error
             });
         }

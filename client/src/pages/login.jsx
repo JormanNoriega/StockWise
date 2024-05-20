@@ -9,6 +9,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
+    tipo: "user", // default value for tipo
     correo: "",
     contraseña: ""
   });
@@ -20,12 +21,17 @@ const LoginPage = () => {
       [name]: value
     }));
   };
-  const { signin } = useAuth();
+
+  const { signin, signine } = useAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await signin(formData);
+      if (formData.tipo === "user") {
+        await signin(formData);
+      } else if (formData.tipo === "employee") {
+        await signine(formData);
+      }
       Swal.fire({
         icon: "success",
         title: "¡Inicio de sesión exitoso!",
@@ -37,11 +43,10 @@ const LoginPage = () => {
         icon: "error",
         title: "¡Error!",
         text: "Correo o contraseña incorrectos",
-        footer: error
+        footer: error.message
       });
     }
   };
-  
 
   return (
     <div className="Bg-Img">
@@ -62,8 +67,13 @@ const LoginPage = () => {
         <div className="login-form">
           <h2>Inicio De Sesión</h2>
           <form onSubmit={handleSubmit}>
-          <label htmlFor="username">Tipo de Inicio de Sesión:</label>
-            <select name="tipo" id="tipo">
+            <label htmlFor="tipo">Tipo de Inicio de Sesión:</label>
+            <select
+              name="tipo"
+              id="tipo"
+              value={formData.tipo}
+              onChange={handleChange}
+            >
               <option value="user">Usuario</option>
               <option value="employee">Empleado</option>
             </select>
@@ -97,11 +107,11 @@ const LoginPage = () => {
             <div className="btns">
               <button type="submit">Inicia Sesión</button>
             </div>
-            </form>
-            <p>¿No tienes cuenta?</p>
-            <Link to="/registro" className="nav-links2">
-              Regístrate aquí
-            </Link>
+          </form>
+          <p>¿No tienes cuenta?</p>
+          <Link to="/registro" className="nav-links2">
+            Regístrate aquí
+          </Link>
         </div>
       </div>
     </div>
