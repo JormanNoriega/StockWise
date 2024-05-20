@@ -1,3 +1,4 @@
+import { Empleado } from "../models/Empleado.js";
 import { Usuario } from "../models/Usuario.js";
 import { UsuarioDTO } from "../dtos/usuario.dto.js";
 import bcrypt from "bcryptjs";
@@ -13,6 +14,16 @@ export async function registrarUsuario(nombre, correo, contraseña) {
     });
 
     if (usuarioEncontrado) {
+      throw new Error("El correo ya está en uso");
+    }
+
+    const empleadoEncontrado = await Empleado.findOne({
+      where: {
+        correo: correo,
+      },
+    });
+
+    if (empleadoEncontrado) {
       throw new Error("El correo ya está en uso");
     }
 

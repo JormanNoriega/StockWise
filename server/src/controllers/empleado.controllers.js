@@ -1,4 +1,7 @@
 import * as empleadoService from "../services/empleado.services.js";
+import jwt from 'jsonwebtoken';
+import { TOKEN_SECRET } from "../config.js";
+import { Empleado } from "../models/Empleado.js";
 
 //Crear un Empleado
 export const postEmpleado = async (req, res) => {
@@ -67,4 +70,36 @@ export async function deleteEmpleado(req, res) {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+}
+
+export const postIniciarSesion = async (req, res) => {
+  try {
+    const { correo, contraseña } = req.body;
+    const empleadoLogeado = await empleadoService.iniciarSesion(
+      correo,
+      contraseña
+    );
+    res.cookie("token", empleadoLogeado.token);
+    res.json(empleadoLogeado);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const verifyToken = async (req, res) => {
+  const { token } = req.cookies;
+
+  if(!token) return res.status(401).json({message: 
+    "Unauthorized"});
+
+  jwt.verify(token, TOKEN_SECRET, async (err, empleado) => {
+    if(err) return res.status(401).json({message: 
+      "Unauthorized"});
+
+    const empleadoEncontrado = await Empleado.findByPk(empleado.idEmpleado);
+    if(!empleadoEncontrado) return res.status(401).json({ message: 
+      "Unauthorized" });
+
+    return res.json(empleadoEncontrado);
+  })
 }

@@ -3,7 +3,7 @@ import "../css/component.css";
 import Swal from "sweetalert2";
 import { useCategoria } from "../context/categoriaContext";
 
-const RegistroEmpleados = () => {
+const RegistroCategoria = () => {
   const [formData, setFormData] = useState({
     nombCatergoria: "",
   });
@@ -210,4 +210,4 @@ const RegistroEmpleados = () => {
   );
 };
 
-export default RegistroEmpleados;
+export default RegistroCategoria;

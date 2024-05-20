@@ -12,26 +12,13 @@ const RegisterPage = () => {
     contraseña: ""
   });
   const [error, setError] = useState("");
-  const { signup, isAuthenticated } = useAuth()
+  const { signup, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-
-
-  useEffect(() => {
-    if(isAuthenticated) navigate("/login")
-  }, [isAuthenticated])
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value
-    }));
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      signup(formData);
+      await signup(formData);
       Swal.fire({
         icon: 'success',
         title: '¡Registro exitoso!',
@@ -47,10 +34,22 @@ const RegisterPage = () => {
       Swal.fire({
         icon: 'error',
         title: '¡Error!',
-        text: 'Hubo un problema al registrar tu cuenta.',
+        text: error.response.data.message,
         footer: error
       });
     }
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) navigate("/login");
+  }, [isAuthenticated, navigate]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
   };
 
   return (
