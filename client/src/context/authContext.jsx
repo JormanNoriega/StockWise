@@ -7,13 +7,13 @@ export const AuthContext = createContext()
 
 export const useAuth = () => {
     const context = useContext(AuthContext)
-    if(!context){
+    if (!context) {
         throw new Error("useAuth ya esta usado");
     }
     return context;
 }
 
-export const AuthProvider = ({children}) => {
+export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [empleado, setEmpleado] = useState(null)
     const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -34,6 +34,7 @@ export const AuthProvider = ({children}) => {
             console.log(response.data);
             setIsAuthenticated(true);
             setUser(response.data);
+            Cookies.set("userType", "user"); // Establece una bandera para usuarios
         } catch (error) {
             console.error(error);
             setErrors(error.response.data);
@@ -47,12 +48,14 @@ export const AuthProvider = ({children}) => {
             console.log(response.data);
             setIsAuthenticated(true);
             setEmpleado(response.data);
+            Cookies.set("userType", "empleado"); // Establece una bandera para empleados
         } catch (error) {
             console.error(error);
             setErrors(error.response.data);
             throw new Error(error.response.data.message || "Error en el inicio de sesión");
         }
     }
+
 
     const logout = () => {
         Cookies.remove("token");
@@ -62,9 +65,9 @@ export const AuthProvider = ({children}) => {
     }
 
     useEffect(() => {
-        async function checkLogin () {
+        async function checkLogin() {
             const cookies = Cookies.get();
-            if(!cookies.token){
+            if (!cookies.token) {
                 setIsAuthenticated(false);
                 setLoading(false);
                 return setUser(null);
@@ -72,7 +75,7 @@ export const AuthProvider = ({children}) => {
             try {
                 const res = await verityTokenRequest(cookies.token);
                 console.log(res);
-                if(!res.data){  
+                if (!res.data) {
                     setIsAuthenticated(false);
                     setLoading(false);
                     return;
@@ -88,9 +91,9 @@ export const AuthProvider = ({children}) => {
             }
         }
 
-        async function checkLoginEmpleado () {
+        async function checkLoginEmpleado() {
             const cookies = Cookies.get();
-            if(!cookies.token){
+            if (!cookies.token) {
                 setIsAuthenticated(false);
                 setLoading(false);
                 return setEmpleado(null);
@@ -98,7 +101,7 @@ export const AuthProvider = ({children}) => {
             try {
                 const res = await verityTokenEmpleadoRequest(cookies.token);
                 console.log(res);
-                if(!res.data){  
+                if (!res.data) {
                     setIsAuthenticated(false);
                     setLoading(false);
                     return;
@@ -113,11 +116,20 @@ export const AuthProvider = ({children}) => {
                 setLoading(false);
             }
         }
-        checkLogin();
-        checkLoginEmpleado();
-    }, [])
 
-    return(
+        const userType = Cookies.get("userType");
+
+        if (userType === "user") {
+            checkLogin();
+        } else if (userType === "empleado") {
+            checkLoginEmpleado();
+        } else {
+            setLoading(false);
+        }
+    }, []);
+
+
+    return (
         <AuthContext.Provider value={{
             signup,
             signin,

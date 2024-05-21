@@ -12,11 +12,10 @@ import {
 } from "react-icons/fa";
 import "../css/menu.css";
 import FormProducto from "../components/FormProducto";
-import FormEmpleado from "../components/FormEmpleado";
+import RegistroEmpleados from "../components/FormEmpleado";
 import FormCategoria from "../components/FormCategoria";
 import FormProveedor from "../components/FormProveedor";
 import FormVenta from "../components/FormVenta";
-
 import { useAuth } from "../context/authContext";
 
 const Dashboard = () => {
@@ -28,9 +27,26 @@ const Dashboard = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
+  const renderContent = () => {
+    switch (activeContent) {
+      case "producto":
+        return <FormProducto />;
+      case "empleado":
+        return <RegistroEmpleados />;
+      case "categoria":
+        return <FormCategoria />;
+      case "proveedor":
+        return <FormProveedor />;
+      case "venta":
+        return <FormVenta />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="dashboard">
-      {/* BARRA SUPERIOR*/}
+      {/* BARRA SUPERIOR */}
       <header className="header">
         <a href="/menu" className="logo">
           <img className="logo" src="./LogoSinFondo.png" alt="logo" />
@@ -50,7 +66,7 @@ const Dashboard = () => {
         </div>
       </header>
 
-      {/* BARRA DE NAVEGACION LATERAL*/}
+      {/* BARRA DE NAVEGACION LATERAL */}
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <ul className="sidebar-nav" id="sidebar-nav">
           {user && (
@@ -136,24 +152,24 @@ const Dashboard = () => {
               </li>
 
               <li className="nav-item">
-              <Link
-                className={
-                  activeContent === "venta"
-                    ? "nav-link active"
-                    : "nav-link collapsed"
-                }
-                onClick={() => setActiveContent("venta")}
-              >
-                <FaChartLine
-                  style={{
-                    marginLeft: "0px",
-                    marginRight: "5px",
-                    fontSize: "20px",
-                  }}
-                />
-                <span>Ventas</span>
-              </Link>
-            </li>
+                <Link
+                  className={
+                    activeContent === "venta"
+                      ? "nav-link active"
+                      : "nav-link collapsed"
+                  }
+                  onClick={() => setActiveContent("venta")}
+                >
+                  <FaChartLine
+                    style={{
+                      marginLeft: "0px",
+                      marginRight: "5px",
+                      fontSize: "20px",
+                    }}
+                  />
+                  <span>Ventas</span>
+                </Link>
+              </li>
             </>
           )}
 
@@ -253,11 +269,7 @@ const Dashboard = () => {
       {/*Contenido Principal*/}
       <main className="main">
         <div className="pagetitle" />
-        {activeContent === "producto" && <FormProducto />}
-        {activeContent === "empleado" && <FormEmpleado />}
-        {activeContent === "categoria" && <FormCategoria />}
-        {activeContent === "proveedor" && <FormProveedor />}
-        {activeContent === "venta" && <FormVenta />}
+        {renderContent()}
       </main>
     </div>
   );

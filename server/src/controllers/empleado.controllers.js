@@ -90,15 +90,15 @@ export const verifyToken = async (req, res) => {
   const { token } = req.cookies;
 
   if(!token) return res.status(401).json({message: 
-    "Unauthorized"});
+    "Unauthorized hola"});
 
   jwt.verify(token, TOKEN_SECRET, async (err, empleado) => {
     if(err) return res.status(401).json({message: 
-      "Unauthorized"});
+      "Unauthorized hola 2"});
 
     const empleadoEncontrado = await Empleado.findByPk(empleado.idEmpleado);
     if(!empleadoEncontrado) return res.status(401).json({ message: 
-      "Unauthorized" });
+      "Unauthorized hola 3" });
 
     return res.json(empleadoEncontrado);
   })
