@@ -1,58 +1,79 @@
 import React, { useEffect, useState } from "react";
 import "../css/component.css";
 import Swal from "sweetalert2";
-import { useEmpleado } from "../context/empleadoContext";
+import { useProducto } from "../context/productoContext";
+import { useCategoria } from "../context/categoriaContext";
+import { useProveedor } from "../context/proveedorContext";
 
-//ESTE COMPONENTE NO ESTA TERMINADO :D
-const RegistroEmpleados = () => {
+const RegistroProducto = () => {
   const [formData, setFormData] = useState({
-    nombre: "",
-    correo: "",
-    contraseña: "",
+    codProducto: "",
+    idCategoria: "",
+    nombCatergoria: "",
+    idProveedor: "",
+    nombProveedor: "",
+    nombProducto: "",
+    precioCompra: "",
+    precioVenta: "",
+    vecimiento: ""
   });
-  const [id, setId] = useState("");
+  const [codProducto, setId] = useState("");
   const [editar, setEditar] = useState(false);
   const [error, setError] = useState("");
   const {
-    createEmpleado,
-    getEmpleado,
-    empleados,
-    deleteEmpleado,
-    updateEmpleado,
-  } = useEmpleado();
+    createProducto,
+    getProducto,
+    productos,
+    deleteProducto,
+    updateProducto,
+  } = useProducto();
+  const {
+    getCategoria,
+    categorias,
+  } = useCategoria();
+  const {
+    getProveedor,
+    proveedores,
+  } = useProveedor();
 
   const handleCreateEmpleado = async (e) => {
     e.preventDefault();
     try {
-      await createEmpleado(formData);
+      await createProducto(formData);
       Swal.fire({
         icon: "success",
         title: "¡Registro exitoso!",
-        text: "El empleado ha sido registrado correctamente.",
+        text: "El producto ha sido registrado correctamente.",
       });
       setFormData({
-        nombre: "",
-        correo: "",
-        contraseña: "",
+        codProducto: "",
+        idCategoria: "",
+        nombCatergoria: "",
+        idProveedor: "",
+        nombProveedor: "",
+        nombProducto: "",
+        precioCompra: "",
+        precioVenta: "",
+        vecimiento: ""
       });
-      await getEmpleado();
+      await getProducto();
     } catch (error) {
       setError(error.response.data.message);
       Swal.fire({
         icon: "error",
         title: "¡Error!",
-        text: "Hubo un problema al registrar al empleado.",
+        text: "Hubo un problema al registrar el producto.",
         footer: error,
       });
     }
   };
 
-  const handleDeleteEmpleado = (val) => {
+  const handleDeleteProducto = (val) => {
     Swal.fire({
       title: "Confirmar eliminación",
       html:
         "<i>¿Realmente desea eliminar a <strong>" +
-        val.nombre +
+        val.nombProducto +
         "</strong>?</i>",
       icon: "warning",
       showCancelButton: true,
@@ -61,13 +82,13 @@ const RegistroEmpleados = () => {
       confirmButtonText: "Sí, eliminarlo!",
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteEmpleado(val.idEmpleado)
+        deleteProducto(val.codProducto)
           .then(() => {
             Swal.fire({
               title: "Registro eliminado!",
               html:
-                "<i>El empleado <strong>" +
-                val.nombre +
+                "<i>El producto <strong>" +
+                val.nombProducto +
                 "</strong> fue eliminado exitosamente!</i>",
               icon: "success",
             });
@@ -76,7 +97,7 @@ const RegistroEmpleados = () => {
             Swal.fire({
               icon: "error",
               title: "Oops...",
-              text: "No se puede eliminar el empleado!",
+              text: "No se puede eliminar el producto!",
               footer: '<a href="#">Intente más tarde</a>',
             });
           });
@@ -84,53 +105,63 @@ const RegistroEmpleados = () => {
     });
   };
 
-  const handleUpdateEmpleado = async (e) => {
+  const handleUpdateProducto = async (e) => {
     e.preventDefault();
     try {
-      await updateEmpleado(id, formData);
+      await updateProducto(codProducto, formData);
       limpiar();
       Swal.fire({
         title: "<strong>Actualización exitosa!</strong>",
         html:
-          "<i>El empleado <strong>" +
-          formData.nombre +
+          "<i>El producto <strong>" +
+          formData.nombProducto +
           "</strong> fue actualizado con éxito! </i>",
         icon: "success",
       });
-      await getEmpleado();
+      await getProducto();
     } catch (error) {
       setError(error.response.data.message);
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "No se puede actualizar el empleado!",
+        text: "No se puede actualizar el producto!",
         footer: '<a href="#">Intente más tarde</a>',
       });
     }
   };
 
-  const setEmpleado = (val) => {
+  const setProducto = (val) => {
     setEditar(true);
     setFormData({
-      nombre: val.nombre,
-      correo: val.correo,
-      contraseña: val.contraseña,
+      codProducto: val.codProducto,
+      idCategoria: val.idCategoria,
+      idProveedor: val.idProveedor,
+      nombProducto: val.nombProducto,
+      precioCompra: val.precioCompra,
+      precioVenta: val.precioVenta,
+      vecimiento: val.vecimiento
     });
-    setId(val.idEmpleado);
+    setId(val.codProducto);
   };
 
   const limpiar = () => {
     setFormData({
-      nombre: "",
-      correo: "",
-      contraseña: "",
+      codProducto: "",
+      idCategoria: "",
+      idProveedor: "",
+      nombProducto: "",
+      precioCompra: "",
+      precioVenta: "",
+      vecimiento: ""
     });
     setId("");
     setEditar(false);
   };
 
   useEffect(() => {
-    getEmpleado();
+    getProducto();
+    getCategoria();
+    getProveedor();
   }, []);
 
   const handleChange = (e) => {
@@ -148,9 +179,9 @@ const RegistroEmpleados = () => {
       </div>
       <div className="form-comp">
         <div className="card">
-          <h2 className="sub-titles-copm">Nuevo Producto</h2>
-          <form onSubmit={editar ? handleUpdateEmpleado : handleCreateEmpleado}>
-            <div>
+          <h1 className="sub-titles-comp">Nuevo Producto</h1>
+          <form onSubmit={editar ? handleUpdateProducto : handleCreateEmpleado} className="form-grid">
+            <div className="form-group">
               <label htmlFor="codProducto">Código de Producto</label>
               <input
                 type="text"
@@ -163,31 +194,41 @@ const RegistroEmpleados = () => {
                 required
               />
             </div>
-            <div>
-              <label htmlFor="Categoria">Categoría</label>
+            <div className="form-group">
+              <label htmlFor="idCategoria">Categoría</label>
               <select
-                id="Categoria"
-                name="Categoria"
-                placeholder="Ingrese el ID de categoría"
-                autoComplete="off"
+                id="idCategoria"
+                name="idCategoria"
                 value={formData.idCategoria}
                 onChange={handleChange}
                 required
-              />
+              >
+                <option value="">Seleccione una categoría</option>
+                {categorias.map((val) => (
+                  <option key={val.idCategoria} value={val.idCategoria}>
+                    {val.nombCatergoria}
+                  </option>
+                ))}
+              </select>
             </div>
-            <div>
-              <label htmlFor="Proveedor">ID de Proveedor</label>
+            <div className="form-group">
+              <label htmlFor="idProveedor">Proveedor</label>
               <select
-                id="Proveedor"
-                name="Proveedor"
-                placeholder="Ingrese el ID de proveedor"
-                autoComplete="off"
+                id="idProveedor"
+                name="idProveedor"
                 value={formData.idProveedor}
                 onChange={handleChange}
                 required
-              />
+              >
+                <option value="">Seleccione un proveedor</option>
+                {proveedores.map((val) => (
+                  <option key={val.idProveedor} value={val.idProveedor}>
+                    {val.nombProveedor}
+                  </option>
+                ))}
+              </select>
             </div>
-            <div>
+            <div className="form-group">
               <label htmlFor="nombProducto">Nombre del Producto</label>
               <input
                 type="text"
@@ -200,7 +241,7 @@ const RegistroEmpleados = () => {
                 required
               />
             </div>
-            <div>
+            <div className="form-group">
               <label htmlFor="precioCompra">Precio de Compra</label>
               <input
                 type="number"
@@ -213,7 +254,7 @@ const RegistroEmpleados = () => {
                 required
               />
             </div>
-            <div>
+            <div className="form-group">
               <label htmlFor="precioVenta">Precio de Venta</label>
               <input
                 type="number"
@@ -226,7 +267,7 @@ const RegistroEmpleados = () => {
                 required
               />
             </div>
-            <div>
+            <div className="form-group">
               <label htmlFor="vecimiento">Fecha de Vencimiento</label>
               <input
                 type="date"
@@ -239,8 +280,7 @@ const RegistroEmpleados = () => {
                 required
               />
             </div>
-
-            <div>
+            <div className="form-group">
               {editar ? (
                 <div>
                   <button type="submit_2">Actualizar</button>
@@ -254,41 +294,47 @@ const RegistroEmpleados = () => {
             </div>
           </form>
         </div>
-
         <div className="table-container">
-          <h2 className="sub-titles-copm">Productos Registrados</h2>
+          <h2 className="sub-titles-comp">Productos Registrados</h2>
           <div className="table-card">
             <table>
               <thead>
                 <tr>
+                  <th>Codigo</th>
                   <th>Nombre</th>
-                  <th>Correo Electrónico</th>
-                  <th>Contraseña</th>
-                  <th>Acciones</th>
+                  <th>Categoria</th>
+                  <th>Proveedor</th>
+                  <th>Precio de compra</th>
+                  <th>Precio de venta</th>
+                  <th>Vencimiento</th>
                 </tr>
               </thead>
               <tbody>
-                {/* {empleados.map((val) => (
+                {productos.map((val) => (
                   <tr key={val.idUsuario}>
-                    <td>{val.nombre}</td>
-                    <td>{val.correo}</td>
-                    <td>{val.contraseña}</td>
+                    <td>{val.codProducto}</td>
+                    <td>{val.nombProducto}</td>
+                    <td>{val.idCategoria}</td>
+                    <td>{val.idProveedor}</td>
+                    <td>{val.precioCompra}</td>
+                    <td>{val.precioVenta}</td>
+                    <td>{val.vecimiento}</td>
                     <td>
                       <button
                         className="edit-button"
-                        onClick={() => setEmpleado(val)}
+                        onClick={() => setProducto(val)}
                       >
                         Editar
                       </button>
                       <button
                         className="delete-button"
-                        onClick={() => handleDeleteEmpleado(val)}
+                        onClick={() => handleDeleteProducto(val)}
                       >
                         Eliminar
                       </button>
                     </td>
                   </tr>
-                ))} */}
+                ))}
               </tbody>
             </table>
           </div>
@@ -298,4 +344,4 @@ const RegistroEmpleados = () => {
   );
 };
 
-export default RegistroEmpleados;
+export default RegistroProducto;
