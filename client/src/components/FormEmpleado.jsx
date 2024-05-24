@@ -130,10 +130,10 @@ const RegistroEmpleados = () => {
         <h1 className="title-comp">Registro de Empleados</h1>
       </div>
       <div className="form-comp">
-        <div className="card">
-          <h2 className="sub-titles-copm">Nuevo Empleado</h2>
+        <div className="card-empleado">
+          <h1 className="sub-titles-copm-empleado">Nuevo Empleado</h1>
           <form onSubmit={editar ? handleUpdateEmpleado : handleCreateEmpleado}>
-            <div>
+            <div >
               <label htmlFor="nombre">Nombre</label>
               <input
                 type="text"
@@ -184,11 +184,20 @@ const RegistroEmpleados = () => {
                 <button type="submit">Registrar</button>
               )}
             </div>
+            <div className="form-group-filter-empleado">
+              <input
+                type="text"
+                id="producto-filter"
+                name="producto-filter"
+                placeholder="Filtrar empleados"
+                autoComplete="off"
+              />
+            </div>
           </form>
         </div>
 
         <div className="table-container">
-          <h2 className="sub-titles-copm">Empleados Registrados</h2>
+          <h1 className="sub-titles-copm-table">Empleados Registrados</h1>
           <div className="table-card">
             <table>
               <thead>

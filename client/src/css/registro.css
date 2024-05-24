@@ -41,16 +41,19 @@ body {
     width: 100px;
     height: 120px;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4)); /* Sombra del contorno */
+    animation: animacion 1s ease-out forwards;
 }
 
 .info h1{
     padding-top: 10px;
     padding-bottom: 10px;
     font-size: 40px;
+    animation: animacion 1s ease-out forwards;
 }
 
 .info p{
     font-size: 20px;
+    animation: animacion 1s ease-out forwards;
 }
 
 .registro-form {
@@ -60,6 +63,19 @@ body {
     padding: 30px;
     box-shadow: 0 0 50px;
     border-radius: 20px;  
+    animation: animacion 1s ease-out forwards;
+}
+
+@keyframes animacion {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0%);
+        opacity: 1;
+    }
 }
 
 .registro-form h2{
@@ -78,11 +94,12 @@ body {
 
 .registro-form input,select{
     width: 100%;
-    padding: 15px;
+    padding: 13px;
     border: 1px solid #ccc;
     border-radius: 10px;
     margin-bottom: 15px;
     font-size: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .registro-form button {

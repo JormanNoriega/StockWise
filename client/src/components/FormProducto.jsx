@@ -9,9 +9,7 @@ const RegistroProducto = () => {
   const [formData, setFormData] = useState({
     codProducto: "",
     idCategoria: "",
-    nombCatergoria: "",
     idProveedor: "",
-    nombProveedor: "",
     nombProducto: "",
     precioCompra: "",
     precioVenta: "",
@@ -20,6 +18,7 @@ const RegistroProducto = () => {
   const [codProducto, setId] = useState("");
   const [editar, setEditar] = useState(false);
   const [error, setError] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const {
     createProducto,
     getProducto,
@@ -48,9 +47,7 @@ const RegistroProducto = () => {
       setFormData({
         codProducto: "",
         idCategoria: "",
-        nombCatergoria: "",
         idProveedor: "",
-        nombProveedor: "",
         nombProducto: "",
         precioCompra: "",
         precioVenta: "",
@@ -164,6 +161,16 @@ const RegistroProducto = () => {
     getProveedor();
   }, []);
 
+  const getCategoriaName = (idCategoria) => {
+    const categoria = categorias.find((cat) => cat.idCategoria === idCategoria);
+    return categoria ? categoria.nombCatergoria : "Desconocida"
+  };
+
+  const getProveedorName = (idProveedor) => {
+    const proveedor = proveedores.find((pro) => pro.idProveedor === idProveedor);
+    return proveedor ? proveedor.nombProveedor : "Desconocido"
+  }
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -178,11 +185,11 @@ const RegistroProducto = () => {
         <h1 className="title-comp">Registro de Productos</h1>
       </div>
       <div className="form-comp">
-        <div className="card">
-          <h1 className="sub-titles-comp">Nuevo Producto</h1>
+        <div className="card-producto">
+          <h1 className="sub-titles-copm-producto">Nuevo Producto</h1>
           <form onSubmit={editar ? handleUpdateProducto : handleCreateEmpleado} className="form-grid">
             <div className="form-group">
-              <label htmlFor="codProducto">Código de Producto</label>
+            <label htmlFor="codProducto">Código de Producto</label>
               <input
                 type="text"
                 id="codProducto"
@@ -292,10 +299,31 @@ const RegistroProducto = () => {
                 <button type="submit">Registrar</button>
               )}
             </div>
+            <div className="form-group-filter-producto">
+              <input
+                type="text"
+                id="producto-filter"
+                name="producto-filter"
+                placeholder="Filtrar productos"
+                autoComplete="off"
+              />
+              <select
+                id="idCategoria-filter"
+                name="idCategoria-filter"
+              >
+                <option value="">Seleccione una categoría</option>
+                {categorias.map((val) => (
+                  <option key={val.idCategoria} value={val.idCategoria}>
+                    {val.nombCatergoria}
+                  </option>
+                ))}
+              </select>
+
+            </div>
           </form>
         </div>
         <div className="table-container">
-          <h2 className="sub-titles-comp">Productos Registrados</h2>
+          <h1 className="sub-titles-copm-table">Productos Registrados</h1>
           <div className="table-card">
             <table>
               <thead>
@@ -314,8 +342,8 @@ const RegistroProducto = () => {
                   <tr key={val.idUsuario}>
                     <td>{val.codProducto}</td>
                     <td>{val.nombProducto}</td>
-                    <td>{val.idCategoria}</td>
-                    <td>{val.idProveedor}</td>
+                    <td>{getCategoriaName(val.idCategoria)}</td>
+                    <td>{getProveedorName(val.idProveedor)}</td>
                     <td>{val.precioCompra}</td>
                     <td>{val.precioVenta}</td>
                     <td>{val.vecimiento}</td>

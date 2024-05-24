@@ -146,13 +146,10 @@ const RegistroProveedor = () => {
         <h1 className="title-comp">Registro de Proveedores</h1>
       </div>
       <div className="form-comp">
-        <div className="card">
-          <h2 className="text-2xl font-bold mb-4">Nuevo Proveedor</h2>
-          <form
-            className="space-y-4"
-            onSubmit={editar ? handleUpdateProveedor : handleCreateProveedor}
-          >
-            <div>
+        <div className="card-proveedor">
+          <h1 className="sub-titles-copm-proveedor">Nuevo Proveedor</h1>
+          <form onSubmit={editar ? handleUpdateProveedor : handleCreateProveedor}>
+            <div className="form-group">
               <label htmlFor="name">Nombre</label>
               <input
                 type="text"
@@ -164,7 +161,7 @@ const RegistroProveedor = () => {
                 required
               />
             </div>
-            <div>
+            <div  className="form-group">
               <label htmlFor="telefono">Telefono</label>
               <input
                 type="number"
@@ -176,7 +173,7 @@ const RegistroProveedor = () => {
                 required
               />
             </div>
-            <div>
+            <div className="form-group">
               <label htmlFor="correo">Correo Electrónico</label>
               <input
                 type="text"
@@ -200,11 +197,24 @@ const RegistroProveedor = () => {
                 <button type="submit">Registrar</button>
               )}
             </div>
+            <div className="form-group-filter-proveedor">
+            <select
+                id="idProveedor-filter"
+                name="idProveedor-filter"
+              >
+                <option value="">Seleccione un proveedor</option>
+                {proveedores.map((val) => (
+                  <option key={val.idProveedor} value={val.idProveedor}>
+                    {val.nombProveedor}
+                  </option>
+                ))}
+              </select>
+            </div>
           </form>
         </div>
         <div></div>
         <div className="table-container">
-          <h2 className="sub-titles-copm">Proveedores Registrados</h2>
+          <h1 className="sub-titles-copm-table">Proveedores Registrados</h1>
           <div className="table-card">
             <table>
               <thead>
