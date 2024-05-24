@@ -17,7 +17,7 @@
     background-color: #1E2736;
     color: #fff;
     padding: 1rem 1.5rem;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
 }
 
 .title-comp {
@@ -37,9 +37,24 @@
 .sub-titles-copm {
     font-size: 1.5rem;
     font-weight: bold;
-    margin-bottom: 1rem;
+    transform: translate(0px, -50px);
+    margin-bottom: 0rem; /* Reducir el espacio debajo del título */
 }
 
+
+.sub-titles-copm-producto {
+    font-size: 1.5rem;
+    font-weight: bold;
+    transform: translate(0px, -50px);
+    margin-bottom: 0rem; /* Reducir el espacio debajo del título */
+}
+
+.sub-titles-copm-table {
+    font-size: 1.5rem;
+    font-weight: bold;
+    transform: translate(0px, -90px);
+    margin-bottom: 0rem; /* Reducir el espacio debajo del título */
+}
 
 .text-sm.font-medium.leading-none.peer-disabled:cursor-not-allowed.peer-disabled:opacity-70 {
     font-size: 0.875rem;
@@ -49,14 +64,14 @@
     margin-bottom: 0.5rem;
 }
 
-.card {
+.card-producto {
     background-color: #fff;
     border-radius: 0.5rem;
     padding: 1.5rem;
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
-.card input,
+.card-producto input,
 select {
     width: 100%;
     padding: 0.75rem;
@@ -70,7 +85,7 @@ select {
     color: #1E2736;
 }
 
-.card button {
+.card-producto button {
     width: 40%;
     padding: 0.75rem 1rem;
     border: none;
@@ -83,10 +98,10 @@ select {
     position: relative;
     left: 30%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+    margin-top: 50px;
 }
 
-.card button[type="submit_2"] {
+.card-producto button[type="submit_2"] {
     width: 20%;
     padding: 0.75rem 1rem;
     border: none;
@@ -99,10 +114,10 @@ select {
     position: relative;
     left: 30%;
     margin-right: 10px;
-    margin-top: 20px;
+    margin-top: 50px;
 }
 
-.card button[type="button"] {
+.card-producto button[type="button"] {
     width: 20%;
     padding: 0.75rem 1rem;
     border: none;
@@ -117,8 +132,349 @@ select {
     margin-top: 20px;
 }
 
-.card button[type="submit"]:hover {
+.card-producto button[type="submit"]:hover {
     background-color: #3c4350;
+}
+
+.form-group-filter-producto {
+    display: flex; /* Cambia el contenedor a un contenedor flex */
+    align-items: center; /* Centra los elementos verticalmente */
+    gap: 10px; /* Espacio entre los elementos */
+    margin: 0px; /* Añade márgenes para asegurarte de que no se desborden */
+}
+
+.form-group-filter-producto select,
+.form-group-filter-producto input {
+    padding: 11px;
+    font-size: 13px;
+    width: 19.7rem; /* Ancho de los elementos */
+    transform: translate(900px, 40px);
+    position: relative;
+    z-index: 2; /* El div tiene un z-index menor */
+}
+
+.form-group-filter-producto div {
+    display: flex; /* Contenedor para los inputs */
+    gap: 10px; /* Espacio entre el select y el input */
+}
+
+/* CSS DEL EMPLEADO */
+
+
+.sub-titles-copm-empleado {
+    font-size: 1.5rem;
+    font-weight: bold;
+    transform: translate(0px, -10px);
+    margin-bottom: 0rem; /* Reducir el espacio debajo del título */
+}
+
+.card-empleado {
+    background-color: transparent;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    transform: translate(0px, -40px); /* Ajusta los valores según tus necesidades */
+    margin-top: 2rem;
+}
+
+.card-empleado input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    font-weight: normal;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #1E2736;
+}
+
+.card-empleado button {
+    width: 40%;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #1E2736;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+    left: 30%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+}
+
+.card-empleado button[type="submit_2"] {
+    width: 20%;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #1E2736;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+    left: 30%;
+    margin-right: 10px;
+    margin-top: 50px;
+}
+
+.card-empleado button[type="button"] {
+    width: 20%;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #1E2736;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+    left: 30%;
+    margin-top: 20px;
+}
+
+.card-empleado button[type="submit"]:hover {
+    background-color: #3c4350;
+}
+
+
+.form-group-filter-empleado input {
+    padding: 11px;
+    font-size: 13px;
+    transform: translate(900px, 80px);
+    width: 41rem;
+    position: relative;
+    z-index: 2; /* El div tiene un z-index menor */
+}
+
+/* CSS CATEGORIA */
+
+.sub-titles-copm-categoria {
+    font-size: 1.5rem;
+    font-weight: bold;
+    transform: translate(0px, -40px);
+    margin-bottom: 0rem; /* Reducir el espacio debajo del título */
+}
+
+.card-categoria {
+    background-color: transparent;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    transform: translate(0px, 10px); /* Ajusta los valores según tus necesidades */
+    margin-top: 2rem;
+    margin-bottom: 4rem; /* Reducir el espacio debajo del título */
+
+}
+
+.card-categoria input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    font-weight: normal;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #1E2736;
+}
+
+.card-categoria button {
+    width: 40%;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #1E2736;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+    left: 30%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 1px;
+}
+
+.card-categoria button[type="submit_2"] {
+    width: 20%;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #1E2736;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+    left: 30%;
+    margin-right: 10px;
+    margin-top: -1px;
+}
+
+.card-categoria button[type="button"] {
+    width: 20%;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #1E2736;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+    left: 30%;
+    margin-top: -1px;
+}
+
+.card-categoria button[type="submit"]:hover {
+    background-color: #3c4350;
+}
+
+.form-group-filter-categoria select {
+    padding: 11px;
+    font-size: 13px;
+    transform: translate(900px, 90px);
+    width: 41rem;
+    position: relative;
+    z-index: 2; /* El div tiene un z-index menor */
+}
+
+/* CSS PROVEEDOR */
+
+.sub-titles-copm-proveedor {
+    font-size: 1.5rem;
+    font-weight: bold;
+    transform: translate(0px, -40px);
+    margin-bottom: 0rem; /* Reducir el espacio debajo del título */
+}
+
+.card-proveedor {
+    background-color: transparent;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    transform: translate(0px, 10px); /* Ajusta los valores según tus necesidades */
+    margin-top: 2rem;
+}
+
+.card-proveedor input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    font-weight: normal;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #1E2736;
+}
+
+.card-proveedor button {
+    width: 40%;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #1E2736;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+    left: 30%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+}
+
+.card-proveedor button[type="submit_2"] {
+    width: 20%;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #1E2736;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+    left: 30%;
+    margin-right: 10px;
+    margin-top: 50px;
+}
+
+.card-proveedor button[type="button"] {
+    width: 20%;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #1E2736;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+    left: 30%;
+    margin-top: 20px;
+}
+
+.card-proveedor button[type="submit"]:hover {
+    background-color: #3c4350;
+}
+
+.form-group-filter-proveedor select {
+    padding: 11px;
+    font-size: 13px;
+    transform: translate(900px, 60px);
+    width: 41rem;
+    position: relative;
+    z-index: 2; /* El div tiene un z-index menor */
+}
+
+/* CSS TABLAS */
+
+.table-card {
+    padding: 0;
+    transform: translate(0px, -60px);
+    position: relative;
+    z-index: 1; /* El div tiene un z-index menor */
+
+}
+
+.table-card table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+    border-collapse: separate;
+}
+
+.table-card table th,
+.table-card table td {
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    background-color: #fff;
+}
+
+.table-card table td {
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+}
+
+.table-card table th {
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+}
+
+.table-card table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid#e5e7eb;
+}
+
+.table-card table tbody td {
+    text-align: center;
 }
 
 .edit-button {
@@ -156,53 +512,7 @@ select {
     background-color: #d32f2f;
 }
 
-/*CSS TABLAS*/
-
-.table-card {
-    overflow: hidden;
-}
-
-.table-card table {
-    width: 100%;
-    border-collapse: collapse;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 1rem;
-    overflow: hidden;
-}
-
-.table-card table th,
-.table-card table td {
-    padding: 0.75rem;
-    border: 1px solid #e2e8f0;
-    background-color: #fff;
-}
-
-.table-card table td {
-    border-left: 1px solid transparent;
-    border-right: 1px solid transparent;
-}
-
-.table-card table th {
-    border-left: 1px solid transparent;
-    border-right: 1px solid transparent;
-}
-
-.table-card table {
-    border-collapse: separate;
-    border-spacing: 0;
-    border: 1px solid#e5e7eb;
-}
-
-.table-card table tbody td {
-    text-align: center;
-}
-
-
-.sub-titles-copm {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-}
+/* CSS GENERAL */
 
 .form-grid {
     display: grid;
@@ -213,10 +523,12 @@ select {
 .form-group {
     display: flex;
     flex-direction: column;
+    transform: translate(0px, -50px); /* Ajusta los valores según tus necesidades */
+
 }
 
 .form-group label {
-    padding-top: 15px;
+    padding-top: 15px; /* Reducir el espacio superior del primer label */
 }
 
 .form-group input,
@@ -229,9 +541,9 @@ select {
 .form-group button {
     padding: 10px 20px;
     font-size: 15px;
-    margin-top: 100px;
-    margin-left: -500px;
+    margin-top: 120px;
     width: 40rem;
+    transform: translate(-500px, 0); /* Ajusta los valores según tus necesidades */
 }
 
 .form-group input,

@@ -138,12 +138,10 @@ const RegistroCategoria = () => {
         <h1 className="title-comp">Registro de Categorias</h1>
       </div>
       <div className="form-comp">
-        <div className="card">
-          <h2 className="sub-titles-copm">Nueva Categoria</h2>
-          <form
-            onSubmit={editar ? handleUpdateCategoria : handleCreateCategoria}
-          >
-            <div>
+        <div className="card-categoria">
+          <h1 className="sub-titles-copm-categoria">Nueva Categoria</h1>
+          <form onSubmit={editar ? handleUpdateCategoria : handleCreateCategoria}>
+            <div className="form-group">
               <label htmlFor="nombCatergoria">Nombre de Categoria</label>
               <input
                 type="text"
@@ -167,10 +165,23 @@ const RegistroCategoria = () => {
                 <button type="submit">Registrar</button>
               )}
             </div>
+            <div className="form-group-filter-categoria">
+              <select
+                id="idCategoria-filter"
+                name="idCategoria-filter"
+              >
+                <option value="">Seleccione una categoría</option>
+                {categorias.map((val) => (
+                  <option key={val.idCategoria} value={val.idCategoria}>
+                    {val.nombCatergoria}
+                  </option>
+                ))}
+              </select>
+            </div>
           </form>
         </div>
         <div className="table-container">
-          <h2 className="sub-titles-copm">Categorias Registradas</h2>
+          <h1 className="sub-titles-copm-table">Categorias Registradas</h1>
           <div className="table-card">
             <table>
               <thead>
