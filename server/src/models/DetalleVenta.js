@@ -4,6 +4,8 @@ import { sequelize } from "../database/database.js";
 export const DetalleVenta = sequelize.define("detalleVentas", {
   idDetalleVenta: {
     type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
   },
   idVenta: {
     type: DataTypes.INTEGER,

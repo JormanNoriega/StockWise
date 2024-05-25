@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { useProducto } from "../context/productoContext";
 import { useCategoria } from "../context/categoriaContext";
 import { useProveedor } from "../context/proveedorContext";
+import { format } from "date-fns";
 
 const RegistroProducto = () => {
   const [formData, setFormData] = useState({
@@ -13,7 +14,7 @@ const RegistroProducto = () => {
     nombProducto: "",
     precioCompra: "",
     precioVenta: "",
-    vecimiento: ""
+    vecimiento: "",
   });
   const [codProducto, setId] = useState("");
   const [editar, setEditar] = useState(false);
@@ -26,14 +27,8 @@ const RegistroProducto = () => {
     deleteProducto,
     updateProducto,
   } = useProducto();
-  const {
-    getCategoria,
-    categorias,
-  } = useCategoria();
-  const {
-    getProveedor,
-    proveedores,
-  } = useProveedor();
+  const { getCategoria, categorias } = useCategoria();
+  const { getProveedor, proveedores } = useProveedor();
 
   const handleCreateEmpleado = async (e) => {
     e.preventDefault();
@@ -51,7 +46,8 @@ const RegistroProducto = () => {
         nombProducto: "",
         precioCompra: "",
         precioVenta: "",
-        vecimiento: ""
+        vecimiento: "",
+        stock: "",
       });
       await getProducto();
     } catch (error) {
@@ -136,7 +132,8 @@ const RegistroProducto = () => {
       nombProducto: val.nombProducto,
       precioCompra: val.precioCompra,
       precioVenta: val.precioVenta,
-      vecimiento: val.vecimiento
+      vecimiento: val.vecimiento,
+      stock: val.stock,
     });
     setId(val.codProducto);
   };
@@ -149,7 +146,8 @@ const RegistroProducto = () => {
       nombProducto: "",
       precioCompra: "",
       precioVenta: "",
-      vecimiento: ""
+      vecimiento: "",
+      stock: "",
     });
     setId("");
     setEditar(false);
@@ -163,13 +161,15 @@ const RegistroProducto = () => {
 
   const getCategoriaName = (idCategoria) => {
     const categoria = categorias.find((cat) => cat.idCategoria === idCategoria);
-    return categoria ? categoria.nombCatergoria : "Desconocida"
+    return categoria ? categoria.nombCatergoria : "Desconocida";
   };
 
   const getProveedorName = (idProveedor) => {
-    const proveedor = proveedores.find((pro) => pro.idProveedor === idProveedor);
-    return proveedor ? proveedor.nombProveedor : "Desconocido"
-  }
+    const proveedor = proveedores.find(
+      (pro) => pro.idProveedor === idProveedor
+    );
+    return proveedor ? proveedor.nombProveedor : "Desconocido";
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -177,6 +177,11 @@ const RegistroProducto = () => {
       ...prevState,
       [name]: value,
     }));
+  };
+
+  // Función para formatear la fecha
+  const formatFecha = (fecha) => {
+    return format(new Date(fecha), "dd/MM/yyyy");
   };
 
   return (
@@ -187,9 +192,12 @@ const RegistroProducto = () => {
       <div className="form-comp">
         <div className="card-producto">
           <h1 className="sub-titles-copm-producto">Nuevo Producto</h1>
-          <form onSubmit={editar ? handleUpdateProducto : handleCreateEmpleado} className="form-grid">
+          <form
+            onSubmit={editar ? handleUpdateProducto : handleCreateEmpleado}
+            className="form-grid"
+          >
             <div className="form-group">
-            <label htmlFor="codProducto">Código de Producto</label>
+              <label htmlFor="codProducto">Código de Producto</label>
               <input
                 type="text"
                 id="codProducto"
@@ -288,6 +296,19 @@ const RegistroProducto = () => {
               />
             </div>
             <div className="form-group">
+              <label htmlFor="stock">Stock</label>
+              <input
+                type="number"
+                id="stock"
+                name="stock"
+                placeholder="Ingrese el Stock"
+                autoComplete="off"
+                value={formData.stock}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
               {editar ? (
                 <div>
                   <button type="submit_2">Actualizar</button>
@@ -307,10 +328,7 @@ const RegistroProducto = () => {
                 placeholder="Filtrar productos"
                 autoComplete="off"
               />
-              <select
-                id="idCategoria-filter"
-                name="idCategoria-filter"
-              >
+              <select id="idCategoria-filter" name="idCategoria-filter">
                 <option value="">Seleccione una categoría</option>
                 {categorias.map((val) => (
                   <option key={val.idCategoria} value={val.idCategoria}>
@@ -318,7 +336,6 @@ const RegistroProducto = () => {
                   </option>
                 ))}
               </select>
-
             </div>
           </form>
         </div>
@@ -335,6 +352,8 @@ const RegistroProducto = () => {
                   <th>Precio de compra</th>
                   <th>Precio de venta</th>
                   <th>Vencimiento</th>
+                  <th>Stock</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -346,7 +365,8 @@ const RegistroProducto = () => {
                     <td>{getProveedorName(val.idProveedor)}</td>
                     <td>{val.precioCompra}</td>
                     <td>{val.precioVenta}</td>
-                    <td>{val.vecimiento}</td>
+                    <td>{formatFecha(val.vecimiento)}</td>
+                    <td>{val.stock}</td>
                     <td>
                       <button
                         className="edit-button"

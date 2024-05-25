@@ -8,14 +8,17 @@ import empleadosRoutes from "./routes/empleado.routes.js";
 import categoriasRoutes from "./routes/categoria.routes.js";
 import proveedoresRoutes from "./routes/proveedor.routes.js";
 import productosRoutes from "./routes/producto.routes.js";
+import ventasRoutes from "./routes/venta.routes.js";
 
 const app = express();
 
 // Middlewares
- app.use(cors({
-     origin: 'http://localhost:5173',
-     credentials: true
-}));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 app.use(morgan("dev"));
 app.use(express.json());
@@ -26,5 +29,6 @@ app.use("/api", empleadosRoutes);
 app.use("/api", categoriasRoutes);
 app.use("/api", proveedoresRoutes);
 app.use("/api", productosRoutes);
+app.use("/api", ventasRoutes);
 
 export default app;

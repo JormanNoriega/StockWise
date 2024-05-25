@@ -8,7 +8,8 @@ export class ProductoDTO {
     nombProducto,
     precioCompra,
     precioVenta,
-    vecimiento
+    vecimiento,
+    stock 
   ) {
     this.idProducto = idProducto;
     this.codProducto = codProducto;
@@ -19,5 +20,6 @@ export class ProductoDTO {
     this.precioCompra = precioCompra;
     this.precioVenta = precioVenta;
     this.vecimiento = vecimiento;
+    this.stock = stock;
   }
 }
