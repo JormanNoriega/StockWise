@@ -12,6 +12,7 @@ export const postProducto = async (req, res) => {
       precioCompra,
       precioVenta,
       vecimiento,
+      stock 
     } = req.body;
     const newProducto = await productoService.crearProducto(
       codProducto,
@@ -21,7 +22,8 @@ export const postProducto = async (req, res) => {
       nombProducto,
       precioCompra,
       precioVenta,
-      vecimiento
+      vecimiento,
+      stock 
     );
     res.json(newProducto);
   } catch (error) {
@@ -66,6 +68,7 @@ export async function putProducto(req, res) {
     precioCompra,
     precioVenta,
     vecimiento,
+    stock,
   } = req.body;
   try {
     const productoActualizado = await productoService.actualizarProducto(
@@ -76,7 +79,8 @@ export async function putProducto(req, res) {
       nombProducto,
       precioCompra,
       precioVenta,
-      vecimiento
+      vecimiento,
+      stock 
     );
     res.json(empleadoActualizado);
   } catch (error) {

@@ -1,6 +1,6 @@
 export class DetalleVentaDTO {
   constructor(idDetalleVenta, idVenta, idProducto, cantidad, subTotal) {
-    this.idDetalleVenta = idVenta;
+    this.idDetalleVenta = idDetalleVenta;
     this.idVenta = idVenta;
     this.idProducto = idProducto;
     this.cantidad = cantidad;

@@ -10,7 +10,8 @@ export async function crearProducto(
   nombProducto,
   precioCompra,
   precioVenta,
-  vecimiento
+  vecimiento,
+  stock
 ) {
   try {
     const newProducto = await Producto.create({
@@ -22,6 +23,7 @@ export async function crearProducto(
       precioCompra,
       precioVenta,
       vecimiento,
+      stock,
     });
     return new ProductoDTO(
       newProducto.idProducto,
@@ -32,7 +34,8 @@ export async function crearProducto(
       newProducto.nombProducto,
       newProducto.precioCompra,
       newProducto.precioVenta,
-      newProducto.vecimiento
+      newProducto.vecimiento,
+      newProducto.stock
     );
   } catch (error) {
     throw new Error(error.message);
@@ -58,7 +61,8 @@ export async function obtenerProductos(idUsuario) {
           productos.nombProducto,
           productos.precioCompra,
           productos.precioVenta,
-          productos.vecimiento
+          productos.vecimiento,
+          productos.stock
         )
     );
   } catch (error) {
@@ -66,7 +70,6 @@ export async function obtenerProductos(idUsuario) {
   }
 }
 
-//pendiente obtener el producto con los objetos relacionados
 //Obtener un Producto
 export async function obtenerProducto(idUsuario, codProducto) {
   try {
@@ -86,7 +89,8 @@ export async function obtenerProducto(idUsuario, codProducto) {
         producto.nombProducto,
         producto.precioCompra,
         producto.precioVenta,
-        producto.vecimiento
+        producto.vecimiento,
+        producto.stock
       );
     } else {
       // Si no se encontró ningún empleado, devolver null
@@ -106,7 +110,8 @@ export async function actualizarProducto(
   nombProducto,
   precioCompra,
   precioVenta,
-  vecimiento
+  vecimiento,
+  stock
 ) {
   try {
     const producto = await Producto.findOne({
@@ -121,6 +126,7 @@ export async function actualizarProducto(
     producto.precioCompra = precioCompra;
     producto.precioVenta = precioVenta;
     producto.vecimiento = vecimiento;
+    producto.stock = stock;
     await producto.save();
 
     return new ProductoDTO(
@@ -132,7 +138,8 @@ export async function actualizarProducto(
       producto.nombProducto,
       producto.precioCompra,
       producto.precioVenta,
-      producto.vecimiento
+      producto.vecimiento,
+      producto.stock
     );
   } catch (error) {
     throw new Error(error.message);

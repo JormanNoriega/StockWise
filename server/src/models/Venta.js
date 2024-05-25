@@ -16,6 +16,7 @@ export const Venta = sequelize.define("ventas", {
   },
   fechaVenta: {
     type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
   },
 });
 
