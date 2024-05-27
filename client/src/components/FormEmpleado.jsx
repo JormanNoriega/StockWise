@@ -11,6 +11,8 @@ const RegistroEmpleados = () => {
   });
   const [id, setId] = useState("");
   const [editar, setEditar] = useState(false);
+  const [filteredEmpleados, setFilteredEmpleados] = useState([]);
+  const [filterValue, setFilterValue] = useState("");
   const [error, setError] = useState("");
   const { createEmpleado, getEmpleado, empleados, deleteEmpleado, updateEmpleado } = useEmpleado();
 
@@ -58,6 +60,7 @@ const RegistroEmpleados = () => {
               html: "<i>El empleado <strong>" + val.nombre + "</strong> fue eliminado exitosamente!</i>",
               icon: 'success',
             });
+            getEmpleado();
           }).catch((error) => {
             Swal.fire({
               icon: "error",
@@ -116,6 +119,10 @@ const RegistroEmpleados = () => {
     getEmpleado();
   }, []);
 
+  useEffect(() => {
+    setFilteredEmpleados(empleados);
+  }, [empleados]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -124,16 +131,27 @@ const RegistroEmpleados = () => {
     }));
   };
 
+  const handleFilterChange = (e) => {
+    const query = e.target.value.toLowerCase();
+    setFilterValue(e.target.value);
+    setFilteredEmpleados(
+      empleados.filter((empleado) =>
+        empleado.nombre.toLowerCase().includes(query) ||
+        empleado.correo.toLowerCase().includes(query)
+      )
+    );
+  };
+
   return (
     <div className="w-full h-full">
       <div className="header-comp">
         <h1 className="title-comp">Registro de Empleados</h1>
       </div>
       <div className="form-comp">
-        <div className="card-empleado">
-          <h1 className="sub-titles-copm-empleado">Nuevo Empleado</h1>
+        <div className="card">
+          <h1 className="sub-titles-copm">Nuevo Empleado</h1>
           <form onSubmit={editar ? handleUpdateEmpleado : handleCreateEmpleado}>
-            <div >
+            <div>
               <label htmlFor="nombre">Nombre</label>
               <input
                 type="text"
@@ -184,55 +202,55 @@ const RegistroEmpleados = () => {
                 <button type="submit">Registrar</button>
               )}
             </div>
-            <div className="form-group-filter-empleado">
-              <input
-                type="text"
-                id="producto-filter"
-                name="producto-filter"
-                placeholder="Filtrar empleados"
-                autoComplete="off"
-              />
-            </div>
           </form>
         </div>
 
-        <div className="table-container">
-          <h1 className="sub-titles-copm-table">Empleados Registrados</h1>
-          <div className="table-card">
-            <table>
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Correo Electrónico</th>
-                  <th>Contraseña</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {empleados.map((val) => (
-                  <tr key={val.idUsuario}>
-                    <td>{val.nombre}</td>
-                    <td>{val.correo}</td>
-                    <td>{val.contraseña}</td>
-                    <td>
-                      <button
-                        className="edit-button"
-                        onClick={() => setEmpleado(val)}
-                      >
-                        Editar
-                      </button>
-                      <button
-                        className="delete-button"
-                        onClick={() => handleDeleteEmpleado(val)}
-                      >
-                        Eliminar
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <div className="table-card">
+          <h1 className="sub-titles-copm">Empleados Registrados</h1>
+          <div className="search-bar">
+            <input
+              type="text"
+              id="empleado-filter"
+              name="empleado-filter"
+              placeholder="Filtrar empleados"
+              autoComplete="off"
+              value={filterValue}
+              onChange={handleFilterChange}
+            />
           </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Correo Electrónico</th>
+                <th>Contraseña</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredEmpleados.map((val) => (
+                <tr key={val.idEmpleado}>
+                  <td>{val.nombre}</td>
+                  <td>{val.correo}</td>
+                  <td>{val.contraseña}</td>
+                  <td>
+                    <button
+                      className="edit-button"
+                      onClick={() => setEmpleado(val)}
+                    >
+                      Editar
+                    </button>
+                    <button
+                      className="delete-button"
+                      onClick={() => handleDeleteEmpleado(val)}
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

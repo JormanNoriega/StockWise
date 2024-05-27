@@ -9,6 +9,8 @@ const RegistroCategoria = () => {
   });
   const [id, setId] = useState("");
   const [editar, setEditar] = useState(false);
+  const [filteredCategorias, setFilteredCategorias] = useState([]);
+  const [filterValue, setFilterValue] = useState("");
   const [error, setError] = useState("");
   const {
     createCategoria,
@@ -36,7 +38,7 @@ const RegistroCategoria = () => {
       Swal.fire({
         icon: "error",
         title: "¡Error!",
-        text: "Hubo un problema al registrar la categoria.",
+        text: error.response.data.message,
         footer: error,
       });
     }
@@ -66,6 +68,7 @@ const RegistroCategoria = () => {
                 "</strong> fue eliminado exitosamente!</i>",
               icon: "success",
             });
+            getCategoria();
           })
           .catch((error) => {
             Swal.fire({
@@ -92,7 +95,7 @@ const RegistroCategoria = () => {
           "</strong> fue actualizado con éxito! </i>",
         icon: "success",
       });
-      await getEmpleado();
+      await getCategoria();
     } catch (error) {
       setError(error.response.data.message);
       Swal.fire({
@@ -124,6 +127,10 @@ const RegistroCategoria = () => {
     getCategoria();
   }, []);
 
+  useEffect(() => {
+    setFilteredCategorias(categorias);
+  }, [categorias]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -132,14 +139,24 @@ const RegistroCategoria = () => {
     }));
   };
 
+  const handleFilterChange = (e) => {
+    const query = e.target.value.toLowerCase();
+    setFilterValue(e.target.value);
+    setFilteredCategorias(
+      categorias.filter((categoria) =>
+        categoria.nombCatergoria.toLowerCase().includes(query)
+      )
+    );
+  };
+
   return (
     <div className="w-full h-full">
       <div className="header-comp">
         <h1 className="title-comp">Registro de Categorias</h1>
       </div>
       <div className="form-comp">
-        <div className="card-categoria">
-          <h1 className="sub-titles-copm-categoria">Nueva Categoria</h1>
+        <div className="card">
+          <h1 className="sub-titles-copm">Nueva Categoria</h1>
           <form onSubmit={editar ? handleUpdateCategoria : handleCreateCategoria}>
             <div className="form-group">
               <label htmlFor="nombCatergoria">Nombre de Categoria</label>
@@ -148,7 +165,7 @@ const RegistroCategoria = () => {
                 id="nombCatergoria"
                 name="nombCatergoria"
                 placeholder="Ingrese su categoria"
-                value={formData.nombCategoria}
+                value={formData.nombCatergoria}
                 onChange={handleChange}
                 required
               />
@@ -165,56 +182,52 @@ const RegistroCategoria = () => {
                 <button type="submit">Registrar</button>
               )}
             </div>
-            <div className="form-group-filter-categoria">
-              <select
-                id="idCategoria-filter"
-                name="idCategoria-filter"
-              >
-                <option value="">Seleccione una categoría</option>
-                {categorias.map((val) => (
-                  <option key={val.idCategoria} value={val.idCategoria}>
-                    {val.nombCatergoria}
-                  </option>
-                ))}
-              </select>
-            </div>
           </form>
         </div>
-        <div className="table-container">
-          <h1 className="sub-titles-copm-table">Categorias Registradas</h1>
-          <div className="table-card">
-            <table>
-              <thead>
-                <tr>
-                  <th>Nombre de Categoria</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {categorias.map((val, key) => {
-                  return (
-                    <tr key={val.idUsuario}>
-                      <td>{val.nombCatergoria}</td>
-                      <td>
-                        <button
-                          className="edit-button"
-                          onClick={() => setCategoria(val)}
-                        >
-                          Editar
-                        </button>
-                        <button
-                          className="delete-button"
-                          onClick={() => handleDeleteCategoria(val)}
-                        >
-                          Eliminar
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+        <div className="table-card">
+          <h1 className="sub-titles-copm">Categorias Registradas</h1>
+          <div className="search-bar">
+            <input
+              type="text"
+              id="categoria-filter"
+              name="categoria-filter"
+              placeholder="Filtrar categorias"
+              autoComplete="off"
+              value={filterValue}
+              onChange={handleFilterChange}
+            />
           </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Nombre de Categoria</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredCategorias.map((val, key) => {
+                return (
+                  <tr key={val.idCategoria}>
+                    <td>{val.nombCatergoria}</td>
+                    <td>
+                      <button
+                        className="edit-button"
+                        onClick={() => setCategoria(val)}
+                      >
+                        Editar
+                      </button>
+                      <button
+                        className="delete-button"
+                        onClick={() => handleDeleteCategoria(val)}
+                      >
+                        Eliminar
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

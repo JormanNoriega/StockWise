@@ -82,7 +82,7 @@ export async function putProducto(req, res) {
       vecimiento,
       stock 
     );
-    res.json(empleadoActualizado);
+    res.json(productoActualizado);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

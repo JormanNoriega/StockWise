@@ -1,9 +1,22 @@
 import { Categoria } from "../models/Categoria.js";
 import { CategoriaDTO } from "../dtos/categoria.dto.js";
 
+async function validarCategoria(nombCatergoria) {
+  const categoriaEncontrada = await Categoria.findOne({
+    where: { nombCatergoria: nombCatergoria },
+  });
+
+  if (categoriaEncontrada) {
+    throw new Error("La categoria ya está en uso");
+  }
+}
+
 //Crear Categoria
 export async function crearCategoria(idUsuario, nombCatergoria) {
   try {
+
+    await validarCategoria(nombCatergoria);
+
     const newCategoria = await Categoria.create({
       idUsuario,
       nombCatergoria,

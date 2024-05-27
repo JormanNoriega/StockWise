@@ -1,5 +1,15 @@
 import * as ventaService from "../services/venta.services.js";
 
+export const obtenerProductosDelEmpleado = async (req, res) => {
+  try {
+    const { idEmpleado } = req.body;
+    const obtenerProductos = await ventaService.obtenerProductosDelEmpleado(idEmpleado);
+    res.json(obtenerProductos);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+}
+
 // Crear una Venta
 export const postVenta = async (req, res) => {
   try {
