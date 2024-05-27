@@ -4,6 +4,7 @@ import * as productoService from "../services/producto.services.js";
 export const postProducto = async (req, res) => {
   try {
     const idUsuario = req.usuario.idUsuario;
+    
     const {
       codProducto,
       idCategoria,
@@ -34,6 +35,7 @@ export const postProducto = async (req, res) => {
 //Obtener todos los productos
 export async function getProductos(req, res) {
   const idUsuario = req.usuario.idUsuario;
+  //const idUsuario = req.usuario?.idUsuario || req.empleado?.idUsuario;
   try {
     const productos = await productoService.obtenerProductos(idUsuario);
     res.json(productos);
@@ -88,7 +90,6 @@ export async function putProducto(req, res) {
   }
 }
 
-// Eliminar un empleado
 export async function deleteProducto(req, res) {
   const { codProducto } = req.params;
   const idUsuario = req.usuario.idUsuario;

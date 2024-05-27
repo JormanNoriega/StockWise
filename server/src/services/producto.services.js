@@ -1,23 +1,24 @@
 import { Producto } from "../models/Producto.js";
 import { ProductoDTO } from "../dtos/producto.dto.js";
 
-async function validarProducto(codProducto, nombProducto) {
+async function validarProducto(codProducto, nombProducto, idUsuario) {
   const productoEncontrado = await Producto.findOne({
     where: {
       codProducto: codProducto,
+      idUsuario: idUsuario,
     },
   });
-  
+
   if (productoEncontrado) {
     throw new Error("El codigo del producto ya está en uso");
   }
-  
+
   const nombProductoEncontrado = await Producto.findOne({
     where: {
       nombProducto: nombProducto,
     },
   });
-  
+
   if (nombProductoEncontrado) {
     throw new Error("El nombre del producto ya está en uso");
   }
@@ -36,8 +37,7 @@ export async function crearProducto(
   stock
 ) {
   try {
-
-    await validarProducto(codProducto, nombProducto);
+    await validarProducto(codProducto, nombProducto, idUsuario);
 
     const newProducto = await Producto.create({
       codProducto,

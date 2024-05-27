@@ -1,9 +1,9 @@
 import { Categoria } from "../models/Categoria.js";
 import { CategoriaDTO } from "../dtos/categoria.dto.js";
 
-async function validarCategoria(nombCatergoria) {
+async function validarCategoria(nombCatergoria, idUsuario) {
   const categoriaEncontrada = await Categoria.findOne({
-    where: { nombCatergoria: nombCatergoria },
+    where: { nombCatergoria: nombCatergoria, idUsuario: idUsuario },
   });
 
   if (categoriaEncontrada) {
@@ -14,8 +14,7 @@ async function validarCategoria(nombCatergoria) {
 //Crear Categoria
 export async function crearCategoria(idUsuario, nombCatergoria) {
   try {
-
-    await validarCategoria(nombCatergoria);
+    await validarCategoria(nombCatergoria,idUsuario);
 
     const newCategoria = await Categoria.create({
       idUsuario,
@@ -65,7 +64,7 @@ export async function obtenerCategoria(idUsuario, idCategoria) {
       return new CategoriaDTO(
         categoria.idCategoria,
         categoria.idUsuario,
-        categoria.nombCatergoria,
+        categoria.nombCatergoria
       );
     } else {
       return null;

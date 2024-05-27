@@ -60,14 +60,18 @@ export async function crearVenta(idEmpleado, detalles) {
 
     // Validar stock y calcular subtotal
     for (const detalle of detalles) {
-      const producto = await Producto.findByPk(detalle.idProducto, { transaction });
+      const producto = await Producto.findByPk(detalle.idProducto, {
+        transaction,
+      });
 
       if (!producto) {
         throw new Error(`Producto con id ${detalle.idProducto} no encontrado`);
       }
 
       if (producto.stock < detalle.cantidad) {
-        throw new Error(`Stock insuficiente para el producto con id ${detalle.idProducto}`);
+        throw new Error(
+          `Stock insuficiente para el producto con id ${detalle.idProducto}`
+        );
       }
 
       const subTotal = detalle.cantidad * producto.precioVenta;
@@ -81,25 +85,33 @@ export async function crearVenta(idEmpleado, detalles) {
     }
 
     // Crear la venta
-    const newVenta = await Venta.create({
-      idEmpleado,
-      totalVenta,
-    }, { transaction });
+    const newVenta = await Venta.create(
+      {
+        idEmpleado,
+        totalVenta,
+      },
+      { transaction }
+    );
 
     // Crear los detalles de la venta y actualizar el inventario
     for (const detalle of detallesCreados) {
-      const nuevoDetalle = await DetalleVenta.create({
-        idVenta: newVenta.idVenta,
-        idProducto: detalle.idProducto,
-        cantidad: detalle.cantidad,
-        subTotal: detalle.subTotal,
-      }, { transaction });
+      const nuevoDetalle = await DetalleVenta.create(
+        {
+          idVenta: newVenta.idVenta,
+          idProducto: detalle.idProducto,
+          cantidad: detalle.cantidad,
+          subTotal: detalle.subTotal,
+        },
+        { transaction }
+      );
 
       // Aquí asignamos el idDetalleVenta al objeto detalle creado
       detalle.idDetalleVenta = nuevoDetalle.idDetalleVenta;
 
       // Actualizar el inventario restando la cantidad vendida
-      const producto = await Producto.findByPk(detalle.idProducto, { transaction });
+      const producto = await Producto.findByPk(detalle.idProducto, {
+        transaction,
+      });
       producto.stock -= detalle.cantidad;
       await producto.save({ transaction });
     }
@@ -112,14 +124,15 @@ export async function crearVenta(idEmpleado, detalles) {
       newVenta.idEmpleado,
       newVenta.totalVenta,
       newVenta.fechaVenta,
-      detallesCreados.map((detalle) => 
-        new DetalleVentaDTO(
-          detalle.idDetalleVenta,
-          newVenta.idVenta,
-          detalle.idProducto,
-          detalle.cantidad,
-          detalle.subTotal
-        )
+      detallesCreados.map(
+        (detalle) =>
+          new DetalleVentaDTO(
+            detalle.idDetalleVenta,
+            newVenta.idVenta,
+            detalle.idProducto,
+            detalle.cantidad,
+            detalle.subTotal
+          )
       )
     );
   } catch (error) {
@@ -129,15 +142,21 @@ export async function crearVenta(idEmpleado, detalles) {
   }
 }
 
-// Obtener todas las Ventas
-export async function obtenerVentas() {
+export async function obtenerVentas(idUsuario) {
   try {
+    // Primero, encuentra todos los empleados asociados al usuario
+    const empleados = await Empleado.findAll({
+      where: { idUsuario: idUsuario },
+    });
+
+    // Luego, obtén todas las ventas de esos empleados
     const ventas = await Venta.findAll({
+      where: { idEmpleado: empleados.map((empleado) => empleado.idEmpleado) },
       include: DetalleVenta,
     });
 
     return ventas.map((venta) => {
-      // Asegúrate de que `detalleVentas` no es undefined
+      // Asegúrate de que `detalleVentas` no sea undefined
       const detalles = venta.detalleVentas || [];
 
       return new VentaDTO(
@@ -165,7 +184,7 @@ export async function obtenerVentas() {
 export async function obtenerVenta(idVenta) {
   try {
     const venta = await Venta.findOne({
-      where: { idVenta },
+      where: { idVenta: idVenta },
       include: DetalleVenta,
     });
 

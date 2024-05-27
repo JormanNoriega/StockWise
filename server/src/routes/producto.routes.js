@@ -10,7 +10,7 @@ import { usuarioRequerido } from "../middlewares/usuario.middleware.js";
 
 const router = Router();
 
-//nuevos
+//Rutas Protegidas para Usuarios
 router.post("/productos", usuarioRequerido, postProducto); //crear Producto
 router.get("/productos", usuarioRequerido, getProductos); //obtener todos los Producto
 router.get("/productos/:codProducto", usuarioRequerido, getProducto); // obtener un Producto
