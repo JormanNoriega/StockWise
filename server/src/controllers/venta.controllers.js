@@ -1,19 +1,10 @@
 import * as ventaService from "../services/venta.services.js";
 
-export const obtenerProductosDelEmpleado = async (req, res) => {
-  try {
-    const { idEmpleado } = req.body;
-    const obtenerProductos = await ventaService.obtenerProductosDelEmpleado(idEmpleado);
-    res.json(obtenerProductos);
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-}
-
 // Crear una Venta
 export const postVenta = async (req, res) => {
   try {
-    const { idEmpleado, detalles } = req.body;
+    const idEmpleado = req.usuario.idEmpleado;
+    const { detalles } = req.body;
     const newVenta = await ventaService.crearVenta(idEmpleado, detalles);
     res.json(newVenta);
   } catch (error) {
@@ -24,7 +15,8 @@ export const postVenta = async (req, res) => {
 // Obtener todas las Ventas
 export async function getVentas(req, res) {
   try {
-    const ventas = await ventaService.obtenerVentas();
+    const idUsuario = req.usuario.idUsuario;
+    const ventas = await ventaService.obtenerVentas(idUsuario);
     res.json(ventas);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -33,9 +25,10 @@ export async function getVentas(req, res) {
 
 // Obtener una Venta
 export async function getVenta(req, res) {
+  const idUsuario = req.usuario.idUsuario;
   const { idVenta } = req.params;
   try {
-    const venta = await ventaService.obtenerVenta(idVenta);
+    const venta = await ventaService.obtenerVenta(idVenta, idUsuario);
     res.json(venta);
   } catch (error) {
     res.status(500).json({ message: error.message });
