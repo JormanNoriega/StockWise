@@ -150,27 +150,7 @@ const Dashboard = () => {
                   <span>Proveedores</span>
                 </Link>
               </li>
-
-              <li className="nav-item">
-                <Link
-                  className={
-                    activeContent === "venta"
-                      ? "nav-link active"
-                      : "nav-link collapsed"
-                  }
-                  onClick={() => setActiveContent("venta")}
-                >
-                  <FaChartLine
-                    style={{
-                      marginLeft: "0px",
-                      marginRight: "5px",
-                      fontSize: "20px",
-                    }}
-                  />
-                  <span>Ventas</span>
-                </Link>
-              </li>
-            </>
+              </>
           )}
 
           {empleado && (

@@ -11,6 +11,8 @@ const RegistroProveedor = () => {
   });
   const [id, setId] = useState("");
   const [editar, setEditar] = useState(false);
+  const [filteredProveedores, setFilteredProveedores] = useState([]);
+  const [filterValue, setFilterValue] = useState("");
   const [error, setError] = useState("");
   const {
     createProveedor,
@@ -40,8 +42,8 @@ const RegistroProveedor = () => {
       Swal.fire({
         icon: "error",
         title: "¡Error!",
-        text: "Hubo un problema al registrar el Proveedor.",
-        footer: error,
+        text: error.response.data.message,
+        footer: error.message,
       });
     }
   };
@@ -49,10 +51,7 @@ const RegistroProveedor = () => {
   const handleDeleteProveedor = (val) => {
     Swal.fire({
       title: "Confirmar eliminación",
-      html:
-        "<i>¿Realmente desea eliminar a <strong>" +
-        val.nombProveedor +
-        "</strong>?</i>",
+      html: `<i>¿Realmente desea eliminar a <strong>${val.nombProveedor}</strong>?</i>`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -64,12 +63,10 @@ const RegistroProveedor = () => {
           .then(() => {
             Swal.fire({
               title: "Registro eliminado!",
-              html:
-                "<i>El Proveedor <strong>" +
-                val.nombProveedor +
-                "</strong> fue eliminado exitosamente!</i>",
+              html: `<i>El Proveedor <strong>${val.nombProveedor}</strong> fue eliminado exitosamente!</i>`,
               icon: "success",
             });
+            getProveedor();
           })
           .catch((error) => {
             Swal.fire({
@@ -90,10 +87,7 @@ const RegistroProveedor = () => {
       limpiar();
       Swal.fire({
         title: "<strong>Actualización exitosa!</strong>",
-        html:
-          "<i>El Proveedor <strong>" +
-          formData.nombProveedor +
-          "</strong> fue actualizado con éxito! </i>",
+        html: `<i>El Proveedor <strong>${formData.nombProveedor}</strong> fue actualizado con éxito! </i>`,
         icon: "success",
       });
       await getProveedor();
@@ -132,6 +126,10 @@ const RegistroProveedor = () => {
     getProveedor();
   }, []);
 
+  useEffect(() => {
+    setFilteredProveedores(proveedores);
+  }, [proveedores]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -140,17 +138,30 @@ const RegistroProveedor = () => {
     }));
   };
 
+  const handleFilterChange = (e) => {
+    const query = e.target.value.toLowerCase();
+    setFilterValue(e.target.value);
+    setFilteredProveedores(
+      proveedores.filter((proveedor) =>
+        proveedor.nombProveedor.toLowerCase().includes(query) ||
+        proveedor.telefono.toLowerCase().includes(query) ||
+        proveedor.correo.toLowerCase().includes(query)
+      )
+    );
+  };
+
+
   return (
     <div className="w-full h-full">
       <div className="header-comp">
         <h1 className="title-comp">Registro de Proveedores</h1>
       </div>
       <div className="form-comp">
-        <div className="card-proveedor">
-          <h1 className="sub-titles-copm-proveedor">Nuevo Proveedor</h1>
+        <div className="card">
+          <h1 className="sub-titles-copm">Nuevo Proveedor</h1>
           <form onSubmit={editar ? handleUpdateProveedor : handleCreateProveedor}>
             <div className="form-group">
-              <label htmlFor="name">Nombre</label>
+              <label htmlFor="nombProveedor">Nombre</label>
               <input
                 type="text"
                 id="nombProveedor"
@@ -161,7 +172,7 @@ const RegistroProveedor = () => {
                 required
               />
             </div>
-            <div  className="form-group">
+            <div className="form-group">
               <label htmlFor="telefono">Telefono</label>
               <input
                 type="number"
@@ -176,7 +187,7 @@ const RegistroProveedor = () => {
             <div className="form-group">
               <label htmlFor="correo">Correo Electrónico</label>
               <input
-                type="text"
+                type="email"
                 id="correo"
                 name="correo"
                 placeholder="Ingrese su correo"
@@ -188,7 +199,7 @@ const RegistroProveedor = () => {
             <div>
               {editar ? (
                 <div>
-                  <button type="submit_2">Actualizar</button>
+                  <button type="submit">Actualizar</button>
                   <button type="button" onClick={limpiar}>
                     Cancelar
                   </button>
@@ -197,61 +208,56 @@ const RegistroProveedor = () => {
                 <button type="submit">Registrar</button>
               )}
             </div>
-            <div className="form-group-filter-proveedor">
-            <select
-                id="idProveedor-filter"
-                name="idProveedor-filter"
-              >
-                <option value="">Seleccione un proveedor</option>
-                {proveedores.map((val) => (
-                  <option key={val.idProveedor} value={val.idProveedor}>
-                    {val.nombProveedor}
-                  </option>
-                ))}
-              </select>
-            </div>
           </form>
         </div>
-        <div></div>
-        <div className="table-container">
-          <h1 className="sub-titles-copm-table">Proveedores Registrados</h1>
-          <div className="table-card">
-            <table>
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Telefono</th>
-                  <th>Correo Electrónico</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {proveedores.map((val, key) => {
-                  return (
-                    <tr key={val.idUsuario}>
-                      <td>{val.nombProveedor}</td>
-                      <td>{val.telefono}</td>
-                      <td>{val.correo}</td>
-                      <td>
-                        <button
-                          className="edit-button"
-                          onClick={() => setProveedor(val)}
-                        >
-                          Editar
-                        </button>
-                        <button
-                          className="delete-button"
-                          onClick={() => handleDeleteProveedor(val)}
-                        >
-                          Eliminar
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+        <div className="table-card">
+          <h1 className="sub-titles-copm">Proveedores Registrados</h1>
+          <div className="search-bar">
+            <input
+              type="text"
+              id="proveedor-filter"
+              name="proveedor-filter"
+              placeholder="Filtrar proveedores"
+              autoComplete="off"
+              value={filterValue}
+              onChange={handleFilterChange}
+            />
           </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Telefono</th>
+                <th>Correo Electrónico</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredProveedores.map((val, key) => {
+                return (
+                  <tr key={val.idProveedor}>
+                    <td>{val.nombProveedor}</td>
+                    <td>{val.telefono}</td>
+                    <td>{val.correo}</td>
+                    <td>
+                      <button
+                        className="edit-button"
+                        onClick={() => setProveedor(val)}
+                      >
+                        Editar
+                      </button>
+                      <button
+                        className="delete-button"
+                        onClick={() => handleDeleteProveedor(val)}
+                      >
+                        Eliminar
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

@@ -4,30 +4,29 @@ import { EmpleadoDTO } from "../dtos/empleado.dto.js";
 import bcrypt from "bcryptjs";
 import { createAccessToken } from "../libs/jwt.js";
 
+async function validarCorreo(correo) {
+  const usuarioEncontrado = await Usuario.findOne({
+    where: { correo: correo },
+  });
+
+  if (usuarioEncontrado) {
+    throw new Error("El correo ya está en uso por un usuario");
+  }
+
+  const empleadoEncontrado = await Empleado.findOne({
+    where: { correo: correo },
+  });
+
+  if (empleadoEncontrado) {
+    throw new Error("El correo ya está en uso por un empleado");
+  }
+}
+
 //Crear un Empleado
 export async function crearEmpleado(nombre, correo, contraseña, idUsuario) {
   try {
-    // Verificar si el correo ya está en uso
-    const empleadoEncontrado = await Empleado.findOne({
-      where: {
-        correo: correo,
-      },
-    });
 
-    if (empleadoEncontrado) {
-      throw new Error("El correo ya está en uso");
-    }
-
-    const usuarioEncontrado = await Usuario.findOne({
-      where: {
-        correo: correo,
-      },
-    });
-
-    if (usuarioEncontrado) {
-      throw new Error("El correo ya está en uso");
-    }
-
+    await validarCorreo(correo);
     // Hash de la contraseña
     const contraseñaHash = await bcrypt.hash(contraseña, 10);
 

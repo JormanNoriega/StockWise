@@ -1,9 +1,54 @@
+import { VentaDTO } from "../dtos/venta.dto.js";
 import { Venta } from "../models/Venta.js";
 import { DetalleVenta } from "../models/DetalleVenta.js";
-import { Producto } from "../models/Producto.js";
-import { VentaDTO } from "../dtos/venta.dto.js";
 import { DetalleVentaDTO } from "../dtos/detalleVenta.dto.js";
+import { Empleado } from "../models/Empleado.js";
+import { Usuario } from "../models/Usuario.js";
+import { ProductoDTO } from "../dtos/producto.dto.js";
+import { Producto } from "../models/Producto.js";
 import { sequelize } from "../database/database.js";
+
+// Obtener todos los productos asociados con el usuario relacionado con el empleado
+export async function obtenerProductosDelEmpleado(idEmpleado) {
+  try {
+    // Buscar el empleado por su ID
+    const empleado = await Empleado.findByPk(idEmpleado);
+
+    if (!empleado) {
+      throw new Error(`Empleado con ID ${idEmpleado} no encontrado`);
+    }
+
+    // Obtener el usuario relacionado con el empleado
+    const usuario = await Usuario.findByPk(empleado.idUsuario);
+
+    if (!usuario) {
+      throw new Error(`Usuario asociado con el empleado no encontrado`);
+    }
+
+    // Obtener los productos asociados con el usuario
+    const productos = await Producto.findAll({
+      where: { idUsuario: usuario.idUsuario },
+    });
+
+    // Mapear los productos a DTOs si es necesario
+    return productos.map((producto) => {
+      return new ProductoDTO(
+        producto.idProducto,
+        producto.codProducto,
+        producto.idUsuario,
+        producto.idCategoria,
+        producto.idProveedor,
+        producto.nombProducto,
+        producto.precioCompra,
+        producto.precioVenta,
+        producto.vecimiento,
+        producto.stock
+      );
+    });
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
 
 // Crear una Venta
 export async function crearVenta(idEmpleado, detalles) {
@@ -43,12 +88,15 @@ export async function crearVenta(idEmpleado, detalles) {
 
     // Crear los detalles de la venta y actualizar el inventario
     for (const detalle of detallesCreados) {
-      await DetalleVenta.create({
+      const nuevoDetalle = await DetalleVenta.create({
         idVenta: newVenta.idVenta,
         idProducto: detalle.idProducto,
         cantidad: detalle.cantidad,
         subTotal: detalle.subTotal,
       }, { transaction });
+
+      // Aquí asignamos el idDetalleVenta al objeto detalle creado
+      detalle.idDetalleVenta = nuevoDetalle.idDetalleVenta;
 
       // Actualizar el inventario restando la cantidad vendida
       const producto = await Producto.findByPk(detalle.idProducto, { transaction });

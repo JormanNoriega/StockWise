@@ -10,6 +10,7 @@ import { EmpleadoProvider } from "../context/empleadoContext";
 import { CategoriaProvider } from "../context/categoriaContext";
 import { ProveedorProvider } from "../context/proveedorContext";
 import { ProductoProvider } from "../context/productoContext";
+import { VentaProvider } from "../context/ventaContext";
 
 const AppRoutes = () => {
   return (
@@ -19,17 +20,19 @@ const AppRoutes = () => {
           <CategoriaProvider>
             <ProveedorProvider>
               <ProductoProvider>
-                <BrowserRouter>
-                  <Routes>
-                    <Route path="/" element={<Inicio />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/registro" element={<Registro />} />
+                <VentaProvider>
+                  <BrowserRouter>
+                    <Routes>
+                      <Route path="/" element={<Inicio />} />
+                      <Route path="/login" element={<Login />} />
+                      <Route path="/registro" element={<Registro />} />
 
-                    <Route element={<ProtectedRoutes />}>
-                      <Route path="/menu" element={<Menu />} />
-                    </Route>
-                  </Routes>
-                </BrowserRouter>
+                      <Route element={<ProtectedRoutes />}>
+                        <Route path="/menu" element={<Menu />} />
+                      </Route>
+                    </Routes>
+                  </BrowserRouter>
+                </VentaProvider>
               </ProductoProvider>
             </ProveedorProvider>
           </CategoriaProvider>

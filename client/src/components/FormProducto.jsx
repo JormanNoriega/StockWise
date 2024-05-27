@@ -15,22 +15,26 @@ const RegistroProducto = () => {
     precioCompra: "",
     precioVenta: "",
     vecimiento: "",
+    stock: "",
   });
   const [codProducto, setId] = useState("");
   const [editar, setEditar] = useState(false);
   const [error, setError] = useState("");
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const {
-    createProducto,
-    getProducto,
-    productos,
-    deleteProducto,
-    updateProducto,
+  const [filteredProductos, setFilteredProductos] = useState([]);
+  const [filterValue, setFilterValue] = useState("");
+  const [filterValueProveedor, setFilterValueProveedor] = useState("");
+  const [filterValueCategoria, setFilterValueCategoria] = useState("");
+  const { 
+    createProducto, 
+    getProducto, 
+    productos, 
+    deleteProducto, 
+    updateProducto 
   } = useProducto();
   const { getCategoria, categorias } = useCategoria();
   const { getProveedor, proveedores } = useProveedor();
 
-  const handleCreateEmpleado = async (e) => {
+  const handleCreateProducto = async (e) => {
     e.preventDefault();
     try {
       await createProducto(formData);
@@ -55,8 +59,8 @@ const RegistroProducto = () => {
       Swal.fire({
         icon: "error",
         title: "¡Error!",
-        text: "Hubo un problema al registrar el producto.",
-        footer: error,
+        text: error.response.data.message,
+        footer: error.message,
       });
     }
   };
@@ -64,10 +68,7 @@ const RegistroProducto = () => {
   const handleDeleteProducto = (val) => {
     Swal.fire({
       title: "Confirmar eliminación",
-      html:
-        "<i>¿Realmente desea eliminar a <strong>" +
-        val.nombProducto +
-        "</strong>?</i>",
+      html: "<i>¿Realmente desea eliminar a <strong>" + val.nombProducto + "</strong>?</i>",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -79,10 +80,7 @@ const RegistroProducto = () => {
           .then(() => {
             Swal.fire({
               title: "Registro eliminado!",
-              html:
-                "<i>El producto <strong>" +
-                val.nombProducto +
-                "</strong> fue eliminado exitosamente!</i>",
+              html: "<i>El producto <strong>" + val.nombProducto + "</strong> fue eliminado exitosamente!</i>",
               icon: "success",
             });
           })
@@ -105,10 +103,7 @@ const RegistroProducto = () => {
       limpiar();
       Swal.fire({
         title: "<strong>Actualización exitosa!</strong>",
-        html:
-          "<i>El producto <strong>" +
-          formData.nombProducto +
-          "</strong> fue actualizado con éxito! </i>",
+        html: "<i>El producto <strong>" + formData.nombProducto + "</strong> fue actualizado con éxito! </i>",
         icon: "success",
       });
       await getProducto();
@@ -159,15 +154,17 @@ const RegistroProducto = () => {
     getProveedor();
   }, []);
 
+  useEffect(() => {
+    setFilteredProductos(productos);
+  }, [productos]);
+
   const getCategoriaName = (idCategoria) => {
     const categoria = categorias.find((cat) => cat.idCategoria === idCategoria);
     return categoria ? categoria.nombCatergoria : "Desconocida";
   };
 
   const getProveedorName = (idProveedor) => {
-    const proveedor = proveedores.find(
-      (pro) => pro.idProveedor === idProveedor
-    );
+    const proveedor = proveedores.find((pro) => pro.idProveedor === idProveedor);
     return proveedor ? proveedor.nombProveedor : "Desconocido";
   };
 
@@ -179,7 +176,40 @@ const RegistroProducto = () => {
     }));
   };
 
-  // Función para formatear la fecha
+  const handleFilterChangeProducto = (e) => {
+    const query = e.target.value.toLowerCase();
+    setFilterValue(e.target.value);
+    setFilteredProductos(
+      productos.filter((producto) =>
+        producto.nombProducto.toLowerCase().includes(query) ||
+        getCategoriaName(producto.idCategoria).toLowerCase().includes(query) ||
+        getProveedorName(producto.idProveedor).toLowerCase().includes(query)
+      )
+    );
+  };
+
+  const handleFilterChangeProveedor = (e) => {
+    const query = e.target.value.toLowerCase();
+    setFilterValueProveedor(e.target.value);
+    setFilteredProductos(
+      productos.filter((producto) =>
+        String(producto.idProveedor).toLowerCase().includes(query)
+      )
+    );
+  };
+  
+  const handleFilterChangeCategoria = (e) => {
+    const query = e.target.value.toLowerCase();
+    setFilterValueCategoria(e.target.value);
+    setFilteredProductos(
+      productos.filter((producto) =>
+        String(producto.idCategoria).toLowerCase().includes(query)
+      )
+    );
+  };
+  
+
+
   const formatFecha = (fecha) => {
     return format(new Date(fecha), "dd/MM/yyyy");
   };
@@ -190,175 +220,191 @@ const RegistroProducto = () => {
         <h1 className="title-comp">Registro de Productos</h1>
       </div>
       <div className="form-comp">
-        <div className="card-producto">
-          <h1 className="sub-titles-copm-producto">Nuevo Producto</h1>
-          <form
-            onSubmit={editar ? handleUpdateProducto : handleCreateEmpleado}
-            className="form-grid"
-          >
-            <div className="form-group">
-              <label htmlFor="codProducto">Código de Producto</label>
-              <input
-                type="text"
-                id="codProducto"
-                name="codProducto"
-                placeholder="Ingrese el código de producto"
-                autoComplete="off"
-                value={formData.codProducto}
-                onChange={handleChange}
-                required
-              />
+        <div className="card">
+          <h1 className="sub-titles-copm">Nuevo Producto</h1>
+          <form onSubmit={editar ? handleUpdateProducto : handleCreateProducto}>
+            <div className="grid-container">
+              <div className="grid-item">
+                <label htmlFor="codProducto">Código de Producto</label>
+                <input
+                  type="text"
+                  id="codProducto"
+                  name="codProducto"
+                  placeholder="Ingrese el código de producto"
+                  autoComplete="off"
+                  value={formData.codProducto}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="grid-item">
+                <label htmlFor="idCategoria">Categoría</label>
+                <select
+                  id="idCategoria"
+                  name="idCategoria"
+                  value={formData.idCategoria}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Seleccione una categoría</option>
+                  {categorias.map((val) => (
+                    <option key={val.idCategoria} value={val.idCategoria}>
+                      {val.nombCatergoria}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="grid-item">
+                <label htmlFor="idProveedor">Proveedor</label>
+                <select
+                  id="idProveedor"
+                  name="idProveedor"
+                  value={formData.idProveedor}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Seleccione un proveedor</option>
+                  {proveedores.map((val) => (
+                    <option key={val.idProveedor} value={val.idProveedor}>
+                      {val.nombProveedor}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="grid-item">
+                <label htmlFor="nombProducto">Nombre del Producto</label>
+                <input
+                  type="text"
+                  id="nombProducto"
+                  name="nombProducto"
+                  placeholder="Ingrese el nombre del producto"
+                  autoComplete="off"
+                  value={formData.nombProducto}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="grid-item">
+                <label htmlFor="precioCompra">Precio de Compra</label>
+                <input
+                  type="number"
+                  id="precioCompra"
+                  name="precioCompra"
+                  placeholder="Ingrese el precio de compra"
+                  autoComplete="off"
+                  value={formData.precioCompra}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="grid-item">
+                <label htmlFor="precioVenta">Precio de Venta</label>
+                <input
+                  type="number"
+                  id="precioVenta"
+                  name="precioVenta"
+                  placeholder="Ingrese el precio de venta"
+                  autoComplete="off"
+                  value={formData.precioVenta}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="grid-item">
+                <label htmlFor="vecimiento">Fecha de Vencimiento</label>
+                <input
+                  type="date"
+                  id="vecimiento"
+                  name="vecimiento"
+                  placeholder="Ingrese la fecha de vencimiento"
+                  autoComplete="off"
+                  value={formData.vecimiento}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="grid-item">
+                <label htmlFor="stock">Stock</label>
+                <input
+                  type="number"
+                  id="stock"
+                  name="stock"
+                  placeholder="Ingrese el stock"
+                  autoComplete="off"
+                  value={formData.stock}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
             </div>
-            <div className="form-group">
-              <label htmlFor="idCategoria">Categoría</label>
-              <select
-                id="idCategoria"
-                name="idCategoria"
-                value={formData.idCategoria}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Seleccione una categoría</option>
-                {categorias.map((val) => (
-                  <option key={val.idCategoria} value={val.idCategoria}>
-                    {val.nombCatergoria}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="form-group">
-              <label htmlFor="idProveedor">Proveedor</label>
-              <select
-                id="idProveedor"
-                name="idProveedor"
-                value={formData.idProveedor}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Seleccione un proveedor</option>
-                {proveedores.map((val) => (
-                  <option key={val.idProveedor} value={val.idProveedor}>
-                    {val.nombProveedor}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="form-group">
-              <label htmlFor="nombProducto">Nombre del Producto</label>
-              <input
-                type="text"
-                id="nombProducto"
-                name="nombProducto"
-                placeholder="Ingrese el nombre del producto"
-                autoComplete="off"
-                value={formData.nombProducto}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="precioCompra">Precio de Compra</label>
-              <input
-                type="number"
-                id="precioCompra"
-                name="precioCompra"
-                placeholder="Ingrese el precio de compra"
-                autoComplete="off"
-                value={formData.precioCompra}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="precioVenta">Precio de Venta</label>
-              <input
-                type="number"
-                id="precioVenta"
-                name="precioVenta"
-                placeholder="Ingrese el precio de venta"
-                autoComplete="off"
-                value={formData.precioVenta}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="vecimiento">Fecha de Vencimiento</label>
-              <input
-                type="date"
-                id="vecimiento"
-                name="vecimiento"
-                placeholder="Ingrese la fecha de vencimiento"
-                autoComplete="off"
-                value={formData.vecimiento}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="stock">Stock</label>
-              <input
-                type="number"
-                id="stock"
-                name="stock"
-                placeholder="Ingrese el Stock"
-                autoComplete="off"
-                value={formData.stock}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              {editar ? (
-                <div>
-                  <button type="submit_2">Actualizar</button>
-                  <button type="button" onClick={limpiar}>
-                    Cancelar
-                  </button>
-                </div>
-              ) : (
-                <button type="submit">Registrar</button>
+            <div className="form-buttons">
+              <button type="submit" className="btn-reg">
+                {editar ? "Actualizar" : "Registrar"}
+              </button>
+              {editar && (
+                <button type="button" className="btn-can" onClick={limpiar}>
+                  Cancelar
+                </button>
               )}
-            </div>
-            <div className="form-group-filter-producto">
-              <input
-                type="text"
-                id="producto-filter"
-                name="producto-filter"
-                placeholder="Filtrar productos"
-                autoComplete="off"
-              />
-              <select id="idCategoria-filter" name="idCategoria-filter">
-                <option value="">Seleccione una categoría</option>
-                {categorias.map((val) => (
-                  <option key={val.idCategoria} value={val.idCategoria}>
-                    {val.nombCatergoria}
-                  </option>
-                ))}
-              </select>
             </div>
           </form>
         </div>
-        <div className="table-container">
-          <h1 className="sub-titles-copm-table">Productos Registrados</h1>
-          <div className="table-card">
-            <table>
-              <thead>
-                <tr>
-                  <th>Codigo</th>
-                  <th>Nombre</th>
-                  <th>Categoria</th>
-                  <th>Proveedor</th>
-                  <th>Precio de compra</th>
-                  <th>Precio de venta</th>
-                  <th>Vencimiento</th>
-                  <th>Stock</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {productos.map((val) => (
-                  <tr key={val.idUsuario}>
+        <div className="table-card">
+          <h1 className="sub-titles-copm">Productos Registrados</h1>
+          <div className="search-bar">
+            <input
+              type="text"
+              id="producto-filter"
+              name="producto-filter"
+              placeholder="Filtrar productos"
+              autoComplete="off"
+              value={filterValue}
+              onChange={handleFilterChangeProducto}
+            />
+            <select
+              id="proveedor-filter"
+              name="proveedor-filter"
+              value={filterValueProveedor}
+              onChange={handleFilterChangeProveedor}
+            >
+              <option value="">Seleccione un proveedor</option>
+              {proveedores.map((val) => (
+                <option key={val.idProveedor} value={val.idProveedor}>
+                  {val.nombProveedor}
+                </option>
+              ))}
+            </select>
+            <select
+              id="categoria-filter"
+              name="categoria-filter"
+              value={filterValueCategoria}
+              onChange={handleFilterChangeCategoria}
+            >
+              <option value="">Seleccione una categoría</option>
+              {categorias.map((val) => (
+                <option key={val.idCategoria} value={val.idCategoria}>
+                  {val.nombCatergoria}
+                </option>
+              ))}
+            </select>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Proveedor</th>
+                <th>Precio de Compra</th>
+                <th>Precio de Venta</th>
+                <th>Vencimiento</th>
+                <th>Stock</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredProductos.map((val, key) => {
+                return (
+                  <tr key={val.idProducto}>
                     <td>{val.codProducto}</td>
                     <td>{val.nombProducto}</td>
                     <td>{getCategoriaName(val.idCategoria)}</td>
@@ -382,10 +428,10 @@ const RegistroProducto = () => {
                       </button>
                     </td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
