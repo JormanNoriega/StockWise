@@ -14,7 +14,7 @@ Es Importante Crear una Base de Datos llamada "stockwise"
 Para Ejecutar el server se escribe el comando "npm run dev" 
 
 ## CLIENT:  
-Luego de Configurar Nuestro server Debemos instalar los modulos de nuestro CLIENT con "npn i"  
+Luego de Configurar Nuestro server Debemos instalar los modulos de nuestro CLIENT con "npm i"  
 Para Ejecutar el CLIENT se escribe el comando "npm run dev"
 
 
