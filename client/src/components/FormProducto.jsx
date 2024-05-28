@@ -24,12 +24,12 @@ const RegistroProducto = () => {
   const [filterValue, setFilterValue] = useState("");
   const [filterValueProveedor, setFilterValueProveedor] = useState("");
   const [filterValueCategoria, setFilterValueCategoria] = useState("");
-  const { 
-    createProducto, 
-    getProducto, 
-    productos, 
-    deleteProducto, 
-    updateProducto 
+  const {
+    createProducto,
+    getProducto,
+    productos,
+    deleteProducto,
+    updateProducto
   } = useProducto();
   const { getCategoria, categorias } = useCategoria();
   const { getProveedor, proveedores } = useProveedor();
@@ -197,7 +197,7 @@ const RegistroProducto = () => {
       )
     );
   };
-  
+
   const handleFilterChangeCategoria = (e) => {
     const query = e.target.value.toLowerCase();
     setFilterValueCategoria(e.target.value);
@@ -207,7 +207,7 @@ const RegistroProducto = () => {
       )
     );
   };
-  
+
 
 
   const formatFecha = (fecha) => {
@@ -336,12 +336,12 @@ const RegistroProducto = () => {
                 />
               </div>
             </div>
-            <div className="form-buttons">
-              <button type="submit" className="btn-reg">
+            <div>
+              <button type={editar ? "submit_2" : "submit"}>
                 {editar ? "Actualizar" : "Registrar"}
               </button>
               {editar && (
-                <button type="button" className="btn-can" onClick={limpiar}>
+                <button type="button" onClick={limpiar}>
                   Cancelar
                 </button>
               )}
