@@ -9,6 +9,10 @@ import {
   FaChartLine,
   FaSignOutAlt,
   FaEnvelope,
+  FaChevronUp,
+  FaChevronDown,
+  FaClipboardList,
+  FaFileInvoiceDollar
 } from "react-icons/fa";
 import "../css/menu.css";
 import FormProducto from "../components/FormProducto";
@@ -19,12 +23,17 @@ import FormVenta from "../components/FormVenta";
 import { useAuth } from "../context/authContext";
 
 const Dashboard = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const { isAuthenticated, logout, user, empleado } = useAuth();
   const [activeContent, setActiveContent] = useState("");
+  const [ventasSubMenuOpen, setVentasSubMenuOpen] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
+  };
+
+  const toggleVentasSubMenu = () => {
+    setVentasSubMenuOpen(!ventasSubMenuOpen);
   };
 
   const renderContent = () => {
@@ -46,7 +55,6 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      {/* BARRA SUPERIOR */}
       <header className="header">
         <a href="/menu" className="logo">
           <img className="logo" src="./LogoSinFondo.png" alt="logo" />
@@ -66,7 +74,6 @@ const Dashboard = () => {
         </div>
       </header>
 
-      {/* BARRA DE NAVEGACION LATERAL */}
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <ul className="sidebar-nav" id="sidebar-nav">
           {user && (
@@ -150,31 +157,80 @@ const Dashboard = () => {
                   <span>Proveedores</span>
                 </Link>
               </li>
-              </>
+            </>
           )}
 
           {empleado && (
-            <li className="nav-item">
-              <Link
-                className={
-                  activeContent === "venta"
-                    ? "nav-link active"
-                    : "nav-link collapsed"
-                }
-                onClick={() => setActiveContent("venta")}
-              >
-                <FaChartLine
-                  style={{
-                    marginLeft: "0px",
-                    marginRight: "5px",
-                    fontSize: "20px",
-                  }}
-                />
-                <span>Ventas</span>
-              </Link>
-            </li>
+            <>
+              <li className="nav-item">
+                <div
+                  className={
+                    activeContent.startsWith("venta")
+                      ? "nav-link active"
+                      : "nav-link collapsed"
+                  }
+                  onClick={toggleVentasSubMenu}
+                  style={{ cursor: "pointer" }}
+                >
+                  <FaChartLine
+                    style={{
+                      marginLeft: "0px",
+                      marginRight: "5px",
+                      fontSize: "20px",
+                    }}
+                  />
+                  <span>Ventas</span>
+                  {ventasSubMenuOpen ? (
+                    <FaChevronUp style={{ marginLeft: "auto" }} />
+                  ) : (
+                    <FaChevronDown style={{ marginLeft: "auto" }} />
+                  )}
+                </div>
+                {ventasSubMenuOpen && (
+                  <ul className="submenu">
+                    <li className="nav-item">
+                      <Link
+                        className={
+                          activeContent === "venta"
+                            ? "nav-link active"
+                            : "nav-link collapsed"
+                        }
+                        onClick={() => setActiveContent("venta")}
+                      >
+                        <FaClipboardList
+                          style={{
+                            marginLeft: "0px",
+                            marginRight: "5px",
+                            fontSize: "20px",
+                          }}
+                        />
+                        <span>Generar venta</span>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        className={
+                          activeContent === "detalleVentas"
+                            ? "nav-link active"
+                            : "nav-link collapsed"
+                        }
+                        onClick={() => setActiveContent("detalleVentas")}
+                      >
+                        <FaFileInvoiceDollar
+                          style={{
+                            marginLeft: "0px",
+                            marginRight: "5px",
+                            fontSize: "20px",
+                          }}
+                        />
+                        <span>Detalle de Ventas</span>
+                      </Link>
+                    </li>
+                  </ul>
+                )}
+              </li>
+            </>
           )}
-
           <li className="nav-item-secundary">
             <a className="nav-titulo">
               <span>Pages</span>
@@ -246,8 +302,7 @@ const Dashboard = () => {
         </ul>
       </aside>
 
-      {/*Contenido Principal*/}
-      <main className="main">
+      <main className={`main ${sidebarOpen ? "" : "full"}`}>
         <div className="pagetitle" />
         {renderContent()}
       </main>

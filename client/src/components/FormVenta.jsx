@@ -20,6 +20,24 @@ const RegistroVenta = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (carrito.length === 0) {
+      Swal.fire({
+        icon: "error",
+        title: "¡Error!",
+        text: "El carrito está vacío. Por favor, agregue productos antes de registrar la venta.",
+      });
+      return;
+    }
+    for (let field in formData) {
+      if (!formData[field]) {
+        Swal.fire({
+          icon: "error",
+          title: "¡Error!",
+          text: "Todos los campos del formulario deben estar llenos.",
+        });
+        return;
+      }
+    }
     const venta = {
       fechaVenta: formData.fechaVenta,
       detalles: carrito.map(producto => ({
@@ -54,12 +72,6 @@ const RegistroVenta = () => {
       });
     }
   };
-
-  const eliminarProducto = (index) => {
-    const producto = carrito[index];
-    setCarrito(carrito.filter((_, i) => i !== index));
-    setTotalVenta(prevTotal => prevTotal - parseFloat(producto.subTotal));
-  };
   
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -77,13 +89,6 @@ const RegistroVenta = () => {
     getVentas();
   }, []);
 
-  const calcularSubtotal = (name, value) => {
-    const precio = name === "precioVenta" ? parseFloat(value) : parseFloat(formData.precioVenta);
-    const cantidad = name === "cantidad" ? parseFloat(value) : parseFloat(formData.cantidad);
-    const nuevoSubtotal = precio * cantidad;
-    setSubtotal(nuevoSubtotal.toFixed(2));
-  };
-
   const agregarProducto = () => {
     const producto = productos.find(p => p.idProducto === parseInt(formData.idProducto));
     if (!producto) {
@@ -91,6 +96,15 @@ const RegistroVenta = () => {
         icon: "error",
         title: "¡Error!",
         text: "Producto no encontrado",
+      });
+      return;
+    }
+
+    if (!formData.precioVenta || !formData.cantidad || formData.cantidad <= 0 || formData.precioVenta <= 0) {
+      Swal.fire({
+        icon: "error",
+        title: "¡Error!",
+        text: "El precio de venta y la cantidad deben ser mayores a 0.",
       });
       return;
     }
@@ -103,10 +117,25 @@ const RegistroVenta = () => {
 
     setCarrito([...carrito, nuevoProducto]);
     setTotalVenta(prevTotal => prevTotal + parseFloat(subtotal));
-    limpiarFormulario();
+    limpiar();
   };
 
-  const limpiarFormulario = () => {
+  
+  const eliminarProducto = (index) => {
+    const producto = carrito[index];
+    setCarrito(carrito.filter((_, i) => i !== index));
+    setTotalVenta(prevTotal => prevTotal - parseFloat(producto.subTotal));
+  };
+
+  const calcularSubtotal = (name, value) => {
+    const precio = name === "precioVenta" ? parseFloat(value) : parseFloat(formData.precioVenta);
+    const cantidad = name === "cantidad" ? parseFloat(value) : parseFloat(formData.cantidad);
+    const nuevoSubtotal = precio * cantidad;
+    setSubtotal(nuevoSubtotal.toFixed(2));
+  };
+
+
+  const limpiar = () => {
     setFormData({
       idProducto: "",
       precioVenta: "",
@@ -191,8 +220,8 @@ const RegistroVenta = () => {
                 readOnly
               />
             </div>
-            <div className="form-buttons">
-              <button type="button" className="btn-reg" onClick={agregarProducto}>
+            <div>
+              <button type="button-venta" onClick={agregarProducto}>
                 Agregar Producto
               </button>
             </div>
@@ -200,10 +229,10 @@ const RegistroVenta = () => {
         </div>
         <div className="table-card">
           <h1 className="sub-titles-copm">Carrito de productos</h1>
-          <div className="tabla-container">
-            <table className="table">
-              <thead className="thead">
-                <tr className="tr">
+          <div>
+            <table>
+              <thead >
+                <tr>
                   <th>Producto</th>
                   <th>Precio de Venta</th>
                   <th>Cantidad</th>
@@ -211,7 +240,7 @@ const RegistroVenta = () => {
                   <th>Acciones</th>
                 </tr>
               </thead>
-              <tbody className="tbody">
+              <tbody>
                 {carrito.map((producto, index) => (
                   <tr key={index}>
                     <td>{producto.nombProducto}</td>
@@ -219,7 +248,9 @@ const RegistroVenta = () => {
                     <td>{producto.cantidad}</td>
                     <td>{producto.subTotal}</td>
                     <td>
-                      <button onClick={() => eliminarProducto(index)}>Eliminar</button>
+                      <button
+                        className="delete-button"
+                      onClick={() => eliminarProducto(index)} >Eliminar</button>
                     </td>
                   </tr>
                 ))}
@@ -228,8 +259,8 @@ const RegistroVenta = () => {
             <div className="total-venta">
               <h3>Total Venta: {totalVenta.toFixed(2)}</h3>
             </div>
-            <div className="form-buttons">
-              <button type="button" className="btn-reg" onClick={handleSubmit}>
+            <div>
+              <button type="button-registrar-venta" onClick={handleSubmit}>
                 Registrar Venta
               </button>
             </div>

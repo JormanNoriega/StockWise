@@ -191,15 +191,13 @@ const RegistroEmpleados = () => {
               />
             </div>
             <div>
-              {editar ? (
-                <div>
-                  <button type="submit">Actualizar</button>
-                  <button type="button" onClick={limpiar}>
-                    Cancelar
-                  </button>
-                </div>
-              ) : (
-                <button type="submit">Registrar</button>
+              <button type={editar ? "submit_2" : "submit"}>
+                {editar ? "Actualizar" : "Registrar"}
+              </button>
+              {editar && (
+                <button type="button" onClick={limpiar}>
+                  Cancelar
+                </button>
               )}
             </div>
           </form>

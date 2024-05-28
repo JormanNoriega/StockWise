@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Mont:wght@700&display=swap');
-
 .dashboard {
   display: flex;
   min-height: 100vh;
@@ -51,11 +49,11 @@
 }
 
 .sidebar.open {
-  width: 0px;
+  width: 240px;
 }
 
-.sidebar.open:hover {
-  width: 240px;
+.sidebar:not(.open) {
+  width: 0;
 }
 
 .sidebar-nav {
@@ -109,6 +107,10 @@ aside {
   height: calc(100vh - 60px);
   margin-left: 240px;
   transition: margin-left 0.3s ease-in-out;
+}
+
+.main.full {
+  margin-left: 0;
 }
 
 .pagetitle {
