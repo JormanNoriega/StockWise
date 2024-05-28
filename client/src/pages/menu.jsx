@@ -20,6 +20,7 @@ import RegistroEmpleados from "../components/FormEmpleado";
 import FormCategoria from "../components/FormCategoria";
 import FormProveedor from "../components/FormProveedor";
 import FormVenta from "../components/FormVenta";
+import FormVentas from "../components/FormVentas";
 import { useAuth } from "../context/authContext";
 
 const Dashboard = () => {
@@ -48,6 +49,8 @@ const Dashboard = () => {
         return <FormProveedor />;
       case "venta":
         return <FormVenta />;
+        case "detalleVentas":
+          return <FormVentas />;
       default:
         return null;
     }
