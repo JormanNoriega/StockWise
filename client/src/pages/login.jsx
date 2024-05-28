@@ -9,7 +9,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    tipo: "user", // default value for tipo
+    tipo: "user",
     correo: "",
     contraseña: ""
   });

@@ -28,12 +28,14 @@ export function VentaProvider({ children }) {
     const getVentas = async () => {
         try {
             const res = await getVentasRequest();
-            setVentas(res.data.map(venta => ({
+            const ventasConDetalles = res.data.map(venta => ({
                 ...venta,
                 detalleVentas: Array.isArray(venta.detalleVentas) ? venta.detalleVentas : []
-            })));
+            }));
+            console.log("Ventas con detalles:", ventasConDetalles); // Log de depuración
+            setVentas(ventasConDetalles);
         } catch (error) {
-            console.log(error);
+            console.error("Error fetching ventas:", error);
         }
     }
 
