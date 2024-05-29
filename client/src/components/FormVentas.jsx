@@ -63,7 +63,7 @@ const ConsultarVentas = () => {
             setIsVisible(false);
             setIsExiting(false);
             setSelectedVenta(null);
-        }, 500); // Esperar a que la animación de salida termine antes de ocultar el modal
+        }, 500);
     };
 
     const formatFecha = (fecha) => {
@@ -134,8 +134,8 @@ const ConsultarVentas = () => {
                             <p><strong>Fecha de la Venta: </strong> {formatFecha(selectedVenta.fechaVenta)}</p>
                             <h3>Productos:</h3>
                             <ul>
-                                {selectedVenta.detalleVentas && selectedVenta.detalleVentas.length > 0 ? (
-                                    selectedVenta.detalleVentas.map((detalle) => (
+                                {selectedVenta.detallesVenta && selectedVenta.detallesVenta.length > 0 ? (
+                                    selectedVenta.detallesVenta.map((detalle) => (
                                         <li key={detalle.idDetalleVenta}>
                                             <p><strong>Producto: </strong> {getProductoName(detalle.idProducto)}</p>
                                             <p><strong>Cantidad: </strong> {detalle.cantidad}</p>
