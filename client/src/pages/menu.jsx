@@ -234,51 +234,6 @@ const Dashboard = () => {
               </li>
             </>
           )}
-          <li className="nav-item-secundary">
-            <a className="nav-titulo">
-              <span>Pages</span>
-            </a>
-          </li>
-
-          <li className="nav-item">
-            <Link
-              className={
-                activeContent === "perfil"
-                  ? "nav-link active"
-                  : "nav-link collapsed"
-              }
-              onClick={() => setActiveContent("perfil")}
-            >
-              <FaUsers
-                style={{
-                  marginLeft: "0px",
-                  marginRight: "5px",
-                  fontSize: "20px",
-                }}
-              />
-              <span>Perfil</span>
-            </Link>
-          </li>
-
-          <li className="nav-item">
-            <Link
-              className={
-                activeContent === "contacto"
-                  ? "nav-link active"
-                  : "nav-link collapsed"
-              }
-              onClick={() => setActiveContent("contacto")}
-            >
-              <FaEnvelope
-                style={{
-                  marginLeft: "0px",
-                  marginRight: "5px",
-                  fontSize: "20px",
-                }}
-              />
-              <span>Contactanos</span>
-            </Link>
-          </li>
 
           <li className="nav-item">
             {isAuthenticated ? (

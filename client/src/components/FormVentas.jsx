@@ -21,22 +21,19 @@ const ConsultarVentas = () => {
         getProducto();
         getEmpleado();
         getVentas();
-    }, [selectedVenta]);
+    }, []);
 
     useEffect(() => {
         setFilteredVentas(
             ventas.filter((venta) => {
-                if (!fechaInicio || !fechaFin) return true;
                 const fechaVenta = new Date(venta.fechaVenta);
-                return (
-                    fechaVenta >= fechaInicio &&
-                    fechaVenta <= fechaFin &&
-                    (selectedVenta === null || venta.idVenta === selectedVenta.idVenta) &&
-                    (filterValue === "" || getEmpleadoName(venta.idEmpleado).toLowerCase().includes(filterValue.toLowerCase()))
-                );
+                const isWithinDateRange = (!fechaInicio || fechaVenta >= fechaInicio) && (!fechaFin || fechaVenta <= fechaFin);
+                const matchesEmpleadoFilter = filterValue === "" || getEmpleadoName(venta.idEmpleado).toLowerCase().includes(filterValue.toLowerCase());
+
+                return isWithinDateRange && matchesEmpleadoFilter;
             })
         );
-    }, [ventas, filterValue, fechaInicio, fechaFin, selectedVenta]);
+    }, [ventas, filterValue, fechaInicio, fechaFin]);
 
     const getProductoName = (idProducto) => {
         const producto = productos.find((pro) => pro.idProducto === idProducto);
