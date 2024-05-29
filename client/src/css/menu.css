@@ -1,7 +1,8 @@
 .dashboard {
   display: flex;
   min-height: 100vh;
-  color: #fff;
+  color: whitesmoke;
+  background-color: whitesmoke;
 }
 
 .header {
@@ -39,7 +40,7 @@
   box-shadow: 0 16px 20px rgba(0, 0, 0, 0.5);
   font-size: 0.9rem;
   font-family: 'Open Sans', sans-serif;
-  color: white;
+  color: whitesmoke;
   font-weight: bold;
   text-decoration: none;
   overflow-y: auto;
@@ -63,7 +64,7 @@
 }
 
 .nav-titulo {
-  color: #fff;
+  color: whitesmoke;
   display: flex;
   align-items: center;
   padding: 1rem 1.5rem;
@@ -80,7 +81,7 @@ aside {
 }
 
 .nav-link {
-  color: #fff;
+  color: whitesmoke;
   display: flex;
   align-items: center;
   padding: 1rem 1.5rem;
@@ -146,7 +147,7 @@ aside {
   right: 1rem;
   padding: 0.5rem;
   background-color: #29374A;
-  color: #fff;
+  color: whitesmoke;
   border-radius: 50%;
   transition: all 0.3s ease-in-out;
 }

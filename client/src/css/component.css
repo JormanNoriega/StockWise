@@ -15,7 +15,7 @@
 
 .header-comp {
     background-color: #1E2736;
-    color: #fff;
+    color: whitesmoke;
     padding: 1rem 1.5rem;
     border-radius: 0.5rem;
 }
@@ -26,7 +26,7 @@
 }
 
 .form-comp {
-    background-color: #fff;
+    background-color: whitesmoke;
     font-weight: bold;
     padding: 1.5rem;
     display: grid;
@@ -50,7 +50,7 @@
 }
 
 .card {
-    background-color: #fff;
+    background-color: whitesmoke;
     border-radius: 0.5rem;
     padding: 1.5rem;
     margin-top: 1rem;
@@ -266,8 +266,8 @@ select {
     cursor: pointer;
     transition: background-color 0.3s;
     position: relative;
-    left: -40%;
-    margin-top: 100px;
+    left: 60%;
+    margin-top: 50px;
 }
 
 .table-card h3 {
@@ -409,7 +409,7 @@ select {
 }
 
 .detalle-venta-card button:hover {
-    background-color: #d32f2f;  
+    background-color: #d32f2f;
 }
 
 .detalle-card-container {

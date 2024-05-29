@@ -8,6 +8,9 @@ import { format } from "date-fns";
 const RegistroVenta = () => {
   const [formData, setFormData] = useState({
     idProducto: "",
+    codProducto: "",
+    nombProducto: "",
+    nombCatergoria: "",
     precioVenta: "",
     cantidad: "",
     fechaVenta: "",
@@ -80,6 +83,26 @@ const RegistroVenta = () => {
     getVentas();
   }, []);
 
+  const handleProductCodeEnter = (e) => {
+    if (e.key === "Enter") {
+      const producto = productos.find(p => p.codProducto === parseInt(formData.codProducto));
+      if (producto) {
+        setFormData(prevState => ({
+          ...prevState,
+          idProducto: producto.idProducto,
+          nombProducto: producto.nombProducto,
+          precioVenta: producto.precioVenta,
+        }));
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "¡Error!",
+          text: "Producto no encontrado 2",
+        });
+      }
+    }
+  };
+
   const agregarProducto = () => {
     const producto = productos.find(p => p.idProducto === parseInt(formData.idProducto));
     if (!producto) {
@@ -111,7 +134,6 @@ const RegistroVenta = () => {
     limpiar();
   };
 
-  
   const eliminarProducto = (index) => {
     const producto = carrito[index];
     setCarrito(carrito.filter((_, i) => i !== index));
@@ -125,10 +147,9 @@ const RegistroVenta = () => {
     setSubtotal(nuevoSubtotal.toFixed(2));
   };
 
-
   const limpiar = () => {
     setFormData({
-      idProducto: "",
+      codProducto: "",
       precioVenta: "",
       cantidad: "",
       fechaVenta: formData.fechaVenta,
@@ -146,21 +167,32 @@ const RegistroVenta = () => {
           <h1 className="sub-titles-copm">Nueva venta</h1>
           <div className="grid-container">
             <div className="grid-item">
-              <label htmlFor="idProducto">Nombre del producto</label>
-              <select
-                id="idProducto"
-                name="idProducto"
-                value={formData.idProducto}
+              <label htmlFor="codProducto">Código del producto</label>
+              <input
+                type="number"
+                id="codProducto"
+                name="codProducto"
+                placeholder="Ingrese el código del producto"
+                autoComplete="off"
+                value={formData.codProducto}
+                onChange={handleChange}
+                onKeyDown={handleProductCodeEnter}
+                required
+              />
+            </div>
+            <div className="grid-item">
+              <label htmlFor="nombProducto">Nombre del producto</label>
+              <input
+                type="text"
+                id="nombProducto"
+                name="nombProducto"
+                placeholder="Ingrese el nombre del producto"
+                autoComplete="off"
+                value={formData.nombProducto}
                 onChange={handleChange}
                 required
-              >
-                <option value="">Seleccione un Producto</option>
-                {productos.map((val) => (
-                  <option key={val.idProducto} value={val.idProducto}>
-                    {val.nombProducto}
-                  </option>
-                ))}
-              </select>
+                readOnly
+              />
             </div>
             <div className="grid-item">
               <label htmlFor="precioVenta">Precio de Venta</label>
@@ -173,6 +205,7 @@ const RegistroVenta = () => {
                 value={formData.precioVenta}
                 onChange={handleChange}
                 required
+                readOnly
               />
             </div>
             <div className="grid-item">

@@ -127,7 +127,7 @@ const RegistroProducto = () => {
       nombProducto: val.nombProducto,
       precioCompra: val.precioCompra,
       precioVenta: val.precioVenta,
-      vecimiento: val.vecimiento,
+      vecimiento: val.vecimiento ? format(new Date(val.vecimiento), "yyyy-MM-dd") : "",
       stock: val.stock,
     });
     setId(val.codProducto);
