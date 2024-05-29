@@ -14,12 +14,14 @@ const ConsultarVentas = () => {
     const { getProducto, productos } = useProducto();
     const { getEmpleado, empleados } = useEmpleado();
     const [filteredVentas, setFilteredVentas] = useState([]);
+    const [isVisible, setIsVisible] = useState(false);
+    const [isExiting, setIsExiting] = useState(false);
 
     useEffect(() => {
         getProducto();
         getEmpleado();
         getVentas();
-    }, []);
+    }, [selectedVenta]);
 
     useEffect(() => {
         setFilteredVentas(
@@ -34,7 +36,7 @@ const ConsultarVentas = () => {
                 );
             })
         );
-    }, [ventas, fechaInicio, fechaFin, selectedVenta, filterValue]);
+    }, [ventas, filterValue, fechaInicio, fechaFin, selectedVenta]);
 
     const getProductoName = (idProducto) => {
         const producto = productos.find((pro) => pro.idProducto === idProducto);
@@ -52,6 +54,16 @@ const ConsultarVentas = () => {
 
     const handleVentaClick = (venta) => {
         setSelectedVenta(venta);
+        setIsVisible(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsExiting(true);
+        setTimeout(() => {
+            setIsVisible(false);
+            setIsExiting(false);
+            setSelectedVenta(null);
+        }, 500); // Esperar a que la animación de salida termine antes de ocultar el modal
     };
 
     const formatFecha = (fecha) => {
@@ -65,7 +77,7 @@ const ConsultarVentas = () => {
             </div>
             <div className="form-comp">
                 <div className="table-card">
-                    <h1 className="sub-titles-copm">Ventas Registradas</h1>
+                    <h1 className="sub-titles-comp">Ventas Registradas</h1>
                     <div className="search-bar">
                         <input
                             type="date"
@@ -114,33 +126,33 @@ const ConsultarVentas = () => {
                         </tbody>
                     </table>
                 </div>
-                <div className="detalle-card-container">
-                    <div className="detalle-venta-card">
-                        <h2>Detalle de la Venta {selectedVenta ? selectedVenta.idVenta : ""}</h2>
-                        {selectedVenta ? (
-                            <div>
-                                <p><strong>Total de la Venta: </strong> {selectedVenta.totalVenta}</p>
-                                <p><strong>Fecha de la Venta: </strong> {formatFecha(selectedVenta.fechaVenta)}</p>
-                                <h3>Productos:</h3>
-                                <ul>
-                                    {selectedVenta.detalleVentas && selectedVenta.detalleVentas.length > 0 ? (
-                                        selectedVenta.detalleVentas.map((detalle) => (
-                                            <li key={detalle.idDetalleVenta}>
-                                                <p><strong>Producto: </strong> {getProductoName(detalle.idProducto)}</p>
-                                                <p><strong>Cantidad: </strong> {detalle.cantidad}</p>
-                                                <p><strong>Sub Total: </strong> {detalle.subTotal}</p>
-                                            </li>
-                                        ))
-                                    ) : (
-                                        <p>No hay detalles disponibles para esta venta.</p>
-                                    )}
-                                </ul>
+                {selectedVenta && (
+                    <div className={`overlay ${isExiting ? 'hidden' : 'visible'}`} onClick={handleCloseModal}>
+                        <div className={`detalle-venta-card ${isExiting ? 'exiting' : ''}`} onClick={(e) => e.stopPropagation()}>
+                            <h2>Detalle de la Venta {selectedVenta.idVenta}</h2>
+                            <p><strong>Total de la Venta: </strong> {selectedVenta.totalVenta}</p>
+                            <p><strong>Fecha de la Venta: </strong> {formatFecha(selectedVenta.fechaVenta)}</p>
+                            <h3>Productos:</h3>
+                            <ul>
+                                {selectedVenta.detalleVentas && selectedVenta.detalleVentas.length > 0 ? (
+                                    selectedVenta.detalleVentas.map((detalle) => (
+                                        <li key={detalle.idDetalleVenta}>
+                                            <p><strong>Producto: </strong> {getProductoName(detalle.idProducto)}</p>
+                                            <p><strong>Cantidad: </strong> {detalle.cantidad}</p>
+                                            <p><strong>Sub Total: </strong> {detalle.subTotal}</p>
+                                        </li>
+                                    ))
+                                ) : (
+                                    <p>No hay detalles disponibles para esta venta.</p>
+                                )}
+                            </ul>
+                            <div className="total">
+                                <p>Total: {selectedVenta.totalVenta}</p>
                             </div>
-                        ) : (
-                            <p>No hay venta seleccionada.</p>
-                        )}
+                            <button onClick={handleCloseModal}>Cerrar</button>
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
         </div>
     );
