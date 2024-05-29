@@ -30,11 +30,11 @@ export function VentaProvider({ children }) {
             const res = await getVentasRequest();
             const ventasConDetalles = res.data.map(venta => ({
                 ...venta,
-                detalleVentas: Array.isArray(venta.detalleVentas) ? venta.detalleVentas : []
+                detallesVenta: Array.isArray(venta.detallesVenta) ? venta.detallesVenta : []
             }));
             setVentas(ventasConDetalles);
         } catch (error) {
-            console.error("Error fetching ventas:", error);
+            console.error(error);
         }
     }
 
@@ -43,7 +43,7 @@ export function VentaProvider({ children }) {
             const res = await getVentaRequest(idVenta);
             return {
                 ...res.data,
-                detalleVentas: Array.isArray(res.data.detalleVentas) ? res.data.detalleVentas : []
+                detallesVenta: Array.isArray(res.data.detallesVenta) ? res.data.detallesVenta : []
             };
         } catch (error) {
             console.log(error);
