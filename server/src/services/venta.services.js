@@ -164,7 +164,7 @@ export async function obtenerVentas(idUsuario) {
         venta.idEmpleado,
         venta.totalVenta,
         venta.fechaVenta,
-        detalles.map((detalle) => {
+        detalles.flatMap((detalle) => {
           return new DetalleVentaDTO(
             detalle.idDetalleVenta,
             detalle.idVenta,

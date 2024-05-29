@@ -12,7 +12,7 @@ export const Venta = sequelize.define("ventas", {
     type: DataTypes.INTEGER,
   },
   totalVenta: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.NUMBER,
   },
   fechaVenta: {
     type: DataTypes.DATE,

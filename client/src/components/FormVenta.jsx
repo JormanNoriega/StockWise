@@ -28,16 +28,7 @@ const RegistroVenta = () => {
       });
       return;
     }
-    for (let field in formData) {
-      if (!formData[field]) {
-        Swal.fire({
-          icon: "error",
-          title: "¡Error!",
-          text: "Todos los campos del formulario deben estar llenos.",
-        });
-        return;
-      }
-    }
+
     const venta = {
       fechaVenta: formData.fechaVenta,
       detalles: carrito.map(producto => ({

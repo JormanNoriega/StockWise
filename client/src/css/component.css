@@ -297,17 +297,129 @@ select {
     cursor: pointer;
 }
 
+/* Superposición para oscurecer el fondo */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Estilos para el modal */
 .detalle-venta-card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background-color: #fff;
     border: 1px solid #ccc;
     padding: 20px;
-    margin-left: 20px;
-    border-radius: 20px;
-    width: 300px;
-    background-color: #f9f9f9;
-  }
-  
-  .detalle-card-container {
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    opacity: 0;
+    animation: enterAnimation 0.5s ease forwards;
+    font-family: 'Poppins', sans-serif;
+}
+
+@keyframes enterAnimation {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes exitAnimation {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    to {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+    }
+}
+
+.detalle-venta-card.exiting {
+    animation: exitAnimation 0.5s ease forwards;
+}
+
+.detalle-venta-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #1E2736;
+    padding-bottom: 0.5rem;
+}
+
+.detalle-venta-card p,
+.detalle-venta-card li {
+    margin: 0.5rem 0;
+}
+
+.detalle-venta-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.detalle-venta-card li {
+    border-bottom: 1px solid #eee;
+    padding: 0.5rem 0;
+}
+
+.detalle-venta-card strong {
+    display: inline-block;
+    width: 150px;
+}
+
+.detalle-venta-card .total {
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-top: 2px solid #1E2736;
+    padding-top: 0.5rem;
+    margin-top: 0.5rem;
+    text-align: right;
+}
+
+.detalle-venta-card button {
+    display: block;
+    margin: 1rem auto 0;
+    padding: 0.5rem 1rem;
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.detalle-venta-card button:hover {
+    background-color: #d32f2f;  
+}
+
+.detalle-card-container {
     display: flex;
     justify-content: space-between;
     margin-top: -40px;
-  }
+}
+
+.detalle-card-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -40px;
+}

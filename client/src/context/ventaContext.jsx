@@ -32,7 +32,6 @@ export function VentaProvider({ children }) {
                 ...venta,
                 detalleVentas: Array.isArray(venta.detalleVentas) ? venta.detalleVentas : []
             }));
-            console.log("Ventas con detalles:", ventasConDetalles); // Log de depuración
             setVentas(ventasConDetalles);
         } catch (error) {
             console.error("Error fetching ventas:", error);
