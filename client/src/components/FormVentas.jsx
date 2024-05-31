@@ -74,7 +74,7 @@ const ConsultarVentas = () => {
             </div>
             <div className="form-comp">
                 <div className="table-card">
-                    <h1 className="sub-titles-comp">Ventas Registradas</h1>
+                    <h1 className="sub-titles-copm">Ventas Registradas</h1>
                     <div className="search-bar">
                         <input
                             type="date"
@@ -122,8 +122,7 @@ const ConsultarVentas = () => {
                             ))}
                         </tbody>
                     </table>
-                </div>
-                {selectedVenta && (
+                    {selectedVenta && (
                     <div className={`overlay ${isExiting ? 'hidden' : 'visible'}`} onClick={handleCloseModal}>
                         <div className={`detalle-venta-card ${isExiting ? 'exiting' : ''}`} onClick={(e) => e.stopPropagation()}>
                             <h2>Detalle de la Venta {selectedVenta.idVenta}</h2>
@@ -150,6 +149,7 @@ const ConsultarVentas = () => {
                         </div>
                     </div>
                 )}
+                </div>
             </div>
         </div>
     );

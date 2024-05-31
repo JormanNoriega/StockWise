@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   FaBars,
-  FaProductHunt,
+  FaHome,
   FaUsers,
   FaThLarge,
-  FaGem,
+  FaCartPlus,
   FaChartLine,
   FaSignOutAlt,
-  FaEnvelope,
+  FaInbox,
   FaChevronUp,
   FaChevronDown,
   FaClipboardList,
@@ -21,6 +21,7 @@ import FormCategoria from "../components/FormCategoria";
 import FormProveedor from "../components/FormProveedor";
 import FormVenta from "../components/FormVenta";
 import FormVentas from "../components/FormVentas";
+import DashboardCards from "../components/DasboardCards";
 import { useAuth } from "../context/authContext";
 
 const Dashboard = () => {
@@ -39,20 +40,22 @@ const Dashboard = () => {
 
   const renderContent = () => {
     switch (activeContent) {
-      case "producto":
+      case "Inventario":
         return <FormProducto />;
-      case "empleado":
+      case "empleados":
         return <RegistroEmpleados />;
-      case "categoria":
+      case "categorias":
         return <FormCategoria />;
-      case "proveedor":
+      case "proveedores":
         return <FormProveedor />;
       case "venta":
         return <FormVenta />;
-        case "detalleVentas":
-          return <FormVentas />;
+      case "detalleVentas":
+        return <FormVentas />;
+      case "Inicio":
+        return <DashboardCards />;
       default:
-        return null;
+        return <DashboardCards />;
     }
   };
 
@@ -79,18 +82,37 @@ const Dashboard = () => {
 
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <ul className="sidebar-nav" id="sidebar-nav">
+        <li className="nav-item">
+                <Link
+                  className={
+                    activeContent === "Inicio"
+                      ? "nav-link active"
+                      : "nav-link collapsed"
+                  }
+                  onClick={() => setActiveContent("Inicio")}
+                >
+                  <FaHome
+                    style={{
+                      marginLeft: "0px",
+                      marginRight: "5px",
+                      fontSize: "20px",
+                    }}
+                  />
+                  <span>Inicio</span>
+                </Link>
+              </li>
           {user && (
             <>
               <li className="nav-item">
                 <Link
                   className={
-                    activeContent === "producto"
+                    activeContent === "Inventario"
                       ? "nav-link active"
                       : "nav-link collapsed"
                   }
-                  onClick={() => setActiveContent("producto")}
+                  onClick={() => setActiveContent("Inventario")}
                 >
-                  <FaProductHunt
+                  <FaInbox
                     style={{
                       marginLeft: "0px",
                       marginRight: "5px",
@@ -104,11 +126,11 @@ const Dashboard = () => {
               <li className="nav-item">
                 <Link
                   className={
-                    activeContent === "empleado"
+                    activeContent === "empleados"
                       ? "nav-link active"
                       : "nav-link collapsed"
                   }
-                  onClick={() => setActiveContent("empleado")}
+                  onClick={() => setActiveContent("empleados")}
                 >
                   <FaUsers
                     style={{
@@ -124,11 +146,11 @@ const Dashboard = () => {
               <li className="nav-item">
                 <Link
                   className={
-                    activeContent === "categoria"
+                    activeContent === "categorias"
                       ? "nav-link active"
                       : "nav-link collapsed"
                   }
-                  onClick={() => setActiveContent("categoria")}
+                  onClick={() => setActiveContent("categorias")}
                 >
                   <FaThLarge
                     style={{
@@ -144,13 +166,13 @@ const Dashboard = () => {
               <li className="nav-item">
                 <Link
                   className={
-                    activeContent === "proveedor"
+                    activeContent === "proveedores"
                       ? "nav-link active"
                       : "nav-link collapsed"
                   }
-                  onClick={() => setActiveContent("proveedor")}
+                  onClick={() => setActiveContent("proveedores")}
                 >
-                  <FaGem
+                  <FaCartPlus
                     style={{
                       marginLeft: "0px",
                       marginRight: "5px",
@@ -160,12 +182,59 @@ const Dashboard = () => {
                   <span>Proveedores</span>
                 </Link>
               </li>
+              <li className="nav-item">
+                <div
+                  className={
+                    activeContent.startsWith("venta")
+                      ? "nav-link active"
+                      : "nav-link collapsed"
+                  }
+                  onClick={toggleVentasSubMenu}
+                  style={{ cursor: "pointer" }}
+                >
+                  <FaChartLine
+                    style={{
+                      marginLeft: "0px",
+                      marginRight: "5px",
+                      fontSize: "20px",
+                    }}
+                  />
+                  <span>Ventas</span>
+                  {ventasSubMenuOpen ? (
+                    <FaChevronUp style={{ marginLeft: "auto" }} />
+                  ) : (
+                    <FaChevronDown style={{ marginLeft: "auto" }} />
+                  )}
+                </div>
+                {ventasSubMenuOpen && (
+                  <ul className="submenu">
+                    <li className="nav-item">
+                      <Link
+                        className={
+                          activeContent === "detalleVentas"
+                            ? "nav-link active"
+                            : "nav-link collapsed"
+                        }
+                        onClick={() => setActiveContent("detalleVentas")}
+                      >
+                        <FaFileInvoiceDollar
+                          style={{
+                            marginLeft: "0px",
+                            marginRight: "5px",
+                            fontSize: "20px",
+                          }}
+                        />
+                        <span>Detalle de Ventas</span>
+                      </Link>
+                    </li>
+                  </ul>
+                )}
+              </li>
             </>
           )}
-
           {empleado && (
-            <>
-              <li className="nav-item">
+<>
+<li className="nav-item">
                 <div
                   className={
                     activeContent.startsWith("venta")
@@ -232,9 +301,8 @@ const Dashboard = () => {
                   </ul>
                 )}
               </li>
-            </>
+</>
           )}
-
           <li className="nav-item">
             {isAuthenticated ? (
               <Link

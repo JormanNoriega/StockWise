@@ -5,12 +5,14 @@
     padding: 0;
     font-family: 'Poppins', sans-serif;
     box-sizing: border-box;
+    
 }
 
 .w-full.h-full {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    
 }
 
 .header-comp {
@@ -26,19 +28,21 @@
 }
 
 .form-comp {
-    background-color: whitesmoke;
+    background-color: #2A354A;
     font-weight: bold;
     padding: 1.5rem;
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
-    color: #1E2736;
+    color: whitesmoke;
 }
 
 .sub-titles-copm {
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 1rem;
+    color: whitesmoke;
+
 }
 
 .text-sm.font-medium.leading-none.peer-disabled:cursor-not-allowed.peer-disabled:opacity-70 {
@@ -50,7 +54,7 @@
 }
 
 .card {
-    background-color: whitesmoke;
+    background-color: #2A354A;
     border-radius: 0.5rem;
     padding: 1.5rem;
     margin-top: 1rem;
@@ -162,6 +166,7 @@ select {
 
 .table-card {
     overflow: hidden;
+    color: #1E2736;
 }
 
 .table-card table {
@@ -422,4 +427,8 @@ select {
     display: flex;
     justify-content: space-between;
     margin-top: -40px;
+}
+
+.total-venta {
+    color: whitesmoke;
 }
