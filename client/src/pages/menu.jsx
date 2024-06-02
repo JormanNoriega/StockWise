@@ -18,7 +18,6 @@ import {
   FaMoon,
 } from "react-icons/fa";
 import logoAzul from "../assets/LogoSinFondo.png";
-import logoBlanco from "../assets/LogoSinFondoBlanco.png";
 import "../css/menu.css";
 import FormProducto from "../components/FormProducto";
 import RegistroEmpleados from "../components/FormEmpleado";
@@ -63,13 +62,21 @@ const Dashboard = () => {
         return <DashboardCards />;
     }
   };
-  const userName = user ? user.nombre : empleado ? empleado.nombre : "Usuario";
+  const userName = user ? user.nombre : empleado ? empleado.nombre : "Desconocido";
 
-  const [theme, setTheme] = useState("light"); // Nuevo estado para el tema
+
+  const [theme, setTheme] = useState(() => {
+    // Recupera el tema del localStorage o usa 'light' como valor por defecto
+    const savedTheme = localStorage.getItem("theme");
+    return savedTheme || "light";
+  });
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
+    // Guarda el tema en el localStorage
+    localStorage.setItem("theme", theme);
   }, [theme]);
+
 
   const toggleTheme = () => {
     if (theme === "light") {
@@ -101,13 +108,37 @@ const Dashboard = () => {
         <div className="usuario">
           <FaUserCircle
             style={{
-              marginLeft: "1820px",
+              marginLeft: "1770px",
               marginRight: "0px",
               marginTop: "-44px",
               fontSize: "30px",
             }}
           />
           <span className="nombreUsuario">{userName}</span>
+        </div>
+        <div className="theme">
+          <button className="toggleButton" onClick={toggleTheme}>
+            {theme === "light" ? (
+              <FaMoon
+                style={{
+                  marginLeft: "1820px",
+                  marginRight: "0px",
+                  fontSize: "20px",
+                  marginTop: "-50px",
+                  color: "ffffff",
+                }}
+              />
+            ) : (
+              <FaSun
+                style={{
+                  marginLeft: "1820px",
+                  marginRight: "0px",
+                  marginTop: "-50px",
+                  fontSize: "20px",
+                }}
+              />
+            )}
+          </button>
         </div>
       </header>
 
@@ -356,28 +387,6 @@ const Dashboard = () => {
               <></>
             )}
           </li>
-          <div>
-              <button className="toggleButton" onClick={toggleTheme}>
-                {theme === "light" ? (
-                  <FaMoon
-                    style={{
-                      marginLeft: "0px",
-                      marginRight: "5px",
-                      fontSize: "20px",
-                      color: "ffffff",
-                    }}
-                  />
-                ) : (
-                  <FaSun
-                    style={{
-                      marginLeft: "0px",
-                      marginRight: "5px",
-                      fontSize: "20px"
-                    }}
-                  />
-                )}
-              </button>
-            </div>
         </ul>
       </aside>
 

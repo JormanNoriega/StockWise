@@ -57,8 +57,8 @@
 }
 
 .nombreUsuario {
-  margin-left: 1450px;
-  margin-top: -43px;
+  margin-left: 1410px;
+  margin-top: -41px;
 }
 
 .sidebar {
@@ -202,15 +202,21 @@ aside {
   background-color: transparent;
 }
 
+.theme button {
+  margin-left: 20px;
+  margin-top: 0.6%;
+  display: grid;
+  grid-template-columns: 100px auto;
+  grid-gap: 10px;
+}
 
 .toggleButton {
-  width: 40px;
-  height: 40px;
   background-color: transparent;
   color: whitesmoke;
   border: none;
   transition: all 0.5s ease-in-out;
   margin-left: 15px;
+  cursor: pointer;
 }
 
 .toggleButton:hover {
