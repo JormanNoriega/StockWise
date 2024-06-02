@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../css/inicio.css";
+import logoAzul from "../assets/LogoSinFondo.png";
 
 const Inicio = () => {
   return (
@@ -8,7 +9,7 @@ const Inicio = () => {
       <header className="hero">
         <nav className="nav contenedor">
           <div className="nav-logo">
-            <img src="./LogoSinFondoBlanco.png" alt="logo" />
+            <img src={logoAzul} alt="logo" />
             <h2 className="nav-titulo">StockWise</h2>
           </div>
           <ul className="nav-link">

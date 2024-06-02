@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../css/login.css";
+import logoAzul from "../assets/LogoSinFondo.png";
 import Swal from "sweetalert2";
 import { useAuth } from "../context/authContext";
 
@@ -52,7 +53,7 @@ const LoginPage = () => {
     <div className="Bg-Img">
       <div className="container">
         <div className="info">
-          <img src="../LogoSinFondo.png" alt="" />
+          <img src={logoAzul} alt="" />
           <h1 className="hero-titulo">StockWise</h1>
           <link
             href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"

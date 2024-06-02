@@ -2,7 +2,7 @@
   display: flex;
   min-height: 100vh;
   color: whitesmoke;
-  background-color: #2A354A;
+  background-color: #31313C;
 }
 
 .header {
@@ -12,10 +12,17 @@
   position: fixed;
   width: 100%;
   height: 60px;
+  white-space: nowrap;
   z-index: 10;
   text-decoration: none;
 }
+
 .logo {
+  width: 45px;
+  height: auto;
+}
+
+.usuario {
   width: 45px;
   height: auto;
 }
@@ -32,9 +39,26 @@
   grid-gap: 10px;
 }
 
+.usuario {
+  color: #5383E8;
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-decoration: none;
+  margin-left: 20px;
+  margin-top: 3px;
+  display: grid;
+  grid-template-columns: 100px auto;
+  grid-gap: 10px;
+}
+
 .nombrelogo {
   margin-left: -40px;
   margin-top: 12px;
+}
+
+.nombreUsuario {
+  margin-left: 1450px;
+  margin-top: -43px;
 }
 
 .sidebar {
@@ -132,7 +156,7 @@ aside {
   padding: 0px;
   font-size: 0.9rem;
   list-style: none;
-  color: #313f3f;
+  color: #31313C;
 }
 
 .breadcrumb-item a {
@@ -151,7 +175,7 @@ aside {
   bottom: 1rem;
   right: 1rem;
   padding: 0.5rem;
-  background-color: #29374A;
+  background-color: #31313C;
   color: whitesmoke;
   border-radius: 50%;
   transition: all 0.3s ease-in-out;

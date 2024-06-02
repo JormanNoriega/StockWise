@@ -38,8 +38,3 @@ Venta.belongsTo(Empleado, {
   foreignKey: "idEmpleado",
   targetID: "idEmpleado",
 });
-
-
-
-
-
