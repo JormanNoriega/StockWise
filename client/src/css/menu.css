@@ -6,7 +6,7 @@
 }
 
 .header {
-  background-color: #1E2736;
+  background-color: #1C1C1F;
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
   padding: 0rem 1.4rem;
   position: fixed;
@@ -15,9 +15,13 @@
   z-index: 10;
   text-decoration: none;
 }
+.logo {
+  width: 45px;
+  height: auto;
+}
 
 .logo {
-  color: #55DAD5;
+  color: #5383E8;
   font-weight: bold;
   font-size: 1.4rem;
   text-decoration: none;
@@ -34,7 +38,7 @@
 }
 
 .sidebar {
-  background-color: #1E2736;
+  background-color: #1C1C1F;  
   width: 240px;
   transition: width 0.3s ease-in-out;
   box-shadow: 0 16px 20px rgba(0, 0, 0, 0.5);
@@ -99,7 +103,7 @@ aside {
 }
 
 .main {
-  background-color: #2A354A;
+  background-color: #31313C;
   flex: 1;
   padding: 1.5rem;
   margin-top: 45px;
@@ -157,10 +161,6 @@ aside {
   background-color: #55DAD5;
 }
 
-.logo {
-  width: 35px;
-  height: auto;
-}
 
 .toggle-sidebar-btn {
   background-color: transparent;

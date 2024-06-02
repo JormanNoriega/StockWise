@@ -58,15 +58,16 @@ body{
 }
 
 .nav-logo img{
+    margin-top: 12px;
     margin-right: 15px;
     width: 40px;
-    height: 50px;
+    height: 40px;
     padding: 0px;
 }
 
 .nav-titulo {
-    margin-left: -20px;
-    padding-top: 20px;
+    margin-left: -30px;
+    margin-top: 10px;
 }
 
 .nav-link {

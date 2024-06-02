@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
-import "../css/registro.css";
+import "../css/login.css";
 import Swal from "sweetalert2";
 
 const RegisterPage = () => {
@@ -9,7 +9,7 @@ const RegisterPage = () => {
   const [formData, setFormData] = useState({
     nombre: "",
     correo: "",
-    contraseña: ""
+    contraseña: "",
   });
   const [error, setError] = useState("");
   const { signup, isAuthenticated } = useAuth();
@@ -20,22 +20,22 @@ const RegisterPage = () => {
     try {
       await signup(formData);
       Swal.fire({
-        icon: 'success',
-        title: '¡Registro exitoso!',
-        text: 'Tu cuenta ha sido creada correctamente.'
+        icon: "success",
+        title: "¡Registro exitoso!",
+        text: "Tu cuenta ha sido creada correctamente.",
       });
       setFormData({
         nombre: "",
         correo: "",
-        contraseña: ""
+        contraseña: "",
       });
     } catch (error) {
       setError(error.response.data.message);
       Swal.fire({
-        icon: 'error',
-        title: '¡Error!',
+        icon: "error",
+        title: "¡Error!",
         text: error.response.data.message,
-        footer: error
+        footer: error,
       });
     }
   };
@@ -48,7 +48,7 @@ const RegisterPage = () => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -112,10 +112,12 @@ const RegisterPage = () => {
               <button type="submit">Registrar Usuario</button>
             </div>
           </form>
-          <p>¿Ya tienes cuenta?</p>
-          <Link to="/login" className="nav-links2">
-            Inicia sesión aquí
-          </Link>
+          <div className="links">
+            <p>¿Ya tienes cuenta?</p>
+            <Link to="/login" className="nav-links2">
+              Inicia sesión aquí
+            </Link>
+          </div>
         </div>
       </div>
     </div>
