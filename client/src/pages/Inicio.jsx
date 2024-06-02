@@ -8,7 +8,7 @@ const Inicio = () => {
       <header className="hero">
         <nav className="nav contenedor">
           <div className="nav-logo">
-            <img src="./LogoSinFondo.png" alt="logo" />
+            <img src="./LogoSinFondoBlanco.png" alt="logo" />
             <h2 className="nav-titulo">StockWise</h2>
           </div>
           <ul className="nav-link">

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 import "../css/login.css";
 import Swal from "sweetalert2";
 import { useAuth } from "../context/authContext";
@@ -11,14 +11,14 @@ const LoginPage = () => {
   const [formData, setFormData] = useState({
     tipo: "user",
     correo: "",
-    contraseña: ""
+    contraseña: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -43,7 +43,7 @@ const LoginPage = () => {
         icon: "error",
         title: "¡Error!",
         text: "Correo o contraseña incorrectos",
-        footer: error.message
+        footer: error.message,
       });
     }
   };
@@ -108,10 +108,12 @@ const LoginPage = () => {
               <button type="submit">Inicia Sesión</button>
             </div>
           </form>
-          <p>¿No tienes cuenta?</p>
-          <Link to="/registro" className="nav-links2">
-            Regístrate aquí
-          </Link>
+          <div className="links">
+            <p>¿No tienes cuenta?</p>
+            <Link to="/registro" className="nav-links2">
+              Regístrate aquí
+            </Link>
+          </div>
         </div>
       </div>
     </div>

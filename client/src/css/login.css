@@ -13,8 +13,10 @@ body {
 }
 
 .Bg-Img{
-    background-color: #001A49;
-    background-image: linear-gradient(180deg, #0000008c 0%, #0000008c 100%),url("https://images.unsplash.com/photo-1462899006636-339e08d1844e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+    background-image: linear-gradient(180deg, #0000008c 0%, #0000008c 100%),url("../../public/fondo.jpg");
+    background-size: cover; /* Ajusta la imagen para que cubra todo el área del elemento */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-position: center; /* Centra la imagen */
 }
 
 .container {
@@ -38,8 +40,8 @@ body {
 }
 
 .info img{
-    width: 100px;
-    height: 120px;
+    width: 250px;
+    height: 250px;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4)); /* Sombra del contorno */
     animation: animacion 1s ease-out forwards;
 }
@@ -59,10 +61,11 @@ body {
 .login-form {
     width: 500px;
     height: 600px;
-    background-color: #f4f4f4;
+    background-color: #EBEEF1;
     padding: 30px;
     box-shadow: 0 0 50px;
     border-radius: 20px;
+    border: 1px solid white;
     animation: animacion 1s ease-out forwards;
 }
 
@@ -82,15 +85,17 @@ body {
     text-align: left;
     margin-bottom: 30px;
     font-size: 40px;
-    color: #007bff;
+    color: #5383E8;
     font-weight: bold;
 }
 
-.login-form label{
+.login-form select, label{
     display: block;
     margin-bottom: 10px;
     font-size: 15px;
+    color: #1C1C1F;
 }
+
 
 .login-form input,select{
     width: 100%;
@@ -100,30 +105,30 @@ body {
     margin-bottom: 15px;
     font-size: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
+    background-color: fff;
+    color: #1C1C1F;
 }
+
 
 .login-form button {
     margin-top: 30px;
     margin-bottom: 20px;
     width: 100%;
-    background-color: #007bff;
-    color: #fff;
+    background-color: #5383E8;
+    color: white;
+    font-weight: bold;
     padding: 15px 20px;
     border: none;
-    border-radius: 10px;
+    border-radius: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .login-form button:hover {
-    background-color: #0056b3;
+    background-color: #3a70e4;
 }
 
-.login-form links {
-    text-align: center;
-    margin-bottom: 20px;
-}
+
 
 .flooter{
     background-color: #000C21;
@@ -131,8 +136,16 @@ body {
     height: 100px;
 }
 
+.links {
+    display: flex;
+    margin-bottom: 20px;
+    color: #1C1C1F;
+}
 .nav-links2 {
-    color: blue;
+    color: #5383E8;
+    padding-left: 4px;
+    font-weight: bold;
+    text-decoration: none;
   }
 
 .toggle-password {

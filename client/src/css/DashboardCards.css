@@ -111,7 +111,7 @@
   }
   
   .card-dashboard-chart {
-    background: linear-gradient(to bottom right, #1E2736, #2A354A);
+    background: linear-gradient(to bottom right, #1C1C1F, #1C1C1F);
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     display: flex;
