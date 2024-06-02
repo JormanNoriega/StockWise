@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import "../css/login.css";
 import Swal from "sweetalert2";
+import logoAzul from "../assets/LogoSinFondo.png";
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -60,7 +61,7 @@ const RegisterPage = () => {
           rel="stylesheet"
         ></link>
         <div className="info">
-          <img src="../LogoSinFondo.png" alt="" />
+          <img src={logoAzul} alt="" />
           <h1 className="hero-titulo">StockWise</h1>
           <p>
             Descubre cómo puedes optimizar y mejorar la gestión de tu negocio

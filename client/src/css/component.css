@@ -16,10 +16,10 @@
 }
 
 .header-comp {
-    background-color: #1E2736;
+    background-color: #1C1C1F;
     color: whitesmoke;
     padding: 1rem 1.5rem;
-    border-radius: 0.5rem;
+    border-radius: 1.5rem;
 }
 
 .title-comp {
@@ -28,7 +28,6 @@
 }
 
 .form-comp {
-    /* background-color: #2A354A; */
     font-weight: bold;
     padding: 1.5rem;
     display: grid;
@@ -55,9 +54,16 @@
 
 .card {
     background-color: #1C1C1F;
-    border-radius: 0.5rem;
+    border-radius: 1.5rem;
     padding: 1.5rem;
     margin-top: 1rem;
+}
+
+.card label {
+    color: whitesmoke;
+    font-weight: bold;
+    margin-bottom: 0.1rem;
+    font-size: 13px;
 }
 
 .card input,
@@ -66,7 +72,7 @@ select {
     padding: 0.75rem;
     border: 1px solid #e2e8f0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     margin-bottom: 1rem;
     font-size: 0.9rem;
     font-weight: normal;
@@ -78,7 +84,7 @@ select {
     width: 40%;
     padding: 0.75rem 1rem;
     border: none;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     background-color:#5383E8;
     color: white;
     font-size: 0.9rem;
@@ -220,14 +226,16 @@ select {
 
 .grid-item label {
     margin-bottom: 0.1rem;
+    color: whitesmoke;
     font-weight: bold;
+    font-size: 13px;
 }
 
 .grid-item input, select {
     width: 100%;
     padding: 0.75rem;
     border: 1px solid #e2e8f0;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     margin-bottom: -0.01rem;
     font-size: 0.9rem;
     font-weight: normal;
@@ -248,7 +256,7 @@ select {
     padding: 0.75rem;
     border: 1px solid #e2e8f0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     margin-bottom: -0.3rem;
     margin-left: 1rem;
     font-size: 0.8rem;

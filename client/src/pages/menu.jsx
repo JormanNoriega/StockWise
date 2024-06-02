@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
+  FaUserCircle,
   FaBars,
   FaHome,
   FaUsers,
@@ -14,6 +15,8 @@ import {
   FaClipboardList,
   FaFileInvoiceDollar
 } from "react-icons/fa";
+import logoAzul from "../assets/LogoSinFondo.png";
+import logoBlanco from "../assets/LogoSinFondoBlanco.png";
 import "../css/menu.css";
 import FormProducto from "../components/FormProducto";
 import RegistroEmpleados from "../components/FormEmpleado";
@@ -29,6 +32,7 @@ const Dashboard = () => {
   const { isAuthenticated, logout, user, empleado } = useAuth();
   const [activeContent, setActiveContent] = useState("");
   const [ventasSubMenuOpen, setVentasSubMenuOpen] = useState(false);
+  const [isTheme, setIsTheme] = useState(true);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -59,11 +63,22 @@ const Dashboard = () => {
     }
   };
 
+  const toggleTema = () => {
+    setIsTheme(!isTheme);
+  };
+  
+
+  const userName = user ? user.nombre : empleado ? empleado.nombre : "Usuario";
+
   return (
     <div className="dashboard">
       <header className="header">
         <a href="/menu" className="logo">
-          <img className="logo" src="./LogoSinFondo.png" alt="logo" />
+          <img
+            className="logo"
+            src={isTheme ? logoAzul : logoBlanco}
+            alt="logo"
+          />
           <span className="nombrelogo">StockWise</span>
         </a>
         <div>
@@ -77,6 +92,17 @@ const Dashboard = () => {
               }}
             />
           </button>
+        </div>
+        <div className="usuario">
+          <FaUserCircle
+            style={{
+              marginLeft: "1820px",
+              marginRight: "0px",
+              marginTop: "-44px",
+              fontSize: "30px",
+            }}
+          />
+          <span className="nombreUsuario">{userName}</span>
         </div>
       </header>
 
@@ -233,8 +259,8 @@ const Dashboard = () => {
             </>
           )}
           {empleado && (
-<>
-<li className="nav-item">
+            <>
+            <li className="nav-item">
                 <div
                   className={
                     activeContent.startsWith("venta")
@@ -324,6 +350,11 @@ const Dashboard = () => {
             ) : (
               <></>
             )}
+          </li>
+          <li className="nav-item">
+            <button onClick={toggleTema} className="setTheme">
+              <span>Cambiar tema</span>
+            </button>
           </li>
         </ul>
       </aside>

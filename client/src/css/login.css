@@ -64,7 +64,7 @@ body {
     background-color: #EBEEF1;
     padding: 30px;
     box-shadow: 0 0 50px;
-    border-radius: 20px;
+    border-radius: 25px;
     border: 1px solid white;
     animation: animacion 1s ease-out forwards;
 }
@@ -101,7 +101,7 @@ body {
     width: 100%;
     padding: 13px;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 20px;
     margin-bottom: 15px;
     font-size: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
