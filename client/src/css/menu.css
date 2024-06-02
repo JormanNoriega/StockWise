@@ -127,7 +127,6 @@ aside {
 }
 
 .main {
-  background-color: #31313C;
   flex: 1;
   padding: 1.5rem;
   margin-top: 45px;
@@ -200,5 +199,20 @@ aside {
 }
 
 .toggle-sidebar-btn:hover {
+  background-color: transparent;
+}
+
+
+.toggleButton {
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  color: whitesmoke;
+  border: none;
+  transition: all 0.5s ease-in-out;
+  margin-left: 15px;
+}
+
+.toggleButton:hover {
   background-color: transparent;
 }

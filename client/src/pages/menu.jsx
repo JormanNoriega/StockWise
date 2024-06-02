@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   FaUserCircle,
@@ -13,7 +13,9 @@ import {
   FaChevronUp,
   FaChevronDown,
   FaClipboardList,
-  FaFileInvoiceDollar
+  FaFileInvoiceDollar,
+  FaSun,
+  FaMoon,
 } from "react-icons/fa";
 import logoAzul from "../assets/LogoSinFondo.png";
 import logoBlanco from "../assets/LogoSinFondoBlanco.png";
@@ -32,7 +34,6 @@ const Dashboard = () => {
   const { isAuthenticated, logout, user, empleado } = useAuth();
   const [activeContent, setActiveContent] = useState("");
   const [ventasSubMenuOpen, setVentasSubMenuOpen] = useState(false);
-  const [isTheme, setIsTheme] = useState(true);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -62,23 +63,27 @@ const Dashboard = () => {
         return <DashboardCards />;
     }
   };
-
-  const toggleTema = () => {
-    setIsTheme(!isTheme);
-  };
-  
-
   const userName = user ? user.nombre : empleado ? empleado.nombre : "Usuario";
+
+  const [theme, setTheme] = useState("light"); // Nuevo estado para el tema
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    if (theme === "light") {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  };
 
   return (
     <div className="dashboard">
       <header className="header">
         <a href="/menu" className="logo">
-          <img
-            className="logo"
-            src={isTheme ? logoAzul : logoBlanco}
-            alt="logo"
-          />
+          <img className="logo" src={logoAzul} alt="logo" />
           <span className="nombrelogo">StockWise</span>
         </a>
         <div>
@@ -108,25 +113,25 @@ const Dashboard = () => {
 
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <ul className="sidebar-nav" id="sidebar-nav">
-        <li className="nav-item">
-                <Link
-                  className={
-                    activeContent === "Inicio"
-                      ? "nav-link active"
-                      : "nav-link collapsed"
-                  }
-                  onClick={() => setActiveContent("Inicio")}
-                >
-                  <FaHome
-                    style={{
-                      marginLeft: "0px",
-                      marginRight: "5px",
-                      fontSize: "20px",
-                    }}
-                  />
-                  <span>Inicio</span>
-                </Link>
-              </li>
+          <li className="nav-item">
+            <Link
+              className={
+                activeContent === "Inicio"
+                  ? "nav-link active"
+                  : "nav-link collapsed"
+              }
+              onClick={() => setActiveContent("Inicio")}
+            >
+              <FaHome
+                style={{
+                  marginLeft: "0px",
+                  marginRight: "5px",
+                  fontSize: "20px",
+                }}
+              />
+              <span>Inicio</span>
+            </Link>
+          </li>
           {user && (
             <>
               <li className="nav-item">
@@ -260,7 +265,7 @@ const Dashboard = () => {
           )}
           {empleado && (
             <>
-            <li className="nav-item">
+              <li className="nav-item">
                 <div
                   className={
                     activeContent.startsWith("venta")
@@ -327,7 +332,7 @@ const Dashboard = () => {
                   </ul>
                 )}
               </li>
-</>
+            </>
           )}
           <li className="nav-item">
             {isAuthenticated ? (
@@ -351,11 +356,28 @@ const Dashboard = () => {
               <></>
             )}
           </li>
-          <li className="nav-item">
-            <button onClick={toggleTema} className="setTheme">
-              <span>Cambiar tema</span>
-            </button>
-          </li>
+          <div>
+              <button className="toggleButton" onClick={toggleTheme}>
+                {theme === "light" ? (
+                  <FaMoon
+                    style={{
+                      marginLeft: "0px",
+                      marginRight: "5px",
+                      fontSize: "20px",
+                      color: "ffffff",
+                    }}
+                  />
+                ) : (
+                  <FaSun
+                    style={{
+                      marginLeft: "0px",
+                      marginRight: "5px",
+                      fontSize: "20px"
+                    }}
+                  />
+                )}
+              </button>
+            </div>
         </ul>
       </aside>
 
