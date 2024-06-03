@@ -1,8 +1,35 @@
+:root[data-theme="light"] {
+  --color1: #ffffff;
+  --color2: #ebeef1;
+  --color3: #f7f7f8;
+  --text-color: #1c1c1f;
+  --button-text: #1c1c1f;
+}
+
+:root[data-theme="dark"] {
+  --color1: #1c1c1f;
+  --color2: #31313c;
+  --color3: #24242a;
+  --text-color: #ebeef1;
+  --button-text: white;
+}
+
 .dashboard {
   display: flex;
   min-height: 100vh;
   color: whitesmoke;
-  background-color: #31313C;
+  background-color: var(--color2);
+
+}
+
+.logo {
+  width: 45px;
+  height: auto;
+}
+
+.usuario {
+  width: 45px;
+  height: auto;
 }
 
 .header {
@@ -14,51 +41,84 @@
   height: 60px;
   white-space: nowrap;
   z-index: 10;
-  text-decoration: none;
+  display: flex;
+  align-items: center;
 }
 
 .logo {
-  width: 45px;
-  height: auto;
-}
-
-.usuario {
-  width: 45px;
-  height: auto;
-}
-
-.logo {
+  width: 50px;
+  margin-top: -2px;
+  margin-left: 15px;
   color: #5383E8;
   font-weight: bold;
   font-size: 1.4rem;
   text-decoration: none;
-  margin-left: 20px;
-  margin-top: 3px;
-  display: grid;
-  grid-template-columns: 100px auto;
-  grid-gap: 10px;
-}
-
-.usuario {
-  color: #5383E8;
-  font-weight: bold;
-  font-size: 1.1rem;
-  text-decoration: none;
-  margin-left: 20px;
-  margin-top: 3px;
-  display: grid;
-  grid-template-columns: 100px auto;
-  grid-gap: 10px;
+  display: flex;
+  align-items: center;
 }
 
 .nombrelogo {
-  margin-left: -40px;
-  margin-top: 12px;
+  margin-top: 7px;
+  margin-left: 5px;
 }
 
-.nombreUsuario {
-  margin-left: 1450px;
-  margin-top: -43px;
+.containerUsuario {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  position: relative;
+}
+
+.usuario {
+  display: flex;
+  align-items: center;
+  color: #5383e8;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.sub-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: var(--color2);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 20;
+  min-width: 150px;
+}
+
+.sub-menu-item span {
+  margin-left: 10px;
+  font-size: 13px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+}
+
+.sub-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  color: var(--text-color);
+}
+
+.sub-menu-item:hover {
+  background-color: var(--color3);
+}
+
+.sub-menu-item button {
+  background-color: transparent;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.sub-menu-item button:focus {
+  outline: none;
 }
 
 .sidebar {
@@ -193,24 +253,29 @@ aside {
   border: none;
   transition: all 0.2s ease-in-out;
   display: flex;
-  margin-top: 7px;
-  margin-left: -10px;
-  margin-top: -35px;
+  margin-top: -20px;
+  margin-left: -70px;
 }
 
 .toggle-sidebar-btn:hover {
   background-color: transparent;
 }
 
+.theme button {
+  margin-left: 20px;
+  margin-top: 0.6%;
+  display: grid;
+  grid-template-columns: 100px auto;
+  grid-gap: 10px;
+}
 
 .toggleButton {
-  width: 40px;
-  height: 40px;
   background-color: transparent;
   color: whitesmoke;
   border: none;
   transition: all 0.5s ease-in-out;
   margin-left: 15px;
+  cursor: pointer;
 }
 
 .toggleButton:hover {

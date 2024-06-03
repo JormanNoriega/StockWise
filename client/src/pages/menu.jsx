@@ -18,7 +18,6 @@ import {
   FaMoon,
 } from "react-icons/fa";
 import logoAzul from "../assets/LogoSinFondo.png";
-import logoBlanco from "../assets/LogoSinFondoBlanco.png";
 import "../css/menu.css";
 import FormProducto from "../components/FormProducto";
 import RegistroEmpleados from "../components/FormEmpleado";
@@ -34,6 +33,7 @@ const Dashboard = () => {
   const { isAuthenticated, logout, user, empleado } = useAuth();
   const [activeContent, setActiveContent] = useState("");
   const [ventasSubMenuOpen, setVentasSubMenuOpen] = useState(false);
+  const [config, setConfig] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -41,6 +41,10 @@ const Dashboard = () => {
 
   const toggleVentasSubMenu = () => {
     setVentasSubMenuOpen(!ventasSubMenuOpen);
+  };
+
+  const toggleUsuarioSubMenu = () => {
+    setConfig(!config);
   };
 
   const renderContent = () => {
@@ -63,13 +67,21 @@ const Dashboard = () => {
         return <DashboardCards />;
     }
   };
-  const userName = user ? user.nombre : empleado ? empleado.nombre : "Usuario";
+  const userName = user ? user.nombre : empleado ? empleado.nombre : "Desconocido";
 
-  const [theme, setTheme] = useState("light"); // Nuevo estado para el tema
+
+  const [theme, setTheme] = useState(() => {
+    // Recupera el tema del localStorage o usa 'light' como valor por defecto
+    const savedTheme = localStorage.getItem("theme");
+    return savedTheme || "light";
+  });
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
+    // Guarda el tema en el localStorage
+    localStorage.setItem("theme", theme);
   }, [theme]);
+
 
   const toggleTheme = () => {
     if (theme === "light") {
@@ -91,25 +103,43 @@ const Dashboard = () => {
             <FaBars
               style={{
                 marginLeft: "5.5px",
-                marginRight: "0px",
-                marginTop: "5px",
+                marginRight: "10px",
+                marginTop: "20px",
                 fontSize: "25px",
               }}
             />
           </button>
         </div>
-        <div className="usuario">
-          <FaUserCircle
-            style={{
-              marginLeft: "1820px",
-              marginRight: "0px",
-              marginTop: "-44px",
-              fontSize: "30px",
-            }}
-          />
-          <span className="nombreUsuario">{userName}</span>
+        <div className="containerUsuario">
+          <div className="usuario" onClick={toggleUsuarioSubMenu} style={{ cursor: "pointer" }}>
+            <FaUserCircle style={{ fontSize: "25px", marginLeft: "auto" }} />
+            {config ? (
+              <FaChevronUp style={{ fontSize: "15px", marginLeft: "auto" }} />
+            ) : (
+              <FaChevronDown style={{ fontSize: "15px", marginLeft: "auto" }} />
+            )}
+          </div>
+          {config && (
+            <div className="sub-menu">
+              <div className="sub-menu-item">
+                <FaUserCircle style={{ fontSize: "20px" }} />
+                <span>{userName}</span>
+              </div>
+              <div className="sub-menu-item">
+                <button className="toggleButton" onClick={toggleTheme}>
+                  {theme === "light" ? (
+                    <FaMoon style={{ fontSize: "17px", marginLeft: "-17px" }} />
+                  ) : (
+                    <FaSun style={{ fontSize: "17px", marginLeft: "-17px" }} />
+                  )}
+                <span>CAMBIAR TEMA</span>
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </header>
+
 
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <ul className="sidebar-nav" id="sidebar-nav">
@@ -356,28 +386,6 @@ const Dashboard = () => {
               <></>
             )}
           </li>
-          <div>
-              <button className="toggleButton" onClick={toggleTheme}>
-                {theme === "light" ? (
-                  <FaMoon
-                    style={{
-                      marginLeft: "0px",
-                      marginRight: "5px",
-                      fontSize: "20px",
-                      color: "ffffff",
-                    }}
-                  />
-                ) : (
-                  <FaSun
-                    style={{
-                      marginLeft: "0px",
-                      marginRight: "5px",
-                      fontSize: "20px"
-                    }}
-                  />
-                )}
-              </button>
-            </div>
         </ul>
       </aside>
 
