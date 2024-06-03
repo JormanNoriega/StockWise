@@ -3,7 +3,7 @@ import "../css/component.css";
 import { useProducto } from "../context/productoContext";
 import { useEmpleado } from "../context/empleadoContext";
 import { useVenta } from "../context/ventaContext";
-import { format } from "date-fns";
+import { format, isSameDay, startOfDay, endOfDay } from "date-fns";
 
 const ConsultarVentas = () => {
     const [selectedVenta, setSelectedVenta] = useState(null);
@@ -27,7 +27,7 @@ const ConsultarVentas = () => {
         setFilteredVentas(
             ventas.filter((venta) => {
                 const fechaVenta = new Date(venta.fechaVenta);
-                const isWithinDateRange = (!fechaInicio || fechaVenta >= fechaInicio) && (!fechaFin || fechaVenta <= fechaFin);
+                const isWithinDateRange = (!fechaInicio || fechaVenta >= startOfDay(fechaInicio)) && (!fechaFin || fechaVenta <= endOfDay(fechaFin));
                 const matchesEmpleadoFilter = filterValue === "" || getEmpleadoName(venta.idEmpleado).toLowerCase().includes(filterValue.toLowerCase());
 
                 return isWithinDateRange && matchesEmpleadoFilter;
@@ -82,7 +82,7 @@ const ConsultarVentas = () => {
                             name="fecha-inicio"
                             placeholder="Fecha inicio"
                             autoComplete="off"
-                            onChange={(e) => setFechaInicio(new Date(e.target.value))}
+                            onChange={(e) => setFechaInicio(e.target.value ? new Date(e.target.value) : null)}
                         />
                         <input
                             type="text"
@@ -99,7 +99,7 @@ const ConsultarVentas = () => {
                             name="fecha-fin"
                             placeholder="Fecha fin"
                             autoComplete="off"
-                            onChange={(e) => setFechaFin(new Date(e.target.value))}
+                            onChange={(e) => setFechaFin(e.target.value ? new Date(e.target.value) : null)}
                         />
                     </div>
                     <table>
@@ -123,32 +123,32 @@ const ConsultarVentas = () => {
                         </tbody>
                     </table>
                     {selectedVenta && (
-                    <div className={`overlay ${isExiting ? 'hidden' : 'visible'}`} onClick={handleCloseModal}>
-                        <div className={`detalle-venta-card ${isExiting ? 'exiting' : ''}`} onClick={(e) => e.stopPropagation()}>
-                            <h2>Detalle de la Venta {selectedVenta.idVenta}</h2>
-                            <p><strong>Total de la Venta: </strong> {selectedVenta.totalVenta}</p>
-                            <p><strong>Fecha de la Venta: </strong> {formatFecha(selectedVenta.fechaVenta)}</p>
-                            <h3>Productos:</h3>
-                            <ul>
-                                {selectedVenta.detallesVenta && selectedVenta.detallesVenta.length > 0 ? (
-                                    selectedVenta.detallesVenta.map((detalle) => (
-                                        <li key={detalle.idDetalleVenta}>
-                                            <p><strong>Producto: </strong> {getProductoName(detalle.idProducto)}</p>
-                                            <p><strong>Cantidad: </strong> {detalle.cantidad}</p>
-                                            <p><strong>Sub Total: </strong> {detalle.subTotal}</p>
-                                        </li>
-                                    ))
-                                ) : (
-                                    <p>No hay detalles disponibles para esta venta.</p>
-                                )}
-                            </ul>
-                            <div className="total">
-                                <p>Total: {selectedVenta.totalVenta}</p>
+                        <div className={`overlay ${isExiting ? 'hidden' : 'visible'}`} onClick={handleCloseModal}>
+                            <div className={`detalle-venta-card ${isExiting ? 'exiting' : ''}`} onClick={(e) => e.stopPropagation()}>
+                                <h2>Detalle de la Venta {selectedVenta.idVenta}</h2>
+                                <p><strong>Total de la Venta: </strong> {selectedVenta.totalVenta}</p>
+                                <p><strong>Fecha de la Venta: </strong> {formatFecha(selectedVenta.fechaVenta)}</p>
+                                <h3>Productos:</h3>
+                                <ul>
+                                    {selectedVenta.detallesVenta && selectedVenta.detallesVenta.length > 0 ? (
+                                        selectedVenta.detallesVenta.map((detalle) => (
+                                            <li key={detalle.idDetalleVenta}>
+                                                <p><strong>Producto: </strong> {getProductoName(detalle.idProducto)}</p>
+                                                <p><strong>Cantidad: </strong> {detalle.cantidad}</p>
+                                                <p><strong>Sub Total: </strong> {detalle.subTotal}</p>
+                                            </li>
+                                        ))
+                                    ) : (
+                                        <p>No hay detalles disponibles para esta venta.</p>
+                                    )}
+                                </ul>
+                                <div className="total">
+                                    <p>Total: {selectedVenta.totalVenta}</p>
+                                </div>
+                                <button onClick={handleCloseModal}>Cerrar</button>
                             </div>
-                            <button onClick={handleCloseModal}>Cerrar</button>
                         </div>
-                    </div>
-                )}
+                    )}
                 </div>
             </div>
         </div>

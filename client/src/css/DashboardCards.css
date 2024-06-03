@@ -1,9 +1,26 @@
 
+:root[data-theme="light"] {
+  --color1: #ffffff;
+  --color2: #ebeef1;
+  --color3: #f7f7f8;
+  --text-color: #1c1c1f;
+  --button-text: #1c1c1f;
+}
+
+:root[data-theme="dark"] {
+  --color1: #1c1c1f;
+  --color2: #31313c;
+  --color3: #24242a;
+  --text-color: #ebeef1;
+  --button-text: white;
+}
+
+
 .dashboard-cards {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 10px;
+    margin-top: -20px;
   }
   
   .card-container {
@@ -15,7 +32,7 @@
 
   .card-detalle {
     font-weight: bold;
-    color: #1E2736;
+    color: var(--text-color);
   }
   
   .card-dashboard-1 {
@@ -26,9 +43,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 370px;
+    width: 250px;
     height: 150px;
-    margin: 10px;
+    margin: 5px;
     padding: 20px;
     text-align: center;
   }
@@ -41,9 +58,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 370px;
+    width: 250px;
     height: 150px;
-    margin: 10px;
+    margin: 5px;
     padding: 20px;
     text-align: center;
   }
@@ -56,9 +73,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 370px;
+    width: 250px;
     height: 150px;
-    margin: 10px;
+    margin: 5px;
     padding: 20px;
     text-align: center;
   }
@@ -72,37 +89,69 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    width: 380px;
+    width: 250px;
     height: 150px;
-    margin: 10px;
+    margin: 5px;
     padding: 20px;
     text-align: center;
   }
 
+  .card-dashboard-detalle-1 {
+    background: linear-gradient(to bottom right, #1E2736, #2E294E);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 250px;
+    height: 150px;
+    margin: 5px;
+    margin: 10px;
+
+    padding: 20px;
+    text-align: center;
+  }
+
+
+  .card-dashboard-detalle-2 {
+    background: linear-gradient(to bottom right, #1E2736, #2A2E45);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    height: 150px;
+    margin: 5px;
+    padding: 20px;
+    text-align: center;
+  }
+
+
   .card-icon {
-    font-size: 90px;
-    margin-bottom: -120px;
-    margin-left: -250px;
+    font-size: 60px;
+    margin-bottom: 10px;
+    margin-left: -150px;
+    color: whitesmoke;
+
   }
 
   .card-info h3 {
-    margin-left: 10px;
-    font-size: 24px;
+    margin-left: 30px;
+    font-size: 18px;
   }
   
   .card-info p {
-    margin-top: 50px;
-    font-size: 20px;
+    margin-top: -70px;
+    margin-left: 40px;
+    font-size: 17px;
     font-weight: bold;
     color: whitesmoke;
   }
 
-  .card-icon-2 {
-    font-size: 60px;
-    margin-bottom: -10px;
-    margin-left: 270px;
-  }
-  
   .charts-container {
     display: flex;
     justify-content: space-around;
@@ -110,18 +159,34 @@
     width: 100%;
   }
   
-  .card-dashboard-chart {
-    background: linear-gradient(to bottom right, #1C1C1F, #1C1C1F);
+  .card-dashboard-chart-1 {
+    border: 1px solid var(--color2);
+    background-color: var(--color1);
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 48%;
-    height: 40rem;
+    width: 49%;
+    height: 42rem;
+    margin-top: 10px;
+    padding: 20px;
+    text-align: center;
+  }
+    
+  .card-dashboard-chart-2 {
+    border: 1px solid var(--color2);
+    background-color: var(--color1);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 49%;
+    height: 42rem;
     margin: 10px;
     padding: 20px;
     text-align: center;
   }
-  

@@ -33,6 +33,7 @@ const Dashboard = () => {
   const { isAuthenticated, logout, user, empleado } = useAuth();
   const [activeContent, setActiveContent] = useState("");
   const [ventasSubMenuOpen, setVentasSubMenuOpen] = useState(false);
+  const [config, setConfig] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -40,6 +41,10 @@ const Dashboard = () => {
 
   const toggleVentasSubMenu = () => {
     setVentasSubMenuOpen(!ventasSubMenuOpen);
+  };
+
+  const toggleUsuarioSubMenu = () => {
+    setConfig(!config);
   };
 
   const renderContent = () => {
@@ -98,49 +103,43 @@ const Dashboard = () => {
             <FaBars
               style={{
                 marginLeft: "5.5px",
-                marginRight: "0px",
-                marginTop: "5px",
+                marginRight: "10px",
+                marginTop: "20px",
                 fontSize: "25px",
               }}
             />
           </button>
         </div>
-        <div className="usuario">
-          <FaUserCircle
-            style={{
-              marginLeft: "1770px",
-              marginRight: "0px",
-              marginTop: "-44px",
-              fontSize: "30px",
-            }}
-          />
-          <span className="nombreUsuario">{userName}</span>
-        </div>
-        <div className="theme">
-          <button className="toggleButton" onClick={toggleTheme}>
-            {theme === "light" ? (
-              <FaMoon
-                style={{
-                  marginLeft: "1820px",
-                  marginRight: "0px",
-                  fontSize: "20px",
-                  marginTop: "-50px",
-                  color: "ffffff",
-                }}
-              />
+        <div className="containerUsuario">
+          <div className="usuario" onClick={toggleUsuarioSubMenu} style={{ cursor: "pointer" }}>
+            <FaUserCircle style={{ fontSize: "25px", marginLeft: "auto" }} />
+            {config ? (
+              <FaChevronUp style={{ fontSize: "15px", marginLeft: "auto" }} />
             ) : (
-              <FaSun
-                style={{
-                  marginLeft: "1820px",
-                  marginRight: "0px",
-                  marginTop: "-50px",
-                  fontSize: "20px",
-                }}
-              />
+              <FaChevronDown style={{ fontSize: "15px", marginLeft: "auto" }} />
             )}
-          </button>
+          </div>
+          {config && (
+            <div className="sub-menu">
+              <div className="sub-menu-item">
+                <FaUserCircle style={{ fontSize: "20px" }} />
+                <span>{userName}</span>
+              </div>
+              <div className="sub-menu-item">
+                <button className="toggleButton" onClick={toggleTheme}>
+                  {theme === "light" ? (
+                    <FaMoon style={{ fontSize: "17px", marginLeft: "-17px" }} />
+                  ) : (
+                    <FaSun style={{ fontSize: "17px", marginLeft: "-17px" }} />
+                  )}
+                <span>CAMBIAR TEMA</span>
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </header>
+
 
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <ul className="sidebar-nav" id="sidebar-nav">

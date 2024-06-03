@@ -3,6 +3,7 @@
 :root[data-theme="light"] {
   --color1: #ffffff;
   --color2: #ebeef1;
+  --color3: #f7f7f8;
   --text-color: #1c1c1f;
   --button-text: #1c1c1f;
 }
@@ -10,6 +11,7 @@
 :root[data-theme="dark"] {
   --color1: #1c1c1f;
   --color2: #31313c;
+  --color3: #24242a;
   --text-color: #ebeef1;
   --button-text: white;
 }
@@ -208,7 +210,7 @@
 
 .table-card table {
   width: 100%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   border-collapse: collapse;
   border-radius: 1rem;
   overflow: hidden;
@@ -239,6 +241,11 @@
 
 .table-card table tbody td {
   text-align: center;
+}
+
+
+.table-card table tr:nth-child(odd) td {
+  background-color: var(--color3);
 }
 
 /* CSS PARA EL GRID DE PRODUCTOS */
@@ -335,7 +342,6 @@
   cursor: pointer;
 }
 
-/* Superposición para oscurecer el fondo */
 .overlay {
   position: fixed;
   top: 0;
@@ -354,13 +360,12 @@
   visibility: visible;
 }
 
-/* Estilos para el modal */
 .detalle-venta-card {
   position: fixed;
   top: 50%;
   left: 50%;
-  background-color: var(--color2);
-  border: 1px solid var(--color1);
+  background-color: var(--color1);
+  border: 1px solid var(--color2);
   padding: 20px;
   border-radius: 10px;
   width: 80%;

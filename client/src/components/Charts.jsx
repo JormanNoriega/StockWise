@@ -28,9 +28,8 @@ ChartJS.register(
 );
 
 const defaultFont = {
-    family: 'Poppins', // Cambia a la tipografía deseada
-    size: 15, // Cambia el tamaño de la fuente
-    color: 'whitesmoke' // Cambia el color de la fuente
+    family: 'Poppins',
+    size: 15,
 };
 
 export function LinesChart() {
@@ -38,11 +37,18 @@ export function LinesChart() {
 
     useEffect(() => {
         getVentas();
-    },[])
+    },[]);
 
-    // Últimas 10 ventas diarias
     const ultimas10Ventas = ventas.slice(-10);
-    const labels = ultimas10Ventas.map((venta, index) => `Día ${index + 1}`);
+    const labels = ultimas10Ventas.map((venta) => {
+        const fecha = new Date(venta.fechaVenta);
+        return fecha.toLocaleDateString('es-ES', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+        });
+    });
+
     const dataVentas = ultimas10Ventas.map(venta => venta.totalVenta);
 
     const lineData = {
@@ -53,11 +59,11 @@ export function LinesChart() {
                 data: dataVentas,
                 tension: 0.5,
                 fill: true,
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                borderColor: '#5383E8',
+                backgroundColor: 'rgba(83, 131, 232, 0.5)',
                 pointRadius: 5,
-                pointBorderColor: 'rgba(255, 99, 132)',
-                pointBackgroundColor: 'rgba(255, 99, 132)',
+                pointBorderColor: '#5383E8',
+                pointBackgroundColor: '#5383E8',
             },
         ],
     };
@@ -67,7 +73,6 @@ export function LinesChart() {
             y: {
                 min: 0,
                 ticks: {
-                    color: 'whitesmoke',
                     font: {
                         ...defaultFont
                     }
@@ -75,7 +80,6 @@ export function LinesChart() {
             },
             x: {
                 ticks: {
-                    color: 'whitesmoke',
                     font: {
                         ...defaultFont
                     }
@@ -85,7 +89,6 @@ export function LinesChart() {
         plugins: {
             legend: {
                 labels: {
-                    color: 'whitesmoke',
                     font: {
                         ...defaultFont
                     }
@@ -176,7 +179,6 @@ export function Pies() {
         plugins: {
             legend: {
                 labels: {
-                    color: 'whitesmoke',
                     font: {
                         ...defaultFont
                     }
@@ -185,7 +187,6 @@ export function Pies() {
             title: {
                 display: true,
                 text: 'Top Productos Más Vendidos',
-                    color: 'whitesmoke',
                     font: {
                     ...defaultFont
                 },
