@@ -39,7 +39,6 @@ export function LinesChart() {
         getVentas();
     }, []);
 
-    // Agrupar ventas por fecha y sumar las ventas de cada día
     const ventasPorFecha = ventas.reduce((acc, venta) => {
         const fecha = new Date(venta.fechaVenta).toLocaleDateString('es-ES', {
             day: '2-digit',
@@ -47,13 +46,12 @@ export function LinesChart() {
             year: 'numeric',
         });
         if (!acc[fecha]) {
-            acc[fecha] = [];
+            acc[fecha] = 0;
         }
-        acc[fecha].push(parseFloat(venta.totalVenta)); // Asegurarse de que sea un número
+        acc[fecha] += parseFloat(venta.totalVenta);
         return acc;
     }, {});
 
-    // Obtener las fechas ordenadas
     const fechasOrdenadas = Object.keys(ventasPorFecha)
         .sort((a, b) => {
             const [dayA, monthA, yearA] = a.split('/');
@@ -61,15 +59,8 @@ export function LinesChart() {
             return new Date(`${yearA}-${monthA}-${dayA}`) - new Date(`${yearB}-${monthB}-${dayB}`);
         });
 
-    // Aplanar los datos para que cada punto represente una venta individual pero en la misma fecha
-    const labels = [];
-    const dataVentas = [];
-    fechasOrdenadas.forEach(fecha => {
-        ventasPorFecha[fecha].forEach((venta, index) => {
-            labels.push(index === 0 ? fecha : '');
-            dataVentas.push(venta);
-        });
-    });
+    const labels = fechasOrdenadas;
+    const dataVentas = fechasOrdenadas.map(fecha => ventasPorFecha[fecha]);
 
     const lineData = {
         labels: labels,
@@ -103,8 +94,8 @@ export function LinesChart() {
                     font: {
                         ...defaultFont
                     },
-                    callback: function(value, index) {
-                        return labels[index]; // Mostrar la fecha solo si está en labels
+                    callback: function (value, index) {
+                        return labels[index];
                     }
                 }
             }
@@ -140,13 +131,11 @@ export function Pies() {
         getProducto();
     }, []);
 
-    // Función para obtener el nombre del producto
     const getProductoName = (idProducto) => {
         const producto = productos.find((pro) => pro.idProducto === idProducto);
         return producto ? producto.nombProducto : "Desconocido";
     };
 
-    // Agrupar ventas por producto
     const ventasPorProducto = ventas.reduce((acc, venta) => {
         venta.detallesVenta.forEach(detalle => {
             if (!acc[detalle.idProducto]) {
@@ -157,7 +146,6 @@ export function Pies() {
         return acc;
     }, {});
 
-    // Convertir el objeto a un array y ordenar por cantidad vendida
     const productosOrdenados = Object.entries(ventasPorProducto)
         .map(([idProducto, { cantidad }]) => ({
             idProducto,
@@ -166,7 +154,6 @@ export function Pies() {
         }))
         .sort((a, b) => b.cantidad - a.cantidad);
 
-    // Seleccionar los 5 productos más vendidos
     const topProductos = productosOrdenados.slice(0, 5);
     const labels = topProductos.map(p => p.nombProducto);
     const dataProductos = topProductos.map(producto => producto.cantidad);
@@ -210,7 +197,7 @@ export function Pies() {
             title: {
                 display: true,
                 text: 'Top Productos Más Vendidos',
-                    font: {
+                font: {
                     ...defaultFont
                 },
                 color: defaultFont.color
