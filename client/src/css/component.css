@@ -137,8 +137,8 @@
   width: 20%;
   padding: 0.75rem 1rem;
   border: none;
-  border-radius: 0.5rem;
-  background-color: #1e2736;
+  border-radius: 1rem;
+  background-color: #053C5E;
   color: white;
   font-size: 0.9rem;
   cursor: pointer;
@@ -154,8 +154,8 @@
   width: 20%;
   padding: 0.75rem 1rem;
   border: none;
-  border-radius: 0.5rem;
-  background-color: #1e2736;
+  border-radius: 1rem;
+  background-color: #f44336;
   color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   font-size: 0.9rem;
@@ -171,7 +171,7 @@
   color: #fff;
   padding: 0.5rem 1rem;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 0.8rem;
   cursor: pointer;
   transition: background-color 0.3s;
   margin-right: 0.5rem;
@@ -186,7 +186,7 @@
   color: #fff;
   padding: 0.5rem 1rem;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 0.8rem;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s;
@@ -338,7 +338,7 @@
 /* CSS detalle de la venta */
 
 .table-card table {
-  margin-bottom: 70px;
+  margin-bottom: 10px;
   cursor: pointer;
 }
 
@@ -464,6 +464,56 @@
   display: flex;
   justify-content: space-between;
   margin-top: -40px;
+}
+
+.report-button-card button {
+  background-color: #3F88C5;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 1em;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s;
+  margin-right: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.report-button-card button:hover {
+  background-color: #326894;
+}
+
+.cerrar-button-card button {
+  background-color: #f44336;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s;
+  margin-right: 0.5rem;
+  margin: 0 auto;
+}
+
+.print-button-container button {
+  background-color: #2E4057;
+  color: #fff;
+  border: none;
+  border-radius: 1em;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s;
+  margin-top: 0rem;
+  margin-left: 95rem;
+}
+
+.print-button-container button:hover {
+  background-color: #2b3a50;
+}
+
+.cerrar-button-card button:hover {
+  background-color: #d32f2f;
 }
 
 .total-venta {

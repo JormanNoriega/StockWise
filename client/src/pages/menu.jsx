@@ -180,7 +180,7 @@ const Dashboard = () => {
                       fontSize: "20px",
                     }}
                   />
-                  <span>Productos</span>
+                  <span>Inventario</span>
                 </Link>
               </li>
 

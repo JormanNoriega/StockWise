@@ -37,7 +37,7 @@
   
   .card-dashboard-1 {
     background: linear-gradient(to bottom right, #1E2736, #1D4E89);
-    border-radius: 20px;
+    border-radius: 30px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
@@ -52,7 +52,7 @@
 
   .card-dashboard-2 {
     background: linear-gradient(to bottom right, #2C2A4A, #4F518C);
-    border-radius: 20px;
+    border-radius: 30px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
@@ -67,7 +67,7 @@
 
   .card-dashboard-3 {
     background: linear-gradient(to bottom right, #0471A6, #061826);
-    border-radius: 20px;
+    border-radius: 30px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
@@ -82,7 +82,7 @@
   
   .card-dashboard-detalle {
     background: linear-gradient(to bottom right, #1E2736, #2D3142);
-    border-radius: 20px;
+    border-radius: 30px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
@@ -98,7 +98,7 @@
 
   .card-dashboard-detalle-1 {
     background: linear-gradient(to bottom right, #1E2736, #2E294E);
-    border-radius: 20px;
+    border-radius: 30px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
@@ -117,7 +117,7 @@
 
   .card-dashboard-detalle-2 {
     background: linear-gradient(to bottom right, #1E2736, #2A2E45);
-    border-radius: 20px;
+    border-radius: 30px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
@@ -136,7 +136,7 @@
     margin-bottom: 10px;
     margin-left: -150px;
     color: whitesmoke;
-
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Añade la sombra */
   }
 
   .card-info h3 {
@@ -162,7 +162,7 @@
   .card-dashboard-chart-1 {
     border: 1px solid var(--color2);
     background-color: var(--color1);
-    border-radius: 20px;
+    border-radius: 70px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
@@ -178,7 +178,7 @@
   .card-dashboard-chart-2 {
     border: 1px solid var(--color2);
     background-color: var(--color1);
-    border-radius: 20px;
+    border-radius: 70px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
