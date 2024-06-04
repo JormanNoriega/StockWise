@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { FaFilePdf } from "react-icons/fa";
 import "../css/component.css";
 import { useProducto } from "../context/productoContext";
 import { useEmpleado } from "../context/empleadoContext";
+import { useAuth } from "../context/authContext";
 import { useVenta } from "../context/ventaContext";
-import { format, isSameDay, startOfDay, endOfDay } from "date-fns";
+import { format, startOfDay, endOfDay } from "date-fns";
+import logoAzul from "../assets/LogoSinFondo.png";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const ConsultarVentas = () => {
     const [selectedVenta, setSelectedVenta] = useState(null);
@@ -15,6 +20,7 @@ const ConsultarVentas = () => {
     const { getEmpleado, empleados } = useEmpleado();
     const [filteredVentas, setFilteredVentas] = useState([]);
     const [isVisible, setIsVisible] = useState(false);
+    const { user, empleado } = useAuth();
     const [isExiting, setIsExiting] = useState(false);
 
     useEffect(() => {
@@ -66,6 +72,83 @@ const ConsultarVentas = () => {
     const formatFecha = (fecha) => {
         return format(new Date(fecha), "dd/MM/yyyy");
     };
+    const userName = user ? user.nombre : empleado ? empleado.nombre : "Desconocido";
+
+    const generateVentasPDF = () => {
+        const doc = new jsPDF();
+        doc.addImage(logoAzul, 'PNG', 5, 5, 25, 25);
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(14);
+        doc.text("REPORTE DE VENTAS", 75, 20);
+        doc.text("Reportes", 153, 25);
+        doc.text("Ventas", 155, 30);
+        doc.setFontSize(10);
+        doc.setLineWidth(0.5);
+        doc.line(15, 35, 195, 35);
+        doc.text("Generado por: " + userName, 100, 40);
+        doc.text("StockWise", 15, 40);
+        doc.text("Aplicación de Gestión de Inventario", 15, 45);
+        doc.text("Generado el: " + format(new Date(), "dd/MM/yyyy"), 15, 50);
+        doc.setLineWidth(0.5);
+        doc.line(15, 55, 195, 55);
+        doc.autoTable({
+            startY: 60,
+            headStyles: {
+                fontStyle: 'bold',
+                fontSize: 10
+            },
+            bodyStyles: {
+                fontSize: 9
+            },
+            head: [['ID Venta', 'Empleado', 'Total de la Venta', 'Fecha de la Venta']],
+            body: filteredVentas.map(venta => [
+                venta.idVenta,
+                getEmpleadoName(venta.idEmpleado),
+                venta.totalVenta,
+                formatFecha(venta.fechaVenta)
+            ])
+        });
+        doc.save("Reporte"+ format(new Date(), "ddMMyyyy") +".pdf");
+    };
+
+    const generateDetallePDF = () => {
+        if (!selectedVenta) return;
+
+        const doc = new jsPDF();
+        doc.addImage(logoAzul, 'PNG', 5, 5, 25, 25);
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(14);
+        doc.text("FACTURA DE LA VENTA", 70, 20);
+        doc.text("Reportes", 156, 25);
+        doc.text(`Factura ${selectedVenta.idVenta}`, 155, 30);
+        doc.setFontSize(10);
+        doc.setLineWidth(0.5);
+        doc.line(15, 35, 195, 35);
+        doc.text("Generado por: " + userName, 100, 40);
+        doc.text("StockWise", 15, 40);
+        doc.text("Aplicación de Gestión de Inventario", 15, 45);
+        doc.text("Generado el: " + format(new Date(), "dd/MM/yyyy"), 15, 50);
+        doc.setLineWidth(0.5);
+        doc.line(15, 55, 195, 55);
+        doc.autoTable({
+            startY: 60,
+            headStyles: {
+                fontStyle: 'bold',
+                fontSize: 10
+            },
+            bodyStyles: {
+                fontSize: 9
+            },
+            head: [['Producto', 'Cantidad', 'Sub Total']],
+            body: selectedVenta.detallesVenta.map(detalle => [
+                getProductoName(detalle.idProducto),
+                detalle.cantidad,
+                detalle.subTotal
+            ])
+        });
+        doc.text(`Total: ${selectedVenta.totalVenta}`, 14, doc.autoTable.previous.finalY + 10);
+        doc.save(`Factura${selectedVenta.idVenta}.pdf`);
+    };
 
     return (
         <div className="w-full h-full">
@@ -102,6 +185,7 @@ const ConsultarVentas = () => {
                             onChange={(e) => setFechaFin(e.target.value ? new Date(e.target.value) : null)}
                         />
                     </div>
+                    
                     <table>
                         <thead>
                             <tr>
@@ -122,6 +206,20 @@ const ConsultarVentas = () => {
                             ))}
                         </tbody>
                     </table>
+                    <div className="print-button-container">
+                        <button 
+                        onClick={generateVentasPDF}>
+                        <FaFilePdf
+                                    style={{
+                                      marginLeft: "10px",
+                                      marginRight: "10px",
+                                      marginTop: "10px",
+                                      marginBottom: "5px",
+                                      fontSize: "20px",
+                                    }}
+                                  />
+                        </button>
+                    </div>
                     {selectedVenta && (
                         <div className={`overlay ${isExiting ? 'hidden' : 'visible'}`} onClick={handleCloseModal}>
                             <div className={`detalle-venta-card ${isExiting ? 'exiting' : ''}`} onClick={(e) => e.stopPropagation()}>
@@ -145,7 +243,12 @@ const ConsultarVentas = () => {
                                 <div className="total">
                                     <p>Total: {selectedVenta.totalVenta}</p>
                                 </div>
-                                <button onClick={handleCloseModal}>Cerrar</button>
+                                <div className="report-button-card" >
+                                    <button className="report-button" onClick={generateDetallePDF}>Generar PDF de la factura</button>
+                                </div>
+                                <div className="cerrar-button-card">
+                                    <button className="cerrar-button" onClick={handleCloseModal}>Cerrar</button>
+                                </div>
                             </div>
                         </div>
                     )}

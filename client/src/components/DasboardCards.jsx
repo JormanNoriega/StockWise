@@ -19,6 +19,7 @@ const DashboardCards = () => {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedVenta, setSelectedVenta] = useState(null);
+  const [modalMessage, setModalMessage] = useState("");
 
   const { getEmpleado, empleados } = useEmpleado();
   const { getVentas, ventas } = useVenta();
@@ -86,14 +87,32 @@ const DashboardCards = () => {
     return producto ? producto.nombProducto : "Desconocido";
   };
 
-  const handleCardClick = (venta) => {
-    setSelectedVenta(venta);
-    setIsModalVisible(true);
+  const handleCardClick = (venta, type) => {
+    if (!venta) {
+      let message = "";
+      switch (type) {
+        case "ventaMayor":
+          message = "No hay datos de la mayor venta.";
+          break;
+        case "mayorVentaDia":
+          message = "No hay ventas realizadas hoy.";
+          break;
+        default:
+          message = "No hay información disponible.";
+      }
+      setModalMessage(message);
+      setIsModalVisible(true);
+    } else {
+      setSelectedVenta(venta);
+      setModalMessage("");
+      setIsModalVisible(true);
+    }
   };
 
   const handleCloseModal = () => {
     setIsModalVisible(false);
     setSelectedVenta(null);
+    setModalMessage("");
   };
 
   return (
@@ -120,14 +139,14 @@ const DashboardCards = () => {
             <h3>${Number(stats.totalVentas).toFixed(2)}</h3>
           </div>
         </div>
-        <div className="card-dashboard-detalle" onClick={() => handleCardClick(stats.ventaMayor)}>
+        <div className="card-dashboard-detalle" onClick={() => handleCardClick(stats.ventaMayor, "ventaMayor")}>
           <FaFunnelDollar className="card-icon" />
           <div className="card-info">
             <p>Mayor Venta</p>
             <h3>${stats.ventaMayor ? Number(stats.ventaMayor.totalVenta).toFixed(2) : 0}</h3>
           </div>
         </div>
-        <div className="card-dashboard-detalle-1" onClick={() => handleCardClick(stats.mayorVentaDia)}>
+        <div className="card-dashboard-detalle-1" onClick={() => handleCardClick(stats.mayorVentaDia, "mayorVentaDia")}>
           <FaChartPie className="card-icon" />
           <div className="card-info">
             <p>Venta del DIA</p>
@@ -143,29 +162,38 @@ const DashboardCards = () => {
         </div>
       </div>
       <div className="card-detalle">
-        {isModalVisible && selectedVenta && (
+        {isModalVisible && (
           <div className={`overlay ${isModalVisible ? 'visible' : 'hidden'}`} onClick={handleCloseModal}>
             <div className="detalle-venta-card" onClick={(e) => e.stopPropagation()}>
-              <h2>Detalle de la Venta {selectedVenta.idVenta}</h2>
-              <p><strong>Total de la Venta: </strong> {selectedVenta.totalVenta}</p>
-              <p><strong>Fecha de la Venta: </strong> {format(new Date(selectedVenta.fechaVenta), "dd/MM/yyyy")}</p>
-              <h3>Productos:</h3>
-              <ul>
-                {selectedVenta.detallesVenta && selectedVenta.detallesVenta.length > 0 ? (
-                  selectedVenta.detallesVenta.map((detalle) => (
-                    <li key={detalle.idDetalleVenta}>
-                      <p><strong>Producto: </strong> {getProductoName(detalle.idProducto)}</p>
-                      <p><strong>Cantidad: </strong> {detalle.cantidad}</p>
-                      <p><strong>Sub Total: </strong> {detalle.subTotal}</p>
-                    </li>
-                  ))
-                ) : (
-                  <p>No hay detalles disponibles para esta venta.</p>
-                )}
-              </ul>
-              <div className="total">
-                <p>Total: {selectedVenta.totalVenta}</p>
-              </div>
+              {modalMessage ? (
+                <div>
+                  <h2>Información</h2>
+                  <p>{modalMessage}</p>
+                </div>
+              ) : (
+                <div>
+                  <h2>Detalle de la Venta {selectedVenta.idVenta}</h2>
+                  <p><strong>Total de la Venta: </strong> {selectedVenta.totalVenta}</p>
+                  <p><strong>Fecha de la Venta: </strong> {format(new Date(selectedVenta.fechaVenta), "dd/MM/yyyy")}</p>
+                  <h3>Productos:</h3>
+                  <ul>
+                    {selectedVenta.detallesVenta && selectedVenta.detallesVenta.length > 0 ? (
+                      selectedVenta.detallesVenta.map((detalle) => (
+                        <li key={detalle.idDetalleVenta}>
+                          <p><strong>Producto: </strong> {getProductoName(detalle.idProducto)}</p>
+                          <p><strong>Cantidad: </strong> {detalle.cantidad}</p>
+                          <p><strong>Sub Total: </strong> {detalle.subTotal}</p>
+                        </li>
+                      ))
+                    ) : (
+                      <p>No hay detalles disponibles para esta venta.</p>
+                    )}
+                  </ul>
+                  <div className="total">
+                    <p>Total: {selectedVenta.totalVenta}</p>
+                  </div>
+                </div>
+              )}
               <button onClick={handleCloseModal}>Cerrar</button>
             </div>
           </div>

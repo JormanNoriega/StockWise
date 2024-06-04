@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "../css/component.css";
+import { FaFilePdf } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { useAuth } from "../context/authContext";
 import { useProducto } from "../context/productoContext";
 import { useCategoria } from "../context/categoriaContext";
 import { useProveedor } from "../context/proveedorContext";
 import { format } from "date-fns";
+import logoAzul from "../assets/LogoSinFondo.png";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const RegistroProducto = () => {
   const [formData, setFormData] = useState({
@@ -33,6 +38,7 @@ const RegistroProducto = () => {
   } = useProducto();
   const { getCategoria, categorias } = useCategoria();
   const { getProveedor, proveedores } = useProveedor();
+  const { user, empleado } = useAuth();
 
   const handleCreateProducto = async (e) => {
     e.preventDefault();
@@ -208,11 +214,53 @@ const RegistroProducto = () => {
     );
   };
 
+  const userName = user ? user.nombre : empleado ? empleado.nombre : "Desconocido";
 
 
   const formatFecha = (fecha) => {
     return format(new Date(fecha), "dd/MM/yyyy");
   };
+
+  const generatePDF = () => {
+    const doc = new jsPDF();
+    doc.addImage(logoAzul, 'PNG', 5, 5, 25, 25);
+    doc.setFont("Helvetica", "bold");
+    doc.setFontSize(14);
+    doc.text("REPORTE DE INVENTARIO", 70, 20);
+    doc.text("Reportes", 154, 25);
+    doc.text("Inventario", 153, 30);
+    doc.setFontSize(10);
+    doc.setLineWidth(0.5);
+    doc.line(15, 35, 195, 35);
+    doc.text("Generado por: " + userName, 100, 40);
+    doc.text("StockWise", 15, 40);
+    doc.text("Aplicación de Gestión de Inventario", 15, 45);
+    doc.text("Generado el: " + format(new Date(), "dd/MM/yyyy"), 15, 50);
+    doc.setLineWidth(0.5);
+    doc.line(15, 55, 195, 55);
+    doc.autoTable({
+        startY: 60,
+        headStyles: {
+            fontStyle: 'bold',
+            fontSize: 10
+        },
+        bodyStyles: {
+            fontSize: 9
+        },
+        head: [['Codigo', 'Nombre', 'Categoria', 'Proveedor', 'Precio de compra', 'Precio de venta', 'Vencimiento', 'Stock']],
+        body: productos.map(producto => [
+            producto.codProducto,
+            producto.nombProducto,
+            getCategoriaName(producto.idCategoria),
+            getProveedorName(producto.idProveedor),
+            producto.precioCompra,
+            producto.precioVenta,
+            formatFecha(producto.vecimiento),
+            producto.stock
+        ])
+    });
+    doc.save("Reporte_Inventario"+ format(new Date(), "ddMMyyyy") +".pdf");
+};
 
   return (
     <div className="w-full h-full">
@@ -432,6 +480,20 @@ const RegistroProducto = () => {
               })}
             </tbody>
           </table>
+          <div className="print-button-container">
+                        <button 
+                        onClick={generatePDF}>
+                        <FaFilePdf
+                          style={{
+                            marginLeft: "10px",
+                            marginRight: "10px",
+                            marginTop: "10px",
+                            marginBottom: "5px",
+                            fontSize: "20px",
+                          }}
+                        />
+                        </button>
+                    </div>
         </div>
       </div>
     </div>

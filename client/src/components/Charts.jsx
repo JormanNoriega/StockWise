@@ -37,25 +37,45 @@ export function LinesChart() {
 
     useEffect(() => {
         getVentas();
-    },[]);
+    }, []);
 
-    const ultimas10Ventas = ventas.slice(-10);
-    const labels = ultimas10Ventas.map((venta) => {
-        const fecha = new Date(venta.fechaVenta);
-        return fecha.toLocaleDateString('es-ES', {
+    // Agrupar ventas por fecha y sumar las ventas de cada día
+    const ventasPorFecha = ventas.reduce((acc, venta) => {
+        const fecha = new Date(venta.fechaVenta).toLocaleDateString('es-ES', {
             day: '2-digit',
             month: '2-digit',
             year: 'numeric',
         });
-    });
+        if (!acc[fecha]) {
+            acc[fecha] = [];
+        }
+        acc[fecha].push(parseFloat(venta.totalVenta)); // Asegurarse de que sea un número
+        return acc;
+    }, {});
 
-    const dataVentas = ultimas10Ventas.map(venta => venta.totalVenta);
+    // Obtener las fechas ordenadas
+    const fechasOrdenadas = Object.keys(ventasPorFecha)
+        .sort((a, b) => {
+            const [dayA, monthA, yearA] = a.split('/');
+            const [dayB, monthB, yearB] = b.split('/');
+            return new Date(`${yearA}-${monthA}-${dayA}`) - new Date(`${yearB}-${monthB}-${dayB}`);
+        });
+
+    // Aplanar los datos para que cada punto represente una venta individual pero en la misma fecha
+    const labels = [];
+    const dataVentas = [];
+    fechasOrdenadas.forEach(fecha => {
+        ventasPorFecha[fecha].forEach((venta, index) => {
+            labels.push(index === 0 ? fecha : '');
+            dataVentas.push(venta);
+        });
+    });
 
     const lineData = {
         labels: labels,
         datasets: [
             {
-                label: 'Últimas 10 Ventas Diarias',
+                label: 'Últimas Ventas Diarias',
                 data: dataVentas,
                 tension: 0.5,
                 fill: true,
@@ -82,6 +102,9 @@ export function LinesChart() {
                 ticks: {
                     font: {
                         ...defaultFont
+                    },
+                    callback: function(value, index) {
+                        return labels[index]; // Mostrar la fecha solo si está en labels
                     }
                 }
             }
@@ -96,7 +119,7 @@ export function LinesChart() {
             },
             title: {
                 display: true,
-                text: 'Últimas 10 Ventas Diarias',
+                text: 'Últimas Ventas Diarias',
                 font: {
                     ...defaultFont
                 },
