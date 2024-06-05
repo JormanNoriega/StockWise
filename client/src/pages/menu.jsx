@@ -132,7 +132,7 @@ const Dashboard = () => {
                   ) : (
                     <FaSun style={{ fontSize: "17px", marginLeft: "-17px" }} />
                   )}
-                <span>CAMBIAR TEMA</span>
+                  <span>CAMBIAR TEMA</span>
                 </button>
               </div>
             </div>
@@ -295,6 +295,26 @@ const Dashboard = () => {
           )}
           {empleado && (
             <>
+              <li className="nav-item">
+                <Link
+                  className={
+                    activeContent === "Inventario"
+                      ? "nav-link active"
+                      : "nav-link collapsed"
+                  }
+                  onClick={() => setActiveContent("Inventario")}
+                >
+                  <FaInbox
+                    style={{
+                      marginLeft: "0px",
+                      marginRight: "5px",
+                      fontSize: "20px",
+                    }}
+                  />
+                  <span>Inventario</span>
+                </Link>
+              </li>
+
               <li className="nav-item">
                 <div
                   className={

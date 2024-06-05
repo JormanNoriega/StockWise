@@ -170,7 +170,7 @@ const RegistroProducto = () => {
   const getProductoName = (idProducto) => {
     const producto = productos.find((pro) => pro.idProducto === idProducto);
     return producto ? producto.nombProducto : "Desconocido";
-};
+  };
 
   const getCategoriaName = (idCategoria) => {
     const categoria = categorias.find((cat) => cat.idCategoria === idCategoria);
@@ -351,35 +351,172 @@ const RegistroProducto = () => {
 
   return (
     <div className="w-full h-full">
-      <div className="header-comp">
-        <h1 className="title-comp">Registro de Productos</h1>
-      </div>
-      <div className="form-comp">
-        <div className="card">
-          <h1 className="sub-titles-copm">Nuevo Producto</h1>
-          <form onSubmit={editar ? handleUpdateProducto : handleCreateProducto}>
-            <div className="grid-container">
-              <div className="grid-item">
-                <label htmlFor="codProducto">Código de Producto</label>
+      {user && (
+        <>
+          <div className="header-comp">
+            <h1 className="title-comp">Registro de Productos</h1>
+          </div>
+          <div className="form-comp">
+            <div className="card">
+              <h1 className="sub-titles-copm">Nuevo Producto</h1>
+              <form onSubmit={editar ? handleUpdateProducto : handleCreateProducto}>
+
+                <div className="grid-container">
+                  <div className="grid-item">
+                    <label htmlFor="codProducto">Código de Producto</label>
+                    <input
+                      type="text"
+                      id="codProducto"
+                      name="codProducto"
+                      placeholder="Ingrese el código de producto"
+                      autoComplete="off"
+                      value={formData.codProducto}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="grid-item">
+                    <label htmlFor="idCategoria">Categoría</label>
+                    <select
+                      id="idCategoria"
+                      name="idCategoria"
+                      value={formData.idCategoria}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="">Seleccione una categoría</option>
+                      {categorias.map((val) => (
+                        <option key={val.idCategoria} value={val.idCategoria}>
+                          {val.nombCatergoria}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="grid-item">
+                    <label htmlFor="idProveedor">Proveedor</label>
+                    <select
+                      id="idProveedor"
+                      name="idProveedor"
+                      value={formData.idProveedor}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="">Seleccione un proveedor</option>
+                      {proveedores.map((val) => (
+                        <option key={val.idProveedor} value={val.idProveedor}>
+                          {val.nombProveedor}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="grid-item">
+                    <label htmlFor="nombProducto">Nombre del Producto</label>
+                    <input
+                      type="text"
+                      id="nombProducto"
+                      name="nombProducto"
+                      placeholder="Ingrese el nombre del producto"
+                      autoComplete="off"
+                      value={formData.nombProducto}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="grid-item">
+                    <label htmlFor="precioCompra">Precio de Compra</label>
+                    <input
+                      type="number"
+                      id="precioCompra"
+                      name="precioCompra"
+                      placeholder="Ingrese el precio de compra"
+                      autoComplete="off"
+                      value={formData.precioCompra}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="grid-item">
+                    <label htmlFor="precioVenta">Precio de Venta</label>
+                    <input
+                      type="number"
+                      id="precioVenta"
+                      name="precioVenta"
+                      placeholder="Ingrese el precio de venta"
+                      autoComplete="off"
+                      value={formData.precioVenta}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="grid-item">
+                    <label htmlFor="vecimiento">Fecha de Vencimiento</label>
+                    <input
+                      type="date"
+                      id="vecimiento"
+                      name="vecimiento"
+                      placeholder="Ingrese la fecha de vencimiento"
+                      autoComplete="off"
+                      value={formData.vecimiento}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="grid-item">
+                    <label htmlFor="stock">Stock</label>
+                    <input
+                      type="number"
+                      id="stock"
+                      name="stock"
+                      placeholder="Ingrese el stock"
+                      autoComplete="off"
+                      value={formData.stock}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <button type={editar ? "submit_2" : "submit"}>
+                    {editar ? "Actualizar" : "Registrar"}
+                  </button>
+                  {editar && (
+                    <button type="button" onClick={limpiar}>
+                      Cancelar
+                    </button>
+                  )}
+                </div>
+
+              </form>
+            </div>
+            <div className="table-card">
+              <h1 className="sub-titles-copm">Productos Registrados</h1>
+              <div className="search-bar">
                 <input
                   type="text"
-                  id="codProducto"
-                  name="codProducto"
-                  placeholder="Ingrese el código de producto"
+                  id="producto-filter"
+                  name="producto-filter"
+                  placeholder="Filtrar productos"
                   autoComplete="off"
-                  value={formData.codProducto}
-                  onChange={handleChange}
-                  required
+                  value={filterValue}
+                  onChange={handleFilterChangeProducto}
                 />
-              </div>
-              <div className="grid-item">
-                <label htmlFor="idCategoria">Categoría</label>
                 <select
-                  id="idCategoria"
-                  name="idCategoria"
-                  value={formData.idCategoria}
-                  onChange={handleChange}
-                  required
+                  id="proveedor-filter"
+                  name="proveedor-filter"
+                  value={filterValueProveedor}
+                  onChange={handleFilterChangeProveedor}
+                >
+                  <option value="">Seleccione un proveedor</option>
+                  {proveedores.map((val) => (
+                    <option key={val.idProveedor} value={val.idProveedor}>
+                      {val.nombProveedor}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  id="categoria-filter"
+                  name="categoria-filter"
+                  value={filterValueCategoria}
+                  onChange={handleFilterChangeCategoria}
                 >
                   <option value="">Seleccione una categoría</option>
                   {categorias.map((val) => (
@@ -389,200 +526,176 @@ const RegistroProducto = () => {
                   ))}
                 </select>
               </div>
-              <div className="grid-item">
-                <label htmlFor="idProveedor">Proveedor</label>
-                <select
-                  id="idProveedor"
-                  name="idProveedor"
-                  value={formData.idProveedor}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="">Seleccione un proveedor</option>
-                  {proveedores.map((val) => (
-                    <option key={val.idProveedor} value={val.idProveedor}>
-                      {val.nombProveedor}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="grid-item">
-                <label htmlFor="nombProducto">Nombre del Producto</label>
-                <input
-                  type="text"
-                  id="nombProducto"
-                  name="nombProducto"
-                  placeholder="Ingrese el nombre del producto"
-                  autoComplete="off"
-                  value={formData.nombProducto}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="grid-item">
-                <label htmlFor="precioCompra">Precio de Compra</label>
-                <input
-                  type="number"
-                  id="precioCompra"
-                  name="precioCompra"
-                  placeholder="Ingrese el precio de compra"
-                  autoComplete="off"
-                  value={formData.precioCompra}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="grid-item">
-                <label htmlFor="precioVenta">Precio de Venta</label>
-                <input
-                  type="number"
-                  id="precioVenta"
-                  name="precioVenta"
-                  placeholder="Ingrese el precio de venta"
-                  autoComplete="off"
-                  value={formData.precioVenta}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="grid-item">
-                <label htmlFor="vecimiento">Fecha de Vencimiento</label>
-                <input
-                  type="date"
-                  id="vecimiento"
-                  name="vecimiento"
-                  placeholder="Ingrese la fecha de vencimiento"
-                  autoComplete="off"
-                  value={formData.vecimiento}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="grid-item">
-                <label htmlFor="stock">Stock</label>
-                <input
-                  type="number"
-                  id="stock"
-                  name="stock"
-                  placeholder="Ingrese el stock"
-                  autoComplete="off"
-                  value={formData.stock}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-            </div>
-            <div>
-              <button type={editar ? "submit_2" : "submit"}>
-                {editar ? "Actualizar" : "Registrar"}
-              </button>
-              {editar && (
-                <button type="button" onClick={limpiar}>
-                  Cancelar
-                </button>
-              )}
-            </div>
-          </form>
-        </div>
-        <div className="table-card">
-          <h1 className="sub-titles-copm">Productos Registrados</h1>
-          <div className="search-bar">
-            <input
-              type="text"
-              id="producto-filter"
-              name="producto-filter"
-              placeholder="Filtrar productos"
-              autoComplete="off"
-              value={filterValue}
-              onChange={handleFilterChangeProducto}
-            />
-            <select
-              id="proveedor-filter"
-              name="proveedor-filter"
-              value={filterValueProveedor}
-              onChange={handleFilterChangeProveedor}
-            >
-              <option value="">Seleccione un proveedor</option>
-              {proveedores.map((val) => (
-                <option key={val.idProveedor} value={val.idProveedor}>
-                  {val.nombProveedor}
-                </option>
-              ))}
-            </select>
-            <select
-              id="categoria-filter"
-              name="categoria-filter"
-              value={filterValueCategoria}
-              onChange={handleFilterChangeCategoria}
-            >
-              <option value="">Seleccione una categoría</option>
-              {categorias.map((val) => (
-                <option key={val.idCategoria} value={val.idCategoria}>
-                  {val.nombCatergoria}
-                </option>
-              ))}
-            </select>
-          </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Código</th>
-                <th>Nombre</th>
-                <th>Categoría</th>
-                <th>Proveedor</th>
-                <th>Precio de Compra</th>
-                <th>Precio de Venta</th>
-                <th>Vencimiento</th>
-                <th>Stock</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredProductos.map((val, key) => {
-                return (
-                  <tr key={val.idProducto}>
-                    <td>{val.codProducto}</td>
-                    <td>{val.nombProducto}</td>
-                    <td>{getCategoriaName(val.idCategoria)}</td>
-                    <td>{getProveedorName(val.idProveedor)}</td>
-                    <td>{val.precioCompra}</td>
-                    <td>{val.precioVenta}</td>
-                    <td>{formatFecha(val.vecimiento)}</td>
-                    <td>{val.stock}</td>
-                    <td>
-                      <button
-                        className="edit-button"
-                        onClick={() => setProducto(val)}
-                      >
-                        Editar
-                      </button>
-                      <button
-                        className="delete-button"
-                        onClick={() => handleDeleteProducto(val)}
-                      >
-                        Eliminar
-                      </button>
-                    </td>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Categoría</th>
+                    <th>Proveedor</th>
+                    <th>Precio de Compra</th>
+                    <th>Precio de Venta</th>
+                    <th>Vencimiento</th>
+                    <th>Stock</th>
+                    <th>Acciones</th>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          <div className="print-button-container">
-            <button
-              onClick={generatePDF}>
-              <FaFilePdf
-                style={{
-                  marginLeft: "10px",
-                  marginRight: "10px",
-                  marginTop: "10px",
-                  marginBottom: "5px",
-                  fontSize: "20px",
-                }}
-              />
-            </button>
+                </thead>
+                <tbody>
+                  {filteredProductos.map((val, key) => {
+                    return (
+                      <tr key={val.idProducto}>
+                        <td>{val.codProducto}</td>
+                        <td>{val.nombProducto}</td>
+                        <td>{getCategoriaName(val.idCategoria)}</td>
+                        <td>{getProveedorName(val.idProveedor)}</td>
+                        <td>{val.precioCompra}</td>
+                        <td>{val.precioVenta}</td>
+                        <td>{formatFecha(val.vecimiento)}</td>
+                        <td>{val.stock}</td>
+                        <td>
+                          <button
+                            className="edit-button"
+                            onClick={() => setProducto(val)}
+                          >
+                            Editar
+                          </button>
+                          <button
+                            className="delete-button"
+                            onClick={() => handleDeleteProducto(val)}
+                          >
+                            Eliminar
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+              <div className="print-button-container">
+                <button
+                  onClick={generatePDF}>
+                  <FaFilePdf
+                    style={{
+                      marginLeft: "10px",
+                      marginRight: "10px",
+                      marginTop: "10px",
+                      marginBottom: "5px",
+                      fontSize: "20px",
+                    }}
+                  />
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
+
+      {empleado && (
+        <>
+          <div className="header-comp">
+            <h1 className="title-comp">Inventario de Productos</h1>
+          </div>
+          <div className="table-card">
+            <h1 className="sub-titles-copm"></h1>
+            <div className="search-bar">
+              <input
+                type="text"
+                id="producto-filter"
+                name="producto-filter"
+                placeholder="Filtrar productos"
+                autoComplete="off"
+                value={filterValue}
+                onChange={handleFilterChangeProducto}
+              />
+              <select
+                id="proveedor-filter"
+                name="proveedor-filter"
+                value={filterValueProveedor}
+                onChange={handleFilterChangeProveedor}
+              >
+                <option value="">Seleccione un proveedor</option>
+                {proveedores.map((val) => (
+                  <option key={val.idProveedor} value={val.idProveedor}>
+                    {val.nombProveedor}
+                  </option>
+                ))}
+              </select>
+              <select
+                id="categoria-filter"
+                name="categoria-filter"
+                value={filterValueCategoria}
+                onChange={handleFilterChangeCategoria}
+              >
+                <option value="">Seleccione una categoría</option>
+                {categorias.map((val) => (
+                  <option key={val.idCategoria} value={val.idCategoria}>
+                    {val.nombCatergoria}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Nombre</th>
+                  <th>Categoría</th>
+                  <th>Proveedor</th>
+                  <th>Precio de Compra</th>
+                  <th>Precio de Venta</th>
+                  <th>Vencimiento</th>
+                  <th>Stock</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredProductos.map((val, key) => {
+                  return (
+                    <tr key={val.idProducto}>
+                      <td>{val.codProducto}</td>
+                      <td>{val.nombProducto}</td>
+                      <td>{getCategoriaName(val.idCategoria)}</td>
+                      <td>{getProveedorName(val.idProveedor)}</td>
+                      <td>{val.precioCompra}</td>
+                      <td>{val.precioVenta}</td>
+                      <td>{formatFecha(val.vecimiento)}</td>
+                      <td>{val.stock}</td>
+                      <td>
+                        <button
+                          className="edit-button"
+                          onClick={() => setProducto(val)}
+                        >
+                          Editar
+                        </button>
+                        <button
+                          className="delete-button"
+                          onClick={() => handleDeleteProducto(val)}
+                        >
+                          Eliminar
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            <div className="print-button-container-empleado">
+              <button
+                onClick={generatePDF}>
+                <FaFilePdf
+                  style={{
+                    marginLeft: "10px",
+                    marginRight: "10px",
+                    marginTop: "10px",
+                    marginBottom: "5px",
+                    fontSize: "20px",
+                  }}
+                />
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
