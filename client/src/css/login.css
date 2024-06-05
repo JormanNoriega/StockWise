@@ -13,7 +13,7 @@ body {
 }
 
 .Bg-Img{
-    background-image: linear-gradient(180deg, #0000008c 0%, #0000008c 100%),url("../../public/fondo.jpg");
+    background-image: linear-gradient(180deg, #0000008c 0%, #0000008c 100%),url("../assets/fondo.jpg");
     background-size: cover; /* Ajusta la imagen para que cubra todo el área del elemento */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
     background-position: center; /* Centra la imagen */
@@ -43,18 +43,15 @@ body {
     width: 250px;
     height: 250px;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4)); /* Sombra del contorno */
-    animation: animacion 1s ease-out forwards;
 }
 
 .info h1{
     padding-top: 10px;
     padding-bottom: 10px;
-    animation: animacion 1s ease-out forwards;
     font-size: 40px;
 }
 
 .info p{
-    animation: animacion 1s ease-out forwards;
     font-size: 20px;
 }
 
@@ -66,20 +63,8 @@ body {
     box-shadow: 0 0 50px;
     border-radius: 25px;
     border: 1px solid white;
-    animation: animacion 1s ease-out forwards;
 }
 
-@keyframes animacion {
-    from {
-        opacity: 0;
-        transform: translateY(100%);
-    }
-
-    to {
-        transform: translateY(0%);
-        opacity: 1;
-    }
-}
 
 .login-form h2{
     text-align: left;
