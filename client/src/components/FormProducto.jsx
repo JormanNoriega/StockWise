@@ -645,7 +645,6 @@ const RegistroProducto = () => {
                   <th>Precio de Venta</th>
                   <th>Vencimiento</th>
                   <th>Stock</th>
-                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -660,20 +659,6 @@ const RegistroProducto = () => {
                       <td>{val.precioVenta}</td>
                       <td>{formatFecha(val.vecimiento)}</td>
                       <td>{val.stock}</td>
-                      <td>
-                        <button
-                          className="edit-button"
-                          onClick={() => setProducto(val)}
-                        >
-                          Editar
-                        </button>
-                        <button
-                          className="delete-button"
-                          onClick={() => handleDeleteProducto(val)}
-                        >
-                          Eliminar
-                        </button>
-                      </td>
                     </tr>
                   );
                 })}
