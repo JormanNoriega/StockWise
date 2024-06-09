@@ -197,7 +197,7 @@ const RegistroEmpleados = () => {
             <div>
               <label htmlFor="contraseña">Contraseña</label>
               <input
-                type="password"
+                type="text"
                 id="contraseña"
                 name="contraseña"
                 placeholder="Ingrese la contraseña"

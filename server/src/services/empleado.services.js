@@ -116,9 +116,12 @@ export async function actualizarEmpleado(
         idUsuario: idUsuario,
       },
     });
+
+    const contraseñaHash = await bcrypt.hash(contraseña, 10);
+
     empleado.nombre = nombre;
     empleado.correo = correo;
-    empleado.contraseña = contraseña;
+    empleado.contraseña = contraseñaHash;
     await empleado.save();
     return new EmpleadoDTO(
       empleado.idEmpleado,
