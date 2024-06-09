@@ -13,6 +13,7 @@ const RegistroVenta = () => {
     nombCatergoria: "",
     precioVenta: "",
     cantidad: "",
+    stock: "",
     fechaVenta: "",
   });
   const [carrito, setCarrito] = useState([]);
@@ -53,9 +54,10 @@ const RegistroVenta = () => {
       setTotalVenta(0);
       setFormData({
         idProducto: "",
+        nombProducto: "",
         precioVenta: "",
         cantidad: "",
-        fechaVenta: "",
+        stock: "",
       });
     } catch (error) {
       Swal.fire({
@@ -90,8 +92,10 @@ const RegistroVenta = () => {
         setFormData(prevState => ({
           ...prevState,
           idProducto: producto.idProducto,
+          codProducto: producto.codProducto,
           nombProducto: producto.nombProducto,
           precioVenta: producto.precioVenta,
+          stock: producto.stock,
         }));
       } else {
         Swal.fire({
@@ -104,7 +108,7 @@ const RegistroVenta = () => {
   };
 
   const agregarProducto = () => {
-    const producto = productos.find(p => p.idProducto === parseInt(formData.idProducto));
+    const producto = productos.find(p => p.codProducto === formData.codProducto);
     if (!producto) {
       Swal.fire({
         icon: "error",
@@ -113,12 +117,21 @@ const RegistroVenta = () => {
       });
       return;
     }
-
+    const cantidad = parseFloat(formData.cantidad);
     if (!formData.precioVenta || !formData.cantidad || formData.cantidad <= 0 || formData.precioVenta <= 0) {
       Swal.fire({
         icon: "error",
         title: "¡Error!",
         text: "El precio de venta y la cantidad deben ser mayores a 0.",
+      });
+      return;
+    }
+
+      if (cantidad > formData.stock) {
+      Swal.fire({
+        icon: "error",
+        title: "¡Error!",
+        text: "No hay suficiente stock disponible.",
       });
       return;
     }
@@ -150,6 +163,7 @@ const RegistroVenta = () => {
   const limpiar = () => {
     setFormData({
       codProducto: "",
+      nombProducto: "",
       precioVenta: "",
       cantidad: "",
       fechaVenta: formData.fechaVenta,
@@ -169,7 +183,7 @@ const RegistroVenta = () => {
             <div className="grid-item">
               <label htmlFor="codProducto">Código del producto</label>
               <input
-                type="number"
+                type="text"
                 id="codProducto"
                 name="codProducto"
                 placeholder="Ingrese el código del producto"
@@ -221,19 +235,7 @@ const RegistroVenta = () => {
                 required
               />
             </div>
-            <div className="grid-item">
-              <label htmlFor="fechaVenta">Fecha de la venta</label>
-              <input
-                type="date"
-                id="fechaVenta"
-                name="fechaVenta"
-                placeholder="Ingrese la fecha de venta"
-                autoComplete="off"
-                value={formData.fechaVenta}
-                onChange={handleChange}
-                required
-              />
-            </div>
+
             <div className="grid-item">
               <label htmlFor="subtotal">Subtotal</label>
               <input
