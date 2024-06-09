@@ -1,4 +1,5 @@
 import { Categoria } from "../models/Categoria.js";
+import { Producto } from "../models/Producto.js";
 import { CategoriaDTO } from "../dtos/categoria.dto.js";
 
 async function validarCategoria(nombCatergoria, idUsuario) {
@@ -102,6 +103,17 @@ export async function actualizarCategoria(
 //Eliminar Categoria de un usuario
 export async function eliminarCategoria(idCategoria, idUsuario) {
   try {
+    const productos = await Producto.findAll({
+      where: {
+        idCategoria: idCategoria,
+        idUsuario: idUsuario,
+      },
+    });
+
+    if (productos.length > 0) {
+      throw new Error("La categoria tiene productos asociados");
+    }
+
     await Categoria.destroy({
       where: {
         idCategoria: idCategoria,

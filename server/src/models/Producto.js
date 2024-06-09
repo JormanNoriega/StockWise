@@ -9,7 +9,7 @@ export const Producto = sequelize.define("productos", {
     autoIncrement: true,
   },
   codProducto: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
   },
   idUsuario: {
     type: DataTypes.INTEGER,

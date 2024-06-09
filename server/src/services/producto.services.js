@@ -1,5 +1,6 @@
 import { Producto } from "../models/Producto.js";
 import { ProductoDTO } from "../dtos/producto.dto.js";
+import { Venta } from "../models/Venta.js";
 
 async function validarProducto(codProducto, nombProducto, idUsuario) {
   const productoEncontrado = await Producto.findOne({
@@ -174,6 +175,17 @@ export async function actualizarProducto(
 //Eliminar Empleado de un usuario
 export async function eliminarProducto(codProducto, idUsuario) {
   try {
+    const ventas = await Venta.findAll({
+      where: {
+        codProducto: codProducto,
+        idUsuario: idUsuario,
+      },
+    });
+
+    if (ventas.length > 0) {
+      throw new Error("No se puede eliminar el producto, tiene ventas asociadas");
+    }
+
     await Producto.destroy({
       where: {
         codProducto: codProducto,
