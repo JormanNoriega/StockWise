@@ -365,7 +365,7 @@ const RegistroProducto = () => {
                   <div className="grid-item">
                     <label htmlFor="codProducto">Código de Producto</label>
                     <input
-                      type="number"
+                      type="text"
                       id="codProducto"
                       name="codProducto"
                       placeholder="Ingrese el código de producto"
