@@ -1,6 +1,5 @@
 import { Proveedor } from "../models/Proveedor.js";
-import { Usuario } from "../models/Usuario.js";
-import { Empleado } from "../models/Empleado.js";
+import { Producto } from "../models/Producto.js";
 import { ProveedorDTO } from "../dtos/proveedor.dto.js";
 
 //Crear Proveedor a un Usuario
@@ -120,6 +119,16 @@ export async function actualizarProveedor(
 //Eliminar Proveedor de un usuario
 export async function eliminarProveedor(idProveedor, idUsuario) {
   try {
+    const productos = await Producto.findAll({
+      where: {
+        idProveedor: idProveedor,
+        idUsuario: idUsuario,
+      },
+    });
+
+    if (productos.length > 0) {
+      throw new Error("La categoria tiene productos asociados");
+    }
     await Proveedor.destroy({
       where: {
         idProveedor: idProveedor,

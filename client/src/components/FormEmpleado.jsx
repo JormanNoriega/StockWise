@@ -14,30 +14,36 @@ const RegistroEmpleados = () => {
   const [filteredEmpleados, setFilteredEmpleados] = useState([]);
   const [filterValue, setFilterValue] = useState("");
   const [error, setError] = useState("");
-  const { createEmpleado, getEmpleado, empleados, deleteEmpleado, updateEmpleado } = useEmpleado();
+  const {
+    createEmpleado,
+    getEmpleado,
+    empleados,
+    deleteEmpleado,
+    updateEmpleado,
+  } = useEmpleado();
 
   const handleCreateEmpleado = async (e) => {
     e.preventDefault();
     try {
       await createEmpleado(formData);
       Swal.fire({
-        icon: 'success',
-        title: '¡Registro exitoso!',
-        text: 'El empleado ha sido registrado correctamente.'
+        icon: "success",
+        title: "¡Registro exitoso!",
+        text: "El empleado ha sido registrado correctamente.",
       });
       setFormData({
         nombre: "",
         correo: "",
-        contraseña: ""
+        contraseña: "",
       });
       await getEmpleado();
     } catch (error) {
       setError(error.response.data.message);
       Swal.fire({
-        icon: 'error',
-        title: '¡Error!',
+        icon: "error",
+        title: "¡Error!",
         text: error.response.data.message,
-        footer: error
+        footer: error,
       });
     }
   };
@@ -45,28 +51,35 @@ const RegistroEmpleados = () => {
   const handleDeleteEmpleado = (val) => {
     Swal.fire({
       title: "Confirmar eliminación",
-      html: "<i>¿Realmente desea eliminar a <strong>" + val.nombre + "</strong>?</i>",
+      html:
+        "<i>¿Realmente desea eliminar a <strong>" +
+        val.nombre +
+        "</strong>?</i>",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, eliminarlo!"
+      confirmButtonText: "Sí, eliminarlo!",
     }).then((result) => {
       if (result.isConfirmed) {
         deleteEmpleado(val.idEmpleado)
           .then(() => {
             Swal.fire({
               title: "Registro eliminado!",
-              html: "<i>El empleado <strong>" + val.nombre + "</strong> fue eliminado exitosamente!</i>",
-              icon: 'success',
+              html:
+                "<i>El empleado <strong>" +
+                val.nombre +
+                "</strong> fue eliminado exitosamente!</i>",
+              icon: "success",
             });
             getEmpleado();
-          }).catch((error) => {
+          })
+          .catch((error) => {
             Swal.fire({
               icon: "error",
               title: "Oops...",
               text: "No se puede eliminar el empleado!",
-              footer: '<a href="#">Intente más tarde</a>'
+              footer: '<a href="#">Intente más tarde</a>',
             });
           });
       }
@@ -80,7 +93,10 @@ const RegistroEmpleados = () => {
       limpiar();
       Swal.fire({
         title: "<strong>Actualización exitosa!</strong>",
-        html: "<i>El empleado <strong>" + formData.nombre + "</strong> fue actualizado con éxito! </i>",
+        html:
+          "<i>El empleado <strong>" +
+          formData.nombre +
+          "</strong> fue actualizado con éxito! </i>",
         icon: "success",
       });
       await getEmpleado();
@@ -135,9 +151,10 @@ const RegistroEmpleados = () => {
     const query = e.target.value.toLowerCase();
     setFilterValue(e.target.value);
     setFilteredEmpleados(
-      empleados.filter((empleado) =>
-        empleado.nombre.toLowerCase().includes(query) ||
-        empleado.correo.toLowerCase().includes(query)
+      empleados.filter(
+        (empleado) =>
+          empleado.nombre.toLowerCase().includes(query) ||
+          empleado.correo.toLowerCase().includes(query)
       )
     );
   };
@@ -219,18 +236,19 @@ const RegistroEmpleados = () => {
           <table>
             <thead>
               <tr>
+                <th>ID Empleado</th>
                 <th>Nombre</th>
                 <th>Correo Electrónico</th>
-                <th>Contraseña</th>
                 <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
               {filteredEmpleados.map((val) => (
                 <tr key={val.idEmpleado}>
+                  <td>{val.idEmpleado}</td>
                   <td>{val.nombre}</td>
                   <td>{val.correo}</td>
-                  <td>{val.contraseña}</td>
+
                   <td>
                     <button
                       className="edit-button"

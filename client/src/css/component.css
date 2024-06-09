@@ -1,11 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
 
+:root{
+  --azul1: #5383e8;
+  --azul2: #375db1;
+  --rojo1: #f44336;
+  --rojo2: #d32f2f;
+}
+
+
 :root[data-theme="light"] {
   --color1: #ffffff;
   --color2: #ebeef1;
   --color3: #f7f7f8;
   --text-color: #1c1c1f;
   --button-text: #1c1c1f;
+  --placeholder: #1c1c1f90;
 }
 
 :root[data-theme="dark"] {
@@ -14,6 +23,7 @@
   --color3: #24242a;
   --text-color: #ebeef1;
   --button-text: white;
+  --placeholder: #ebeef188;
 }
 
 * {
@@ -72,7 +82,7 @@
 .card {
   background-color: var(--color1);
   border-radius: 1.5rem;
-  padding: 1.5rem;
+  padding: 3rem;
   margin-top: 1rem;
 }
 
@@ -109,16 +119,12 @@
   margin-bottom: -0.01rem;
 }
 
-.card input::-webkit-input-placeholder {
-  color: var(--text-color);
-}
-
 .card button {
   width: 40%;
   padding: 0.75rem 1rem;
   border: none;
   border-radius: 1rem;
-  background-color: #5383e8;
+  background-color: var(--azul1);
   color: white;
   font-size: 0.9rem;
   cursor: pointer;
@@ -130,7 +136,7 @@
 }
 
 .card button:hover {
-  background-color: #375db1;
+  background-color: var(--azul2);
 }
 
 .card button[type="submit_2"] {
@@ -138,7 +144,7 @@
   padding: 0.75rem 1rem;
   border: none;
   border-radius: 1rem;
-  background-color: #053C5E;
+  background-color: var(--azul1);
   color: white;
   font-size: 0.9rem;
   cursor: pointer;
@@ -150,12 +156,16 @@
   margin-top: 20px;
 }
 
+.card button[type="submit_2"]:hover {
+  background-color: var(--azul2);
+}
+
 .card button[type="button"] {
   width: 20%;
   padding: 0.75rem 1rem;
   border: none;
   border-radius: 1rem;
-  background-color: #f44336;
+  background-color: var(--rojo1);
   color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   font-size: 0.9rem;
@@ -166,8 +176,12 @@
   margin-top: 20px;
 }
 
+.card button[type="button"]:hover {
+  background-color: var(--rojo2);
+}
+
 .edit-button {
-  background-color: #2196f3;
+  background-color: var(--azul1);
   color: #fff;
   padding: 0.5rem 1rem;
   border: none;
@@ -182,7 +196,7 @@
 }
 
 .delete-button {
-  background-color: #f44336;
+  background-color: var(--rojo1);
   color: #fff;
   padding: 0.5rem 1rem;
   border: none;
@@ -194,11 +208,11 @@
 }
 
 .edit-button:hover {
-  background-color: #0b7dda;
+  background-color: var(--azul2);
 }
 
 .delete-button:hover {
-  background-color: #d32f2f;
+  background-color: var(--rojo2);
 }
 
 /*CSS TABLAS*/
@@ -284,11 +298,6 @@
   font-family: "Poppins", sans-serif;
   color: var(--text-color);
   background-color: var(--color1);
-}
-
-.search-bar input::-webkit-input-placeholder,
-.search-bar select::-webkit-input-placeholder {
-  color: var(--text-color);
 }
 
 .search-bar input:focus,
@@ -535,4 +544,10 @@
 
 .total-venta {
   color: whitesmoke;
+}
+
+.card input::placeholder,
+.search-bar input::placeholder,
+.grid-container input::placeholder{
+  color: var(--placeholder);
 }

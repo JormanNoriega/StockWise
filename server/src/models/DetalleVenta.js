@@ -17,6 +17,6 @@ export const DetalleVenta = sequelize.define("detalleVentas", {
     type: DataTypes.INTEGER,
   },
   subTotal: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.DOUBLE,
   },
 });
