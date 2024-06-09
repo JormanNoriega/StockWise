@@ -97,8 +97,8 @@ const RegistroProducto = () => {
             Swal.fire({
               icon: "error",
               title: "Oops...",
-              text: "No se puede eliminar el producto!",
-              footer: '<a href="#">Intente más tarde</a>',
+              text: error.response.data.message,
+              footer: '<a>Intente más tarde</a>',
             });
           });
       }
@@ -365,7 +365,7 @@ const RegistroProducto = () => {
                   <div className="grid-item">
                     <label htmlFor="codProducto">Código de Producto</label>
                     <input
-                      type="text"
+                      type="number"
                       id="codProducto"
                       name="codProducto"
                       placeholder="Ingrese el código de producto"

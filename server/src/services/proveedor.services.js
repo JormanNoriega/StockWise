@@ -127,7 +127,7 @@ export async function eliminarProveedor(idProveedor, idUsuario) {
     });
 
     if (productos.length > 0) {
-      throw new Error("La categoria tiene productos asociados");
+      throw new Error("El proveedor tiene productos asociados");
     }
     await Proveedor.destroy({
       where: {

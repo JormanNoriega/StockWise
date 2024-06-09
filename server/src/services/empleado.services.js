@@ -1,4 +1,5 @@
 import { Usuario } from "../models/Usuario.js";
+import { Venta } from "../models/Venta.js";
 import { Empleado } from "../models/Empleado.js";
 import { EmpleadoDTO } from "../dtos/empleado.dto.js";
 import bcrypt from "bcryptjs";
@@ -115,9 +116,12 @@ export async function actualizarEmpleado(
         idUsuario: idUsuario,
       },
     });
+
+    const contraseñaHash = await bcrypt.hash(contraseña, 10);
+
     empleado.nombre = nombre;
     empleado.correo = correo;
-    empleado.contraseña = contraseña;
+    empleado.contraseña = contraseñaHash;
     await empleado.save();
     return new EmpleadoDTO(
       empleado.idEmpleado,
@@ -134,6 +138,16 @@ export async function actualizarEmpleado(
 //Eliminar Empleado de un usuario
 export async function eliminarEmpleado(idEmpleado, idUsuario) {
   try {
+    const ventas = await Venta.findAll({
+      where: {
+        idEmpleado: idEmpleado,
+      },
+    });
+
+    if (ventas.length > 0) {
+      throw new Error("No se puede eliminar el empleado, tiene ventas asociadas");
+    }
+
     await Empleado.destroy({
       where: {
         idEmpleado: idEmpleado,

@@ -74,8 +74,8 @@ const RegistroCategoria = () => {
             Swal.fire({
               icon: "error",
               title: "Oops...",
-              text: "No se puede eliminar la categoria!",
-              footer: '<a href="#">Intente más tarde</a>',
+              text: error.response.data.message,
+              footer: '<a>Intente más tarde</a>',
             });
           });
       }

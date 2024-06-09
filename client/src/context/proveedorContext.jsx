@@ -40,7 +40,7 @@ export function ProveedorProvider({ children }) {
             if(res.status == 204) setProveedor(
                 proveedores.filter((proveedor) => proveedor.idProveedor != idProveedor))
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
 
