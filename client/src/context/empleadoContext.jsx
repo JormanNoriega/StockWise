@@ -41,7 +41,7 @@ export function EmpleadoProvider({ children }) {
             if(res.status == 204) setEmpleado(
                 empleados.filter((empleado) => empleado.idEmpleado != idEmpleado))
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
 

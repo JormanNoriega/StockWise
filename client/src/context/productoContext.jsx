@@ -41,7 +41,7 @@ export function ProductoProvider({ children }) {
             if(res.status == 204) setProducto(
                 productos.filter((producto) => producto.codProducto != codProducto))
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
 

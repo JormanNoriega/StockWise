@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../css/inicio.css";
 import logoAzul from "../assets/LogoSinFondo.png";
 
 const Inicio = () => {
+  const [isQuestion1Open, setIsQuestion1Open] = useState(false);
+  const [isQuestion2Open, setIsQuestion2Open] = useState(false);
+  const [isQuestion3Open, setIsQuestion3Open] = useState(false);
+
+  const toggleQuestion1 = () => setIsQuestion1Open(!isQuestion1Open);
+  const toggleQuestion2 = () => setIsQuestion2Open(!isQuestion2Open);
+  const toggleQuestion3 = () => setIsQuestion3Open(!isQuestion3Open);
+
   return (
     <div className="App">
       <header className="hero">
@@ -39,10 +47,10 @@ const Inicio = () => {
 
       <main>
         <section className="contenedor about">
-          <h2 className="subtitle">¿Qué aprenderás en este curso?</h2>
+          <h2 className="subtitle">¿Que necesita tener un bien negocio?</h2>
           <p className="about__paragraph">
-            Todo lo necesario y obligatorio de CSS, (Flexbox, Grid, Custom
-            properties, Position, Animaciones, Box Model y más)
+              Un buen empresario no solo es el que vende mas, si no el que trata y administra
+              su negocio como si fuera su vida
           </p>
 
           <div className="about__main">
@@ -54,8 +62,10 @@ const Inicio = () => {
               />
               <h3 className="about__title">Gestionar tu Inventario</h3>
               <p className="about__paragrah">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae
-                tempore porro eius facilis?
+                Con StockWise obtendras la gestion de tus productos lo mas
+                automatizado posible ahorrandote dinero al tener que contratar a otra 
+                persona o perdiendo el tiempo con un gestor manual, filtrado de productos, control de stock,
+                de categorias, proveedores, etc.
               </p>
             </article>
 
@@ -67,8 +77,9 @@ const Inicio = () => {
               />
               <h3 className="about__title">Personalizar tu Negocio</h3>
               <p className="about__paragrah">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae
-                tempore porro eius facilis?
+                  StockWise puede personalizar la vista de interfaz utilizando
+                  el cambio de tema a modo oscuro o claro asi las personas que
+                  sufren de la vista no se cansaran con la aplicacion
               </p>
             </article>
 
@@ -80,8 +91,7 @@ const Inicio = () => {
               />
               <h3 className="about__title">Sass</h3>
               <p className="about__paragrah">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quae
-                tempore porro eius facilis?
+                No se que es Sass
               </p>
             </article>
           </div>
@@ -94,16 +104,15 @@ const Inicio = () => {
           >
             <div className="knowledege__texts">
               <h2 className="subtitle">
-                Curso completo de CSS3. ¡Domina CSS de una vez por todas!
+                Gestor completo de Inventario. ¡Contralo tu stock de manera eficiente y rapida!
               </h2>
               <p className="knowledge__paragraph">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Excepturi, aliquam nemo in facere suscipit at delectus unde
-                labore ad officia iste accusantium eaque aperiam laborum est
-                voluptate totam? Modi, obcaecati?
+                Todo lo que necesitas a unos pocos clicks,
+                reporte de inventarios, generar facturas en pdf,
+                reporte de ventas, y mas.
               </p>
               <a href="/login" className="btnComienza">
-                Entra al curso
+                Registrate
               </a>
             </div>
 
@@ -123,15 +132,14 @@ const Inicio = () => {
         >
           <h2 className="subtitle">Preguntas frecuentes</h2>
           <p className="questions__paragraph">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea, porro
-            doloribus neque perspiciatis sapiente fuga.
+            ¿No se sabes que es un gestionamiento o un inventario?
           </p>
 
           <section className="questions__container">
             <article className="questions__padding">
               <div className="questions__answer">
-                <h3 className="questions__title">
-                  ¿Qué es CSS?
+                <h3 className="questions__title" onClick={toggleQuestion1}>
+                  ¿Qué es un gestor?
                   <span className="questions__arrow">
                     <img
                       src="./public/images/arrow.svg"
@@ -141,23 +149,18 @@ const Inicio = () => {
                   </span>
                 </h3>
 
-                <p className="questions__show">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos
-                  facere, quidem eum id excepturi assumenda explicabo nam
-                  accusamus veritatis voluptates eveniet adipisci, dicta nihil
-                  nemo modi possimus officiis quam atque? Lorem ipsum, dolor sit
-                  amet consectetur adipisicing elit. Quos facere, quidem eum id
-                  excepturi assumenda explicabo nam accusamus veritatis
-                  voluptates eveniet adipisci, dicta nihil nemo modi possimus
-                  officiis quam atque?
-                </p>
+                {isQuestion1Open && (
+                  <p className="questions__show">
+                    Un gestor es una persona o sistema encargado de administrar y manejar eficientemente determinados recursos, actividades o procesos. Su función principal es gestionar, organizar y realizar las tareas necesarias para el adecuado funcionamiento y consecución de objetivos específicos.
+                  </p>
+                )}
               </div>
             </article>
 
             <article className="questions__padding">
               <div className="questions__answer">
-                <h3 className="questions__title">
-                  ¿Qué aprenderé en este curso?
+                <h3 className="questions__title" onClick={toggleQuestion2}>
+                  ¿Gue es un inventario?
                   <span className="questions__arrow">
                     <img
                       src="./public/images/arrow.svg"
@@ -167,23 +170,19 @@ const Inicio = () => {
                   </span>
                 </h3>
 
-                <p className="questions__show">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos
-                  facere, quidem eum id excepturi assumenda explicabo nam
-                  accusamus veritatis voluptates eveniet adipisci, dicta nihil
-                  nemo modi possimus officiis quam atque? Lorem ipsum, dolor sit
-                  amet consectetur adipisicing elit. Quos facere, quidem eum id
-                  excepturi assumenda explicabo nam accusamus veritatis
-                  voluptates eveniet adipisci, dicta nihil nemo modi possimus
-                  officiis quam atque?
-                </p>
+                {isQuestion2Open && (
+                  <p className="questions__show">
+                    Un inventario es un registro documental y detallado de los bienes, mercancías, materiales o productos que posee una empresa, organización o persona en un momento determinado.
+                    Es básicamente un listado que especifica las cantidades, características y ubicación de cada artículo almacenado. Los inventarios permiten tener un control sobre la existencia de los productos y facilitan la gestión, planificación y toma de decisiones sobre las operaciones de compra, venta, producción, etc.
+                  </p>
+                )}
               </div>
             </article>
 
             <article className="questions__padding">
               <div className="questions__answer">
-                <h3 className="questions__title">
-                  ¿Qué es CSS GRID?
+                <h3 className="questions__title" onClick={toggleQuestion3}>
+                  ¿Como puedo utilizar la app?
                   <span className="questions__arrow">
                     <img
                       src="./public/images/arrow.svg"
@@ -193,30 +192,24 @@ const Inicio = () => {
                   </span>
                 </h3>
 
-                <p className="questions__show">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos
-                  facere, quidem eum id excepturi assumenda explicabo nam
-                  accusamus veritatis voluptates eveniet adipisci, dicta nihil
-                  nemo modi possimus officiis quam atque? Lorem ipsum, dolor sit
-                  amet consectetur adipisicing elit. Quos facere, quidem eum id
-                  excepturi assumenda explicabo nam accusamus veritatis
-                  voluptates eveniet adipisci, dicta nihil nemo modi possimus
-                  officiis quam atque?
-                </p>
+                {isQuestion3Open && (
+                  <p className="questions__show">
+                    Para Utilizar la aplicacion te tienes que logear como usuario, ese usuario, que sera el dueño del negocio que se vaya admistrar deberera empezar ingresar la informacion de todo su negocio incluyendo proveedores y debera crear categorias para da uno de sus productos para llevar la gestion mas avanzada, tambien debera
+                    ingresar la informacion basica de sus empleados que son los encargados de la informacion y gestion de las ventas del negocio, los reportes son automatizados, solo deberan generarlos atravez de un boton y listo.
+                  </p>
+                )}
               </div>
             </article>
           </section>
 
           <section className="questions__offer">
-            <h2 className="subtitle">¿Estas listo para aprender CSS?</h2>
+            <h2 className="subtitle">Si quieres utilizar nuestro producto, ¿Que esperas?</h2>
             <p className="questions__copy">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet
-              ratione architecto magnam, officiis ex porro vero est voluptates
-              quaerat quibusdam illo veniam reprehenderit eius atque tempora
-              iure ab non autem.
+              Si quieres utilizar nuestro producto deberas seguir los pasos que te dejamos
+              en las preguntas, si ya sabes manejarlo no esperes mas y registrate.
             </p>
             <a href="/registro" className="btnComienza">
-              Aprende ahora
+              Registrate ahora
             </a>
           </section>
         </section>
@@ -249,7 +242,7 @@ const Inicio = () => {
             action="https://formspree.io/f/mknkkrkj"
             method="POST"
           >
-            <h2 className="footer__newsletter">Suscribete a la newsletter</h2>
+            <h2 className="footer__newsletter">Envianos un correo</h2>
             <div className="footer__inputs">
               <input
                 type="email"
@@ -299,10 +292,6 @@ const Inicio = () => {
           </h3>
         </section>
       </footer>
-
-      <script src="./public/js/slider.js"></script>
-      <script src="./public/js/questions.js"></script>
-      <script src="./public/js/menu.js"></script>
     </div>
   );
 };

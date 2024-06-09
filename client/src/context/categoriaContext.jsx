@@ -36,13 +36,15 @@ export function CategoriaProvider({ children }) {
 
     const deleteCategoria = async (idCategoria) => {
         try {
-            const res = await deleteCategoriaRequest(idCategoria);
-            if(res.status == 204) setCategoria(
-                categorias.filter((categoria) => categoria.idCategoria != idCategoria))
+          const res = await deleteCategoriaRequest(idCategoria);
+          if (res.status == 204) {
+            setCategoria(categorias.filter((categoria) => categoria.idCategoria != idCategoria));
+          }
         } catch (error) {
-            console.log(error);
+          throw error;
         }
-    }
+      };
+      
 
     const updateCategoria = async (idCategoria, categoria) => {
         try {

@@ -78,8 +78,8 @@ const RegistroEmpleados = () => {
             Swal.fire({
               icon: "error",
               title: "Oops...",
-              text: "No se puede eliminar el empleado!",
-              footer: '<a href="#">Intente más tarde</a>',
+              text: error.response.data.message,
+              footer: '<a>Intente más tarde</a>',
             });
           });
       }
