@@ -87,7 +87,7 @@ const RegistroVenta = () => {
 
   const handleProductCodeEnter = (e) => {
     if (e.key === "Enter") {
-      const producto = productos.find(p => p.codProducto === parseInt(formData.codProducto));
+      const producto = productos.find(p => p.codProducto === formData.codProducto);
       if (producto) {
         setFormData(prevState => ({
           ...prevState,
