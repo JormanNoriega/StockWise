@@ -3,7 +3,7 @@
 1. Node JS
 2. PosgrestSQL
 ## SERVER:
-Primero se instalan los modulos con "npn i"
+Primero se instalan los modulos con "npm i"
 Se Debe configurar la conexion a la BD en "/database/database.js" Por Defecto está:  
 - db name: "stockwise"
 - username: "postgres" 
