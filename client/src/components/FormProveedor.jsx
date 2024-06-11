@@ -73,7 +73,7 @@ const RegistroProveedor = () => {
               icon: "error",
               title: "Oops...",
               text: error.response.data.message,
-              footer: '<a>Intente más tarde</a>',
+              footer: "<a>Intente más tarde</a>",
             });
           });
       }
@@ -142,24 +142,26 @@ const RegistroProveedor = () => {
     const query = e.target.value.toLowerCase();
     setFilterValue(e.target.value);
     setFilteredProveedores(
-      proveedores.filter((proveedor) =>
-        proveedor.nombProveedor.toLowerCase().includes(query) ||
-        proveedor.telefono.toLowerCase().includes(query) ||
-        proveedor.correo.toLowerCase().includes(query)
+      proveedores.filter(
+        (proveedor) =>
+          proveedor.nombProveedor.toLowerCase().includes(query) ||
+          proveedor.telefono.toLowerCase().includes(query) ||
+          proveedor.correo.toLowerCase().includes(query)
       )
     );
   };
 
-
   return (
     <div className="w-full h-full">
-      <div className="header-comp">
-        <h1 className="title-comp">Registro de Proveedores</h1>
-      </div>
       <div className="form-comp">
+        <div className="header-comp">
+          <h1 className="title-comp">Registro de Proveedores</h1>
+        </div>
         <div className="card">
           <h1 className="sub-titles-copm">Nuevo Proveedor</h1>
-          <form onSubmit={editar ? handleUpdateProveedor : handleCreateProveedor}>
+          <form
+            onSubmit={editar ? handleUpdateProveedor : handleCreateProveedor}
+          >
             <div className="form-group">
               <label htmlFor="nombProveedor">Nombre</label>
               <input

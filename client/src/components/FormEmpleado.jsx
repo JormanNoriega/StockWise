@@ -79,7 +79,7 @@ const RegistroEmpleados = () => {
               icon: "error",
               title: "Oops...",
               text: error.response.data.message,
-              footer: '<a>Intente más tarde</a>',
+              footer: "<a>Intente más tarde</a>",
             });
           });
       }
@@ -161,10 +161,10 @@ const RegistroEmpleados = () => {
 
   return (
     <div className="w-full h-full">
-      <div className="header-comp">
-        <h1 className="title-comp">Registro de Empleados</h1>
-      </div>
       <div className="form-comp">
+        <div className="header-comp">
+          <h1 className="title-comp">Registro de Empleados</h1>
+        </div>
         <div className="card">
           <h1 className="sub-titles-copm">Nuevo Empleado</h1>
           <form onSubmit={editar ? handleUpdateEmpleado : handleCreateEmpleado}>

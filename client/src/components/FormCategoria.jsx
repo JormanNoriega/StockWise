@@ -75,7 +75,7 @@ const RegistroCategoria = () => {
               icon: "error",
               title: "Oops...",
               text: error.response.data.message,
-              footer: '<a>Intente más tarde</a>',
+              footer: "<a>Intente más tarde</a>",
             });
           });
       }
@@ -151,13 +151,15 @@ const RegistroCategoria = () => {
 
   return (
     <div className="w-full h-full">
-      <div className="header-comp">
-        <h1 className="title-comp">Registro de Categorias</h1>
-      </div>
       <div className="form-comp">
+        <div className="header-comp">
+          <h1 className="title-comp">Registro de Categorias</h1>
+        </div>
         <div className="card">
           <h1 className="sub-titles-copm">Nueva Categoria</h1>
-          <form onSubmit={editar ? handleUpdateCategoria : handleCreateCategoria}>
+          <form
+            onSubmit={editar ? handleUpdateCategoria : handleCreateCategoria}
+          >
             <div className="form-group">
               <label htmlFor="nombCatergoria">Nombre de Categoria</label>
               <input

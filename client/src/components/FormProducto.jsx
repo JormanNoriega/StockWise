@@ -11,7 +11,7 @@ import { format } from "date-fns";
 import logoAzul from "../assets/LogoSinFondo.png";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import Chart from 'chart.js/auto';
+import Chart from "chart.js/auto";
 
 const RegistroProducto = () => {
   const [formData, setFormData] = useState({
@@ -36,7 +36,7 @@ const RegistroProducto = () => {
     getProducto,
     productos,
     deleteProducto,
-    updateProducto
+    updateProducto,
   } = useProducto();
   const { getCategoria, categorias } = useCategoria();
   const { getProveedor, proveedores } = useProveedor();
@@ -77,7 +77,10 @@ const RegistroProducto = () => {
   const handleDeleteProducto = (val) => {
     Swal.fire({
       title: "Confirmar eliminación",
-      html: "<i>¿Realmente desea eliminar a <strong>" + val.nombProducto + "</strong>?</i>",
+      html:
+        "<i>¿Realmente desea eliminar a <strong>" +
+        val.nombProducto +
+        "</strong>?</i>",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -89,7 +92,10 @@ const RegistroProducto = () => {
           .then(() => {
             Swal.fire({
               title: "Registro eliminado!",
-              html: "<i>El producto <strong>" + val.nombProducto + "</strong> fue eliminado exitosamente!</i>",
+              html:
+                "<i>El producto <strong>" +
+                val.nombProducto +
+                "</strong> fue eliminado exitosamente!</i>",
               icon: "success",
             });
           })
@@ -98,7 +104,7 @@ const RegistroProducto = () => {
               icon: "error",
               title: "Oops...",
               text: error.response.data.message,
-              footer: '<a>Intente más tarde</a>',
+              footer: "<a>Intente más tarde</a>",
             });
           });
       }
@@ -112,7 +118,10 @@ const RegistroProducto = () => {
       limpiar();
       Swal.fire({
         title: "<strong>Actualización exitosa!</strong>",
-        html: "<i>El producto <strong>" + formData.nombProducto + "</strong> fue actualizado con éxito! </i>",
+        html:
+          "<i>El producto <strong>" +
+          formData.nombProducto +
+          "</strong> fue actualizado con éxito! </i>",
         icon: "success",
       });
       await getProducto();
@@ -136,7 +145,9 @@ const RegistroProducto = () => {
       nombProducto: val.nombProducto,
       precioCompra: val.precioCompra,
       precioVenta: val.precioVenta,
-      vecimiento: val.vecimiento ? format(new Date(val.vecimiento), "yyyy-MM-dd") : "",
+      vecimiento: val.vecimiento
+        ? format(new Date(val.vecimiento), "yyyy-MM-dd")
+        : "",
       stock: val.stock,
     });
     setId(val.codProducto);
@@ -178,7 +189,9 @@ const RegistroProducto = () => {
   };
 
   const getProveedorName = (idProveedor) => {
-    const proveedor = proveedores.find((pro) => pro.idProveedor === idProveedor);
+    const proveedor = proveedores.find(
+      (pro) => pro.idProveedor === idProveedor
+    );
     return proveedor ? proveedor.nombProveedor : "Desconocido";
   };
 
@@ -194,10 +207,13 @@ const RegistroProducto = () => {
     const query = e.target.value.toLowerCase();
     setFilterValue(e.target.value);
     setFilteredProductos(
-      productos.filter((producto) =>
-        producto.nombProducto.toLowerCase().includes(query) ||
-        getCategoriaName(producto.idCategoria).toLowerCase().includes(query) ||
-        getProveedorName(producto.idProveedor).toLowerCase().includes(query)
+      productos.filter(
+        (producto) =>
+          producto.nombProducto.toLowerCase().includes(query) ||
+          getCategoriaName(producto.idCategoria)
+            .toLowerCase()
+            .includes(query) ||
+          getProveedorName(producto.idProveedor).toLowerCase().includes(query)
       )
     );
   };
@@ -222,8 +238,11 @@ const RegistroProducto = () => {
     );
   };
 
-  const userName = user ? user.nombre : empleado ? empleado.nombre : "Desconocido";
-
+  const userName = user
+    ? user.nombre
+    : empleado
+    ? empleado.nombre
+    : "Desconocido";
 
   const formatFecha = (fecha) => {
     return format(new Date(fecha), "dd/MM/yyyy");
@@ -233,7 +252,7 @@ const RegistroProducto = () => {
     const doc = new jsPDF();
 
     const ventasPorProducto = ventas.reduce((acc, venta) => {
-      venta.detallesVenta.forEach(detalle => {
+      venta.detallesVenta.forEach((detalle) => {
         if (!acc[detalle.idProducto]) {
           acc[detalle.idProducto] = { cantidad: 0 };
         }
@@ -246,69 +265,72 @@ const RegistroProducto = () => {
       .map(([idProducto, { cantidad }]) => ({
         idProducto,
         cantidad,
-        nombProducto: getProductoName(Number(idProducto))
+        nombProducto: getProductoName(Number(idProducto)),
       }))
       .sort((a, b) => b.cantidad - a.cantidad);
 
     const topProductos = productosOrdenados.slice(0, 5);
-    const labels = topProductos.map(p => p.nombProducto);
-    const dataProductos = topProductos.map(producto => producto.cantidad);
+    const labels = topProductos.map((p) => p.nombProducto);
+    const dataProductos = topProductos.map((producto) => producto.cantidad);
 
     const chartData2 = {
-      labels: labels.map(label => label.length > 6 ? label.substring(0, 6) + '...' : label),
-      datasets: [{
-        label: 'Top Productos',
-        data: dataProductos,
-        backgroundColor: [
-          'rgba(30, 144, 255, 0.7)', // Dodger Blue
-          'rgba(0, 119, 182, 0.7)', // Dark Cerulean
-          'rgba(0, 87, 132, 0.7)',  // Indigo Dye
-          'rgba(18, 52, 86, 0.7)',  // Dark Blue
-          'rgba(0, 48, 73, 0.7)',   // Prussian Blue
-        ],
-        borderColor: [
-          'rgba(30, 144, 255, 1)', // Dodger Blue
-          'rgba(0, 119, 182, 1)', // Dark Cerulean
-          'rgba(0, 87, 132, 1)',  // Indigo Dye
-          'rgba(18, 52, 86, 1)',  // Dark Blue
-          'rgba(0, 48, 73, 1)',   // Prussian Blue
-        ],
-        borderWidth: 2,
-        borderRadius: 5, // Añade bordes redondeados a las barras
-        hoverBackgroundColor: [
-          'rgba(30, 144, 255, 0.9)', // Versiones más oscuras para hover
-          'rgba(0, 119, 182, 0.9)',
-          'rgba(0, 87, 132, 0.9)',
-          'rgba(18, 52, 86, 0.9)',
-          'rgba(0, 48, 73, 0.9)',
-        ],
-      }],
+      labels: labels.map((label) =>
+        label.length > 6 ? label.substring(0, 6) + "..." : label
+      ),
+      datasets: [
+        {
+          label: "Top Productos",
+          data: dataProductos,
+          backgroundColor: [
+            "rgba(30, 144, 255, 0.7)", // Dodger Blue
+            "rgba(0, 119, 182, 0.7)", // Dark Cerulean
+            "rgba(0, 87, 132, 0.7)", // Indigo Dye
+            "rgba(18, 52, 86, 0.7)", // Dark Blue
+            "rgba(0, 48, 73, 0.7)", // Prussian Blue
+          ],
+          borderColor: [
+            "rgba(30, 144, 255, 1)", // Dodger Blue
+            "rgba(0, 119, 182, 1)", // Dark Cerulean
+            "rgba(0, 87, 132, 1)", // Indigo Dye
+            "rgba(18, 52, 86, 1)", // Dark Blue
+            "rgba(0, 48, 73, 1)", // Prussian Blue
+          ],
+          borderWidth: 2,
+          borderRadius: 5, // Añade bordes redondeados a las barras
+          hoverBackgroundColor: [
+            "rgba(30, 144, 255, 0.9)", // Versiones más oscuras para hover
+            "rgba(0, 119, 182, 0.9)",
+            "rgba(0, 87, 132, 0.9)",
+            "rgba(18, 52, 86, 0.9)",
+            "rgba(0, 48, 73, 0.9)",
+          ],
+        },
+      ],
     };
 
-    const canvas2 = document.createElement('canvas');
-    canvas2.style.display = 'none';
+    const canvas2 = document.createElement("canvas");
+    canvas2.style.display = "none";
     document.body.appendChild(canvas2);
     const scaleFactor2 = 4;
     canvas2.width = 130 * scaleFactor2;
     canvas2.height = 60 * scaleFactor2;
 
-    const ctx2 = canvas2.getContext('2d');
+    const ctx2 = canvas2.getContext("2d");
     const myChart2 = new Chart(ctx2, {
-      type: 'pie',
+      type: "pie",
       data: chartData2,
       options: {
         animation: false,
         responsive: false,
         maintainAspectRatio: false,
         devicePixelRatio: scaleFactor2,
-
       },
     });
     doc.setFont("Helvetica", "bold");
     doc.setFontSize(12);
     doc.text("GRAFICO DE VENTAS", 77, 65);
-    doc.addImage(myChart2.toBase64Image(), 'PNG', 50, 70, 100, 50);
-    doc.addImage(logoAzul, 'PNG', 5, 5, 25, 25);
+    doc.addImage(myChart2.toBase64Image(), "PNG", 50, 70, 100, 50);
+    doc.addImage(logoAzul, "PNG", 5, 5, 25, 25);
     doc.setFont("Helvetica", "bold");
     doc.setFontSize(14);
     doc.text("REPORTE DE INVENTARIO", 70, 20);
@@ -328,14 +350,25 @@ const RegistroProducto = () => {
     doc.autoTable({
       startY: 135,
       headStyles: {
-        fontStyle: 'bold',
-        fontSize: 10
+        fontStyle: "bold",
+        fontSize: 10,
       },
       bodyStyles: {
-        fontSize: 9
+        fontSize: 9,
       },
-      head: [['Codigo', 'Nombre', 'Categoria', 'Proveedor', 'Precio de compra', 'Precio de venta', 'Vencimiento', 'Stock']],
-      body: productos.map(producto => [
+      head: [
+        [
+          "Codigo",
+          "Nombre",
+          "Categoria",
+          "Proveedor",
+          "Precio de compra",
+          "Precio de venta",
+          "Vencimiento",
+          "Stock",
+        ],
+      ],
+      body: productos.map((producto) => [
         producto.codProducto,
         producto.nombProducto,
         getCategoriaName(producto.idCategoria),
@@ -343,8 +376,8 @@ const RegistroProducto = () => {
         producto.precioCompra,
         producto.precioVenta,
         formatFecha(producto.vecimiento),
-        producto.stock
-      ])
+        producto.stock,
+      ]),
     });
     doc.save("Reporte_Inventario" + format(new Date(), "ddMMyyyy") + ".pdf");
   };
@@ -353,14 +386,15 @@ const RegistroProducto = () => {
     <div className="w-full h-full">
       {user && (
         <>
-          <div className="header-comp">
-            <h1 className="title-comp">Registro de Productos</h1>
-          </div>
           <div className="form-comp">
+            <div className="header-comp">
+              <h1 className="title-comp">Registro de Productos</h1>
+            </div>
             <div className="card">
               <h1 className="sub-titles-copm">Nuevo Producto</h1>
-              <form onSubmit={editar ? handleUpdateProducto : handleCreateProducto}>
-
+              <form
+                onSubmit={editar ? handleUpdateProducto : handleCreateProducto}
+              >
                 <div className="grid-container">
                   <div className="grid-item">
                     <label htmlFor="codProducto">Código de Producto</label>
@@ -484,7 +518,6 @@ const RegistroProducto = () => {
                     </button>
                   )}
                 </div>
-
               </form>
             </div>
             <div className="table-card">
@@ -572,8 +605,7 @@ const RegistroProducto = () => {
                 </tbody>
               </table>
               <div className="print-button-container">
-                <button
-                  onClick={generatePDF}>
+                <button onClick={generatePDF}>
                   <FaFilePdf
                     style={{
                       marginLeft: "10px",
@@ -665,8 +697,7 @@ const RegistroProducto = () => {
               </tbody>
             </table>
             <div className="print-button-container-empleado">
-              <button
-                onClick={generatePDF}>
+              <button onClick={generatePDF}>
                 <FaFilePdf
                   style={{
                     marginLeft: "10px",

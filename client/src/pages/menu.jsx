@@ -285,7 +285,7 @@ const Dashboard = () => {
                             fontSize: "20px",
                           }}
                         />
-                        <span>Detalle de Ventas</span>
+                        <span>Historial de Ventas</span>
                       </Link>
                     </li>
                   </ul>
@@ -357,7 +357,7 @@ const Dashboard = () => {
                             fontSize: "20px",
                           }}
                         />
-                        <span>Generar venta</span>
+                        <span>Realizar Venta</span>
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -376,7 +376,7 @@ const Dashboard = () => {
                             fontSize: "20px",
                           }}
                         />
-                        <span>Detalle de Ventas</span>
+                        <span>Historial de Ventas</span>
                       </Link>
                     </li>
                   </ul>

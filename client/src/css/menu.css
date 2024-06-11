@@ -1,34 +1,18 @@
-:root[data-theme="light"] {
-  --color1: #ffffff;
-  --color2: #ebeef1;
-  --color3: #f7f7f8;
-  --text-color: #1c1c1f;
-  --button-text: #1c1c1f;
-}
-
-:root[data-theme="dark"] {
-  --color1: #1c1c1f;
-  --color2: #31313c;
-  --color3: #24242a;
-  --text-color: #ebeef1;
-  --button-text: white;
-}
-
 ::-webkit-scrollbar {
-	width: 12px;
+	width: 10px;
   margin: 0;
 	background: var(--color2);
 }
 
 ::-webkit-scrollbar-thumb {
-	background: #138dffd2;
+	background: var(--azul1);
 	border-radius: 10px;
 	border-right: 1px solid var(--color2);
 	border-left: 1px solid var(--color2);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background: #0758a3d2;
+	background: var(--azul2);
 	border-radius: 10px;
 	border-right: 1px solid var(--color2);
 }
@@ -66,7 +50,7 @@
 }
 
 .logo {
-  width: 50px;
+  width: 35px;
   margin-top: -2px;
   margin-left: 15px;
   color: #5383E8;
@@ -185,7 +169,7 @@ aside {
 }
 
 .nav-item:hover {
-  background-color: #2e3644;
+  background-color: #2f2f34;
 }
 
 .nav-link {

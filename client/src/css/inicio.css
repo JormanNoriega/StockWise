@@ -134,12 +134,17 @@ body::-webkit-scrollbar-thumb:hover {
 
 .btnComienza {
     display: inline-block;
-    background-color: #2091F9;
+    background-color: var(--azul1);
     justify-self: center;
     color: #fff;
     text-decoration: none;
     padding: 13px 30px;
     border-radius: 32px;
+}
+
+.btnComienza:hover {
+    background-color: var(--azul2);
+    transition: 0.3s;
 }
 
 /* About */
@@ -541,3 +546,4 @@ footer {
         margin-left: 0;
     }
 }
+
