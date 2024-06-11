@@ -35,7 +35,7 @@ const RegistroVenta = () => {
 
     const venta = {
       fechaVenta: formData.fechaVenta,
-      detalles: carrito.map(producto => ({
+      detalles: carrito.map((producto) => ({
         idProducto: producto.idProducto,
         cantidad: producto.cantidad,
         precioVenta: producto.precioVenta,
@@ -68,7 +68,7 @@ const RegistroVenta = () => {
       });
     }
   };
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -87,9 +87,11 @@ const RegistroVenta = () => {
 
   const handleProductCodeEnter = (e) => {
     if (e.key === "Enter") {
-      const producto = productos.find(p => p.codProducto === formData.codProducto);
+      const producto = productos.find(
+        (p) => p.codProducto === formData.codProducto
+      );
       if (producto) {
-        setFormData(prevState => ({
+        setFormData((prevState) => ({
           ...prevState,
           idProducto: producto.idProducto,
           codProducto: producto.codProducto,
@@ -102,13 +104,16 @@ const RegistroVenta = () => {
           icon: "error",
           title: "¡Error!",
           text: "Producto no encontrado 2",
+          timer: 5000,
         });
       }
     }
   };
 
   const agregarProducto = () => {
-    const producto = productos.find(p => p.codProducto === formData.codProducto);
+    const producto = productos.find(
+      (p) => p.codProducto === formData.codProducto
+    );
     if (!producto) {
       Swal.fire({
         icon: "error",
@@ -118,7 +123,12 @@ const RegistroVenta = () => {
       return;
     }
     const cantidad = parseFloat(formData.cantidad);
-    if (!formData.precioVenta || !formData.cantidad || formData.cantidad <= 0 || formData.precioVenta <= 0) {
+    if (
+      !formData.precioVenta ||
+      !formData.cantidad ||
+      formData.cantidad <= 0 ||
+      formData.precioVenta <= 0
+    ) {
       Swal.fire({
         icon: "error",
         title: "¡Error!",
@@ -127,7 +137,7 @@ const RegistroVenta = () => {
       return;
     }
 
-      if (cantidad > formData.stock) {
+    if (cantidad > formData.stock) {
       Swal.fire({
         icon: "error",
         title: "¡Error!",
@@ -143,19 +153,23 @@ const RegistroVenta = () => {
     };
 
     setCarrito([...carrito, nuevoProducto]);
-    setTotalVenta(prevTotal => prevTotal + parseFloat(subtotal));
+    setTotalVenta((prevTotal) => prevTotal + parseFloat(subtotal));
     limpiar();
   };
 
   const eliminarProducto = (index) => {
     const producto = carrito[index];
     setCarrito(carrito.filter((_, i) => i !== index));
-    setTotalVenta(prevTotal => prevTotal - parseFloat(producto.subTotal));
+    setTotalVenta((prevTotal) => prevTotal - parseFloat(producto.subTotal));
   };
 
   const calcularSubtotal = (name, value) => {
-    const precio = name === "precioVenta" ? parseFloat(value) : parseFloat(formData.precioVenta);
-    const cantidad = name === "cantidad" ? parseFloat(value) : parseFloat(formData.cantidad);
+    const precio =
+      name === "precioVenta"
+        ? parseFloat(value)
+        : parseFloat(formData.precioVenta);
+    const cantidad =
+      name === "cantidad" ? parseFloat(value) : parseFloat(formData.cantidad);
     const nuevoSubtotal = precio * cantidad;
     setSubtotal(nuevoSubtotal.toFixed(2));
   };
@@ -173,10 +187,10 @@ const RegistroVenta = () => {
 
   return (
     <div className="w-full h-full">
-      <div className="header-comp">
-        <h1 className="title-comp">Registro de ventas</h1>
-      </div>
       <div className="form-comp">
+        <div className="header-comp">
+          <h1 className="title-comp">Registro de ventas</h1>
+        </div>
         <div className="card">
           <h1 className="sub-titles-copm">Nueva venta</h1>
           <div className="grid-container">
@@ -257,7 +271,7 @@ const RegistroVenta = () => {
           <h1 className="sub-titles-copm">Carrito de productos</h1>
           <div>
             <table>
-              <thead >
+              <thead>
                 <tr>
                   <th>Producto</th>
                   <th>Precio de Venta</th>
@@ -276,7 +290,10 @@ const RegistroVenta = () => {
                     <td>
                       <button
                         className="delete-button"
-                      onClick={() => eliminarProducto(index)} >Eliminar</button>
+                        onClick={() => eliminarProducto(index)}
+                      >
+                        Eliminar
+                      </button>
                     </td>
                   </tr>
                 ))}

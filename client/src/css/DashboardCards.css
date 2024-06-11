@@ -1,21 +1,3 @@
-
-:root[data-theme="light"] {
-  --color1: #ffffff;
-  --color2: #ebeef1;
-  --color3: #f7f7f8;
-  --text-color: #1c1c1f;
-  --button-text: #1c1c1f;
-}
-
-:root[data-theme="dark"] {
-  --color1: #1c1c1f;
-  --color2: #31313c;
-  --color3: #24242a;
-  --text-color: #ebeef1;
-  --button-text: white;
-}
-
-
 .dashboard-cards {
     display: flex;
     flex-direction: column;
