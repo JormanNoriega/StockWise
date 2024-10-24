@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import "../css/login.css";
 import Swal from "sweetalert2";
-import logoAzul from "../assets/LogoSinFondo.png";
+import logoAzul from "/assets/LogoSinFondo.png";
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);

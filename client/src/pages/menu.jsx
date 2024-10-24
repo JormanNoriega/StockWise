@@ -17,7 +17,7 @@ import {
   FaSun,
   FaMoon,
 } from "react-icons/fa";
-import logoAzul from "../assets/LogoSinFondo.png";
+import logoAzul from "/assets/LogoSinFondo.png";
 import "../css/menu.css";
 import FormProducto from "../components/FormProducto";
 import RegistroEmpleados from "../components/FormEmpleado";

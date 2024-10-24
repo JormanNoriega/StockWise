@@ -8,7 +8,7 @@ import { useCategoria } from "../context/categoriaContext";
 import { useProveedor } from "../context/proveedorContext";
 import { useVenta } from "../context/ventaContext";
 import { format } from "date-fns";
-import logoAzul from "../assets/LogoSinFondo.png";
+import logoAzul from "/assets/LogoSinFondo.png";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Chart from "chart.js/auto";

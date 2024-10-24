@@ -6,7 +6,7 @@ import { useEmpleado } from "../context/empleadoContext";
 import { useAuth } from "../context/authContext";
 import { useVenta } from "../context/ventaContext";
 import { format, startOfDay, endOfDay } from "date-fns";
-import logoAzul from "../assets/LogoSinFondo.png";
+import logoAzul from "/assets/LogoSinFondo.png";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Chart from "chart.js/auto";

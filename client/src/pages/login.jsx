@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../css/login.css";
-import logoAzul from "../assets/LogoSinFondo.png";
+import logoAzul from "/assets/LogoSinFondo.png";
 import Swal from "sweetalert2";
 import { useAuth } from "../context/authContext";
 

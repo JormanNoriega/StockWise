@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../css/inicio.css";
-import logoAzul from "../assets/LogoSinFondo.png";
+import logoAzul from "/assets/LogoSinFondo.png";
 import { FaCoins, FaBoxes } from "react-icons/fa";
 import { BiSolidTachometer } from "react-icons/bi";
 
@@ -17,7 +17,7 @@ const FAQItem = ({ question, answer, isOpen, onClick }) => (
         }`}
       >
         <img
-          src="./assets/images/arrow.svg"
+          src="../assets/arrow.svg"
           alt="arrow"
           className="questions__img"
         />
@@ -162,7 +162,7 @@ const Inicio = () => {
 
             <figure className="knowledge__picture">
               <img
-                src="../assets/MacbookSinFondo.png"
+                src="./assets/MacbookSinFondo.png"
                 alt="macbook"
                 className="knowledge__img"
               />
@@ -237,21 +237,21 @@ const Inicio = () => {
           <div className="footer__icons">
             <a href="#">
               <img
-                src="../assets/facebook.svg"
+                src="/assets/facebook.svg"
                 alt="icon"
                 className="footer__img"
               />
             </a>
             <a href="#">
               <img
-                src="../assets/twitter.svg"
+                src="/assets/twitter.svg"
                 alt="icon"
                 className="footer__img"
               />
             </a>
             <a href="#">
               <img
-                src="../assets/youtube.svg"
+                src="/assets/youtube.svg"
                 alt="icon"
                 className="footer__img"
               />
