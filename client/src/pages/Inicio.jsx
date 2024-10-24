@@ -17,7 +17,7 @@ const FAQItem = ({ question, answer, isOpen, onClick }) => (
         }`}
       >
         <img
-          src="./public/images/arrow.svg"
+          src="./assets/images/arrow.svg"
           alt="arrow"
           className="questions__img"
         />
@@ -91,7 +91,7 @@ const Inicio = () => {
 
       <main>
         <section className="contenedor about">
-          <h2 className="subtitle">¿Qué necesita tener un bien negocio?</h2>
+          <h2 className="subtitle">¿Qué necesita tener un buen negocio?</h2>
           <p className="about__paragraph">
             Organización precisa, gestión eficiente y resultados excepcionales
             para alcanzar el éxito.
@@ -162,7 +162,7 @@ const Inicio = () => {
 
             <figure className="knowledge__picture">
               <img
-                src="./public/images/MacbookSinFondo.png"
+                src="../assets/MacbookSinFondo.png"
                 alt="macbook"
                 className="knowledge__img"
               />
@@ -220,11 +220,6 @@ const Inicio = () => {
                 </Link>
               </li>
             </ul>
-            <form
-              className="footer__form"
-              action="https://formspree.io/f/mknkkrkj"
-              method="POST"
-            >
               <div className="footer__inputs">
                 <input
                   type="email"
@@ -236,28 +231,27 @@ const Inicio = () => {
                   Regístrate
                 </button>
               </div>
-            </form>
           </nav>
         </section>
         <div className="footer__copy">
           <div className="footer__icons">
             <a href="#">
               <img
-                src="./public/images/facebook.svg"
+                src="../assets/facebook.svg"
                 alt="icon"
                 className="footer__img"
               />
             </a>
             <a href="#">
               <img
-                src="./public/images/twitter.svg"
+                src="../assets/twitter.svg"
                 alt="icon"
                 className="footer__img"
               />
             </a>
             <a href="#">
               <img
-                src="./public/images/youtube.svg"
+                src="../assets/youtube.svg"
                 alt="icon"
                 className="footer__img"
               />
