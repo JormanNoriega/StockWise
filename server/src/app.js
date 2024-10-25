@@ -9,13 +9,12 @@ import proveedoresRoutes from "./routes/proveedor.routes.js";
 import productosRoutes from "./routes/producto.routes.js";
 import ventasRoutes from "./routes/venta.routes.js";
 
-
 const app = express();
 
 // Middlewares
 app.use(
   cors({
-    origin: process.env.CLIENT_URL ||"http://localhost:5173",
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
     credentials: true,
   })
 );
