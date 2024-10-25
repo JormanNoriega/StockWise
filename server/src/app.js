@@ -30,4 +30,9 @@ app.use("/api", proveedoresRoutes);
 app.use("/api", productosRoutes);
 app.use("/api", ventasRoutes);
 
+// Ruta de inicio (opcional)
+app.get("/", (req, res) => {
+  res.send("Backend is running!");
+});
+
 export default app;
